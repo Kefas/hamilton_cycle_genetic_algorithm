@@ -2,20 +2,52 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
-import myPkg.*;
+import myPkg.Main;
 
 
-public class MyFrame extends JFrame {
+public class MyFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	static MyFrame frame;
 	private Main main;
+	JMenuBar menuBar;
+	JMenu op1, op2, op3;
+	JMenuItem genGraph, about, finish;
+	JDesktopPane desktop;
 	
 	public MyFrame(){
 		main = new Main();
+		
+		menuBar = new JMenuBar();
+		op1 = new JMenu("Opcja1");
+		op2 = new JMenu("Opcja2");
+		op3 = new JMenu("Pomoc");
+		
+		genGraph = new JMenuItem("Generuj graf");
+		about = new JMenuItem("O programie");
+		finish = new JMenuItem("Zakoñcz");
+		
+		setJMenuBar(menuBar);
+		menuBar.add(op1);
+		menuBar.add(op2);
+		menuBar.add(op3);
+		op1.add(genGraph);
+		op1.addSeparator();
+		op1.add(finish);
+		op3.add(about);
+		
+		finish.addActionListener(this);
+		genGraph.addActionListener(this);
 	}
 	
 	public static void main(String[] args) {
@@ -33,6 +65,21 @@ public class MyFrame extends JFrame {
 				
 			}
 		});
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		
+		if(o == finish)
+			dispose();
+		if(o == genGraph){
+			GenFrame ramka = new GenFrame();
+			ramka.setVisible(true);
+		}
+			
+		
+		
 	}
 
 }
