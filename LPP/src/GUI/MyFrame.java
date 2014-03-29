@@ -19,7 +19,7 @@ import myPkg.Main;
 public class MyFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	static MyFrame frame;
-	private Main main;
+	static Main main;
 	JMenuBar menuBar;
 	JMenu op1, op2, op3;
 	JMenuItem genGraph, about, finish;
@@ -69,17 +69,19 @@ public class MyFrame extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
+		Object source = e.getSource();
 		
-		if(o == finish)
+		if(source == finish)
 			dispose();
-		if(o == genGraph){
+		if(source == genGraph){
 			GenFrame ramka = new GenFrame();
 			ramka.setVisible(true);
 		}
 			
-		
-		
 	}
 
+	static void getGraph(int v){
+		main.makeGraph(v);
+		main.printGraph(main.getGraph());
+	}
 }

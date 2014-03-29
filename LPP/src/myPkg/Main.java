@@ -21,6 +21,13 @@ public class Main {
 		for(int i=0;i<GRAPH_SIZE;i++)
 			graph.add(new Vertex());
 	}
+	
+	public void makeGraph(int vert){
+		graph = new ArrayList<>();
+		for(int i=0;i<vert;i++)
+			graph.add(new Vertex());
+		System.out.println("Tu");
+	}
 
 	public ArrayList<Vertex> getGraph() {
 		return graph;

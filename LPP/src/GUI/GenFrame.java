@@ -1,11 +1,13 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,15 +17,16 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class GenFrame extends JFrame {
+public class GenFrame extends JFrame implements ActionListener {
+	static final int FPS_MIN = 0;
+	static final int FPS_MAX = 50;
+	static final int FPS_INIT = 25; 
+	
 	private int h,w;
 	private JPanel sliderPanel;
 	private JTextField textField;
 	private ChangeListener listener;
-	   
-	static final int FPS_MIN = 0;
-	static final int FPS_MAX = 30;
-	static final int FPS_INIT = 15; 
+	private JButton generate;  
 	
 	
 		GenFrame(){
@@ -31,8 +34,10 @@ public class GenFrame extends JFrame {
 			w=500;
 			h=300;
 			sliderPanel = new JPanel();
-			sliderPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		
+			sliderPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+			
+			
+			
 			// common listener for all sliders
 		      listener = new ChangeListener()
 		         {
@@ -51,12 +56,18 @@ public class GenFrame extends JFrame {
 		         slider.setMajorTickSpacing(10);
 		         slider.setMinorTickSpacing(1);
 		         slider.setPreferredSize(new Dimension(300, 60));
-		         textField = new JTextField("15", 3);
+		         textField = new JTextField("25", 3);
 		        
 		         addSlider("Liczba Wierzcho³ków:  ",slider, textField);
 		         add(sliderPanel, BorderLayout.CENTER);
 		        
-		         //add(textField, BorderLayout.SOUTH);
+		         generate = new JButton("Generuj");
+		        
+		         add(generate, BorderLayout.SOUTH);
+		         
+		         generate.addActionListener(this);
+		         
+		         
 		         
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -81,4 +92,18 @@ public class GenFrame extends JFrame {
 	  
 	   sliderPanel.add(panel);
 	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		
+		if(source == generate){
+			MyFrame.getGraph(Integer.parseInt(textField.getText()));
+			dispose();
+		}
+		
+	}
+	
+	
 }
