@@ -43,5 +43,9 @@ public class Vertex {
 		return result;
 		
 	}
+	
+	public ArrayList<Pair<Integer, Integer>> getList(){
+		return list;
+	}
 
 }

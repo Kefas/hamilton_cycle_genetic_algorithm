@@ -1,20 +1,25 @@
 package GUI;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
 import myPkg.Main;
-
+import edu.uci.ics.jung.algorithms.layout.FRLayout;
+import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.graph.SparseGraph;
+import edu.uci.ics.jung.visualization.VisualizationViewer;
+import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
+import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
 
 public class MyFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -24,7 +29,8 @@ public class MyFrame extends JFrame implements ActionListener {
 	JMenu op1, op2, op3;
 	JMenuItem genGraph, about, finish;
 	JDesktopPane desktop;
-	
+	private GenFrame ramka;
+	private static Graph g;
 	public MyFrame(){
 		main = new Main();
 		
@@ -48,6 +54,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		finish.addActionListener(this);
 		genGraph.addActionListener(this);
+		
 	}
 	
 	public static void main(String[] args) {
@@ -74,14 +81,44 @@ public class MyFrame extends JFrame implements ActionListener {
 		if(source == finish)
 			dispose();
 		if(source == genGraph){
-			GenFrame ramka = new GenFrame();
+			ramka = new GenFrame();
 			ramka.setVisible(true);
 		}
 			
 	}
 
-	static void getGraph(int v){
+	static void setGraph(int v){
 		main.makeGraph(v);
 		main.printGraph(main.getGraph());
 	}
+	
+	public static Graph paintGraph() {
+	    Graph<Integer, String> g = new SparseGraph<Integer, String>();
+
+	    for(int i=0; i< main.getGraph().size()-1;i++){
+	    	g.addVertex((Integer)i);
+	    	//for(int j=0; j< main.getGraph().get(i).getList().size(); j++){
+//	    		g.addEdge("Edge-"+i,main.getGraph().get(i).getList().get(j).getL(), main.getGraph().get(i).getList().get(j).getR());
+	    		g.addEdge("Edge-"+i, i, i+1);
+	    	//}
+	    }
+	    return g;
+	  }
+	
+	static void paintG(){
+		g = paintGraph();
+	    VisualizationViewer<Integer,String> vv = 
+	     new VisualizationViewer<Integer,String>(new FRLayout(g),
+	    		 new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width-100,Toolkit.getDefaultToolkit().getScreenSize().height-100));
+	    frame.getContentPane().add(vv);
+	    
+	    
+	    //"interakcja" grafu z myszk¹ (oddalanie, przesuwanie grafu)
+	    DefaultModalGraphMouse gm = new DefaultModalGraphMouse();
+	    gm.setMode(ModalGraphMouse.Mode.TRANSFORMING);
+	    vv.setGraphMouse(gm);
+	 
+	}
+	
+	
 }

@@ -17,22 +17,27 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import edu.uci.ics.jung.algorithms.layout.FRLayout;
+import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.visualization.VisualizationViewer;
+
 public class GenFrame extends JFrame implements ActionListener {
 	static final int FPS_MIN = 0;
-	static final int FPS_MAX = 50;
-	static final int FPS_INIT = 25; 
+	static final int FPS_MAX = 100;
+	static final int FPS_INIT = 50; 
 	
 	private int h,w;
 	private JPanel sliderPanel;
 	private JTextField textField;
 	private ChangeListener listener;
 	private JButton generate;  
-	
+
 	
 		GenFrame(){
 			System.out.println("GenFrame");
 			w=500;
 			h=300;
+			
 			sliderPanel = new JPanel();
 			sliderPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 			
@@ -54,7 +59,7 @@ public class GenFrame extends JFrame implements ActionListener {
 		         slider.setPaintTicks(true);
 		         slider.setPaintLabels(true);
 		         slider.setMajorTickSpacing(10);
-		         slider.setMinorTickSpacing(1);
+		         slider.setMinorTickSpacing(5);
 		         slider.setPreferredSize(new Dimension(300, 60));
 		         textField = new JTextField("25", 3);
 		        
@@ -99,11 +104,11 @@ public class GenFrame extends JFrame implements ActionListener {
 		Object source = e.getSource();
 		
 		if(source == generate){
-			MyFrame.getGraph(Integer.parseInt(textField.getText()));
+			MyFrame.setGraph(Integer.parseInt(textField.getText()));
+			MyFrame.paintG();
 			dispose();
 		}
 		
 	}
-	
 	
 }
