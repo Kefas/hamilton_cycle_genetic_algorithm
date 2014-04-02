@@ -6,31 +6,13 @@ import java.util.Random;
 public class Vertex {
 	ArrayList<Pair<Integer, Integer>> list;
 	
-	public Vertex(){
+	public Vertex(int [][] tab, int rows){
 		list = new ArrayList<>();
 		Random random = new Random();
-		int rand = random.nextInt(Main.GRAPH_SIZE-1)+1;
-		//int randVertex;
-		//int randValue;
+		for(int j=rows; j<tab.length;j++)
+				if(tab[rows][j] == 1)
+					list.add(new Pair<Integer, Integer>(j, random.nextInt(MyGraph.MAX_VALUE)));
 		
-		for(int i=0;i<rand;i++){
-			//jeżeli graf ma być bez pętli
-			
-			/*randVertex = random.nextInt(Main.GRAPH_SIZE);
-			randValue = random.nextInt(Main.MAX_VALUE);
-			for(int j=0;j<i;j++)
-				if(list.get(j).getL() == randVertex){
-					randVertex = random.nextInt(Main.GRAPH_SIZE);
-					j=0;
-				}
-					
-					
-			list.add(new Pair(randVertex, randValue));*/
-			
-			//graf z pętlami i powtórzonymi krawędziami
-			list.add(new Pair<Integer, Integer>(random.nextInt(Main.GRAPH_SIZE), random.nextInt(Main.GRAPH_SIZE)));
-			
-		}
 	}
 	
 	public String toString(){

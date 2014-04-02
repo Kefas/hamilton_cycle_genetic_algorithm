@@ -13,7 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
-import myPkg.Main;
+import myPkg.MyGraph;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseMultigraph;
@@ -24,7 +24,7 @@ import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
 public class MyFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	static MyFrame frame;
-	static Main main;
+	static MyGraph main;
 	JMenuBar menuBar;
 	JMenu op1, op2, op3;
 	JMenuItem genGraph, about, finish;
@@ -32,7 +32,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	private GenFrame ramka;
 	private static Graph g;
 	public MyFrame(){
-		main = new Main();
+		main = new MyGraph();
 		
 		menuBar = new JMenuBar();
 		op1 = new JMenu("Opcja1");
@@ -41,7 +41,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		genGraph = new JMenuItem("Generuj graf");
 		about = new JMenuItem("O programie");
-		finish = new JMenuItem("Zakoñcz");
+		finish = new JMenuItem("Zakoï¿½cz");
 		
 		setJMenuBar(menuBar);
 		menuBar.add(op1);
@@ -90,6 +90,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	static void setGraph(int v){
 		main.makeGraph(v);
 		main.printGraph(main.getGraph());
+		SwingUtilities.updateComponentTreeUI(frame);
 	}
 	
 	public static Graph paintGraph() {
@@ -98,7 +99,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	    for(int i=0; i< main.getGraph().size()-1;i++){
 	    	g.addVertex((Integer)i);
 	    	for(int j=0; j< main.getGraph().get(i).getList().size(); j++){
-	    		g.addEdge("Edge-"+i, i, main.getGraph().get(i).getList().get(j).getL());
+	    		g.addEdge("Edge-"+i+"-"+j, i, main.getGraph().get(i).getList().get(j).getL());
 	    	}
 	    }
 	    return g;
@@ -112,7 +113,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	    frame.getContentPane().add(vv);
 	    
 	    
-	    //"interakcja" grafu z myszk¹ (oddalanie, przesuwanie grafu)
+	    //"interakcja" grafu z myszkï¿½ (oddalanie, przesuwanie grafu)
 	    DefaultModalGraphMouse gm = new DefaultModalGraphMouse();
 	    gm.setMode(ModalGraphMouse.Mode.TRANSFORMING);
 	    vv.setGraphMouse(gm);

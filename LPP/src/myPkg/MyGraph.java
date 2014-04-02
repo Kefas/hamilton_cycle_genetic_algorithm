@@ -1,13 +1,15 @@
 package myPkg;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public class Main {
+public class MyGraph {
 	public static final int GRAPH_SIZE = 10;
 
 	public static final int MAX_VALUE = 1000;
 	
 	private ArrayList<Vertex> graph;
+	int [][] tab;
 
 	public void printGraph(ArrayList<Vertex> graph) {
 		for(int i=0; i<graph.size(); i++){
@@ -17,16 +19,33 @@ public class Main {
 	}
 
 	public void makeGraph() {
+		tab = new int[GRAPH_SIZE][GRAPH_SIZE];
+		for(int i=0;i<tab.length;i++)
+			for(int j=i;j<tab[i].length;j++){
+				if(i != j)
+					tab[i][j] = rand();
+			}
 		graph = new ArrayList<>();
 		for(int i=0;i<GRAPH_SIZE;i++)
-			graph.add(new Vertex());
+			graph.add(new Vertex(tab, i));
 	}
 	
-	public void makeGraph(int vert){
+	private int rand() {
+		Random random = new Random();
+		int r = random.nextInt(100);
+		return r>50 ? 1 : 0;
+	}
+
+	public void makeGraph(int size){
+		tab = new int[size][size];
+		for(int i=0;i<tab.length;i++)
+			for(int j=i;j<tab[i].length;j++){
+				if(i != j)
+					tab[i][j] = rand();
+			}
 		graph = new ArrayList<>();
-		for(int i=0;i<vert;i++)
-			graph.add(new Vertex());
-		System.out.println("Tu");
+		for(int i=0;i<size;i++)
+			graph.add(new Vertex(tab,i));
 	}
 
 	public ArrayList<Vertex> getGraph() {
