@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 import myPkg.Main;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
 import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.SparseGraph;
+import edu.uci.ics.jung.graph.UndirectedSparseMultigraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
@@ -93,14 +93,13 @@ public class MyFrame extends JFrame implements ActionListener {
 	}
 	
 	public static Graph paintGraph() {
-	    Graph<Integer, String> g = new SparseGraph<Integer, String>();
+	    Graph<Integer, String> g = new UndirectedSparseMultigraph<Integer, String>();
 
 	    for(int i=0; i< main.getGraph().size()-1;i++){
 	    	g.addVertex((Integer)i);
-	    	//for(int j=0; j< main.getGraph().get(i).getList().size(); j++){
-//	    		g.addEdge("Edge-"+i,main.getGraph().get(i).getList().get(j).getL(), main.getGraph().get(i).getList().get(j).getR());
-	    		g.addEdge("Edge-"+i, i, i+1);
-	    	//}
+	    	for(int j=0; j< main.getGraph().get(i).getList().size(); j++){
+	    		g.addEdge("Edge-"+i, i, main.getGraph().get(i).getList().get(j).getL());
+	    	}
 	    }
 	    return g;
 	  }
