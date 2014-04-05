@@ -3,6 +3,7 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Label;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -31,12 +33,13 @@ public class GenFrame extends JFrame implements ActionListener {
 	private JTextField textField;
 	private ChangeListener listener;
 	private JButton generate;  
-
+	private JRadioButton layout1, layout2, layout3, layout4, layout5;
 	
 		GenFrame(){
 			System.out.println("GenFrame");
 			w=500;
-			h=300;
+			h=250;
+			setLayout(new FlowLayout());
 			
 			sliderPanel = new JPanel();
 			sliderPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -66,10 +69,26 @@ public class GenFrame extends JFrame implements ActionListener {
 		         addSlider("Liczba Wierzcho³ków:  ",slider, textField);
 		         add(sliderPanel, BorderLayout.CENTER);
 		        
-		         generate = new JButton("Generuj");
-		        
-		         add(generate, BorderLayout.SOUTH);
+		         Label l = new Label("Wybór layouta:");
+		         add(l);
+		         //dodawanie layoutów (radiobuttony)
+		         layout1 = new JRadioButton("KKLayout");
+		         layout2 = new JRadioButton("FRLayout");
+		         layout3 = new JRadioButton("SpringLayout");
+		         layout4 = new JRadioButton("ISOMLayout");
+		         layout5 = new JRadioButton("CircleLayout");
 		         
+		         getContentPane().add(new MyPanel(layout1, layout2, layout3, layout4, layout5));
+		         generate = new JButton("Generuj");
+		         add(generate);
+		         
+		         
+		         //ActionListener
+		         layout1.addActionListener(this);
+		         layout2.addActionListener(this);
+		         layout3.addActionListener(this);
+		         layout4.addActionListener(this);
+		         layout5.addActionListener(this);
 		         generate.addActionListener(this);
 		         
 		         
@@ -105,7 +124,19 @@ public class GenFrame extends JFrame implements ActionListener {
 		
 		if(source == generate){
 			MyFrame.setGraph(Integer.parseInt(textField.getText()));
-			MyFrame.paintG();
+
+			if(layout1.isSelected())
+				MyFrame.paintG(1);
+			else if(layout2.isSelected())
+				MyFrame.paintG(2);
+			else if(layout3.isSelected())
+				MyFrame.paintG(3);
+			else if(layout4.isSelected())
+				MyFrame.paintG(4);
+			else if(layout5.isSelected())
+				MyFrame.paintG(5);
+			
+			
 			dispose();
 		}
 		

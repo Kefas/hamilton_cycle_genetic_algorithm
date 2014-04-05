@@ -14,7 +14,12 @@ import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
 import myPkg.MyGraph;
+import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
+import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
+import edu.uci.ics.jung.algorithms.layout.KKLayout;
+import edu.uci.ics.jung.algorithms.layout.Layout;
+import edu.uci.ics.jung.algorithms.layout.SpringLayout;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseMultigraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
@@ -41,7 +46,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		genGraph = new JMenuItem("Generuj graf");
 		about = new JMenuItem("O programie");
-		finish = new JMenuItem("Zakoï¿½cz");
+		finish = new JMenuItem("Zakoñcz");
 		
 		setJMenuBar(menuBar);
 		menuBar.add(op1);
@@ -105,10 +110,31 @@ public class MyFrame extends JFrame implements ActionListener {
 	    return g;
 	  }
 	
-	static void paintG(){
+	static void paintG(int choose){
 		g = paintGraph();
-	    VisualizationViewer<Integer,String> vv = 
-	     new VisualizationViewer<Integer,String>(new FRLayout(g),
+		Layout<Integer, String> layout = null;
+		
+		switch(choose){
+			case 1:
+				layout = new KKLayout<>(g);
+				break;
+			case 2:
+				layout = new FRLayout<>(g);
+				break;
+			case 3:
+				layout = new SpringLayout<>(g);
+				break;
+			case 4:
+				layout = new ISOMLayout<>(g);
+				break;
+			case 5:
+				layout = new CircleLayout<>(g);
+				break;
+			
+		}
+	    
+		VisualizationViewer<Integer,String> vv = 
+	     new VisualizationViewer<Integer,String>(layout,
 	    		 new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width-100,Toolkit.getDefaultToolkit().getScreenSize().height-100));
 	    frame.getContentPane().add(vv);
 	    
@@ -117,6 +143,9 @@ public class MyFrame extends JFrame implements ActionListener {
 	    DefaultModalGraphMouse gm = new DefaultModalGraphMouse();
 	    gm.setMode(ModalGraphMouse.Mode.TRANSFORMING);
 	    vv.setGraphMouse(gm);
+	    
+	   // gm.setMode(ModalGraphMouse.Mode.PICKING);
+	    //vv.setGraphMouse(gm);
 	 
 	}
 	
