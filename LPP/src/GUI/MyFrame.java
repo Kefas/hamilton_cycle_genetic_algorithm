@@ -87,6 +87,7 @@ public class MyFrame extends JFrame implements ActionListener {
 			dispose();
 		if(source == genGraph){
 			ramka = new GenFrame();
+			frame.getContentPane().removeAll();
 			ramka.setVisible(true);
 		}
 			
