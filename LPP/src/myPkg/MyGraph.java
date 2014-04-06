@@ -30,6 +30,10 @@ public class MyGraph {
 			graph.add(new Vertex(tab, i));
 	}
 	
+	//Nie wiem czy w tej funkcji powinniśmy za kazdym razem inicjować obiekt random
+	//- to powinno być zrobione raz w konstruktorze, albo zmienna random powinna być statyczną
+	// od razu inicjowaną
+	//A pozatym rand mógłby zamiast tylko połączenia zwracać od razu jego wartość
 	private int rand() {
 		Random random = new Random();
 		int r = random.nextInt(100);
