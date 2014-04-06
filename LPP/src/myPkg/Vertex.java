@@ -6,6 +6,8 @@ import java.util.Random;
 public class Vertex {
 	ArrayList<Pair<Integer, Integer>> list;
 	
+	
+	//Co tutaj się dzieje? Co oznacza zmienna rows?
 	public Vertex(int [][] tab, int rows){
 		list = new ArrayList<>();
 		Random random = new Random();
