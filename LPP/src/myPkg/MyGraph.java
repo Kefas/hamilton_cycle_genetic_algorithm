@@ -10,6 +10,7 @@ public class MyGraph {
 	
 	private ArrayList<Vertex> graph;
 	int [][] tab;
+	private Random random;
 
 	public void printGraph(ArrayList<Vertex> graph) {
 		for(int i=0; i<graph.size(); i++){
@@ -19,6 +20,7 @@ public class MyGraph {
 	}
 
 	public void makeGraph() {
+		random = new Random();
 		tab = new int[GRAPH_SIZE][GRAPH_SIZE];
 		for(int i=0;i<tab.length;i++)
 			for(int j=i;j<tab[i].length;j++){
@@ -30,17 +32,14 @@ public class MyGraph {
 			graph.add(new Vertex(tab, i));
 	}
 	
-	//Nie wiem czy w tej funkcji powinniśmy za kazdym razem inicjować obiekt random
-	//- to powinno być zrobione raz w konstruktorze, albo zmienna random powinna być statyczną
-	// od razu inicjowaną
 	//A pozatym rand mógłby zamiast tylko połączenia zwracać od razu jego wartość
 	private int rand() {
-		Random random = new Random();
 		int r = random.nextInt(100);
-		return r>50 ? 1 : 0;
+		return r>50 ? r : 0;
 	}
 
 	public void makeGraph(int size){
+		random = new Random();
 		tab = new int[size][size];
 		for(int i=0;i<tab.length;i++)
 			for(int j=i;j<tab[i].length;j++){
