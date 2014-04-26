@@ -22,6 +22,7 @@ import javax.swing.event.ChangeListener;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
+/*ta biblioteka powy¿ej jest jakaœ zewnêtrzna? - jak j¹ pobraæ?*/
 
 public class GenFrame extends JFrame implements ActionListener {
 	static final int FPS_MIN = 0;
