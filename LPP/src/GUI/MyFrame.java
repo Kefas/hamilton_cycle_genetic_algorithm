@@ -22,6 +22,7 @@ import edu.uci.ics.jung.algorithms.layout.KKLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.algorithms.layout.SpringLayout;
 import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import edu.uci.ics.jung.graph.UndirectedSparseMultigraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
@@ -102,7 +103,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	}
 	
 	public static Graph paintGraph() {
-	    Graph<Integer, String> g = new UndirectedSparseMultigraph<Integer, String>();
+	    Graph<Integer, String> g = new UndirectedSparseGraph<Integer, String>();
 
 	    for(int i=0; i< main.getGraph().size()-1 ;i++){
 	    	g.addVertex((Integer)i);
