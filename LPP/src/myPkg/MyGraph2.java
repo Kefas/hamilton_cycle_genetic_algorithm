@@ -1,5 +1,6 @@
 package myPkg;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class MyGraph2 {
@@ -13,9 +14,10 @@ public class MyGraph2 {
 		tableOfVertexes = new Vertex2[size];
 		/*
 		 * currVer -> current Vertex
-		 * currNeigh -> current Neighbour (for current Vertex)
+		 * currNeigh -> current Neighbor (for current Vertex)
 		 */
 		for(int currVer=0; currVer < size; currVer++){
+			tableOfVertexes[currVer] = new Vertex2(currVer, size);
 			for(int currNeigh=0; currNeigh < size; currNeigh++){
 				if(currNeigh < currVer){
 					// these distances has been already generated
@@ -42,8 +44,21 @@ public class MyGraph2 {
 	}
 	
 	
-	
-	
+
+	public void wypisz() {
+		
+		for(int i=0; i<tableOfVertexes.length; i++){
+			for(int j=0; j<tableOfVertexes.length; j++)
+				System.out.print( tableOfVertexes[i].getDistanceToNeigbour(j) + "\t");
+		}
+	}
+
+
+	public static void main(String [] args){
+		MyGraph2 nowy = new MyGraph2(5);
+		nowy.wypisz();
+		
+	}
 	
 	
 }
