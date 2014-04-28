@@ -14,7 +14,7 @@ import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
 import myPkg.MyGraph;
-import myPkg.MyGraph2;
+import myPkg.MyGraph;
 import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
 import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
@@ -31,7 +31,7 @@ import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
 public class MyFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	static MyFrame frame;
-	static MyGraph2 main;
+	static MyGraph main;
 	JMenuBar menuBar;
 	JMenu op1, op2, op3;
 	JMenuItem genGraph, about, finish;
@@ -97,7 +97,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
 	static void setGraph(int v){
 //		main.makeGraph(v);
-		main = new MyGraph2(v);
+		main = new MyGraph(v);
 //		main.printGraph(main.getGraph());
 		SwingUtilities.updateComponentTreeUI(frame);
 	}
