@@ -1,5 +1,6 @@
 package myPkg;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -7,10 +8,11 @@ public class MyGraph2 {
 	private final int maxDistance = 1000;
 	Vertex2 tableOfVertexes[];
 	private Random random = new Random();
+	private ArrayList<Vertex> graph;
 	
 	int tmpDistance = 0, tmpMinSumDistance = Integer.MAX_VALUE;
 	
-	MyGraph2(int size){
+	public MyGraph2(int size){
 		tableOfVertexes = new Vertex2[size];
 		/*
 		 * currVer -> current Vertex
@@ -58,6 +60,13 @@ public class MyGraph2 {
 		MyGraph2 nowy = new MyGraph2(5);
 		nowy.wypisz();
 		
+	}
+	public ArrayList<Vertex> getGraph(){
+		graph = new ArrayList<>();
+		for(int i=0; i<tableOfVertexes.length; i++){
+			graph.add(new Vertex(tableOfVertexes[i].getTabOfNeigh()));
+		}
+		return graph;
 	}
 	
 	

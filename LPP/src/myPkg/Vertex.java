@@ -6,7 +6,7 @@ import java.util.Random;
 public class Vertex {
 	ArrayList<Pair<Integer, Integer>> list;
 	
-	//Co tutaj sie dzieje? Co oznacza zmienna rows?
+	/*
 	public Vertex(int [][] tab, int rows){
 		list = new ArrayList<>();
 		Random random = new Random();
@@ -14,6 +14,18 @@ public class Vertex {
 				if(tab[rows][j] != 0)
 					list.add(new Pair<Integer, Integer>(j, random.nextInt(MyGraph.MAX_VALUE)));
 	}
+	*/
+	
+	// poprawiona wersja, przyjmujaca tablice wartosci.
+	public Vertex(int [] tab){
+		list = new ArrayList<>();
+		Random random = new Random();
+		for(int j=0; j<tab.length;j++)
+				if(tab[j] != 0)
+					list.add(new Pair<Integer, Integer>(j, tab[j] ));
+	}
+	
+	
 	
 	public String toString(){
 		String result = "";

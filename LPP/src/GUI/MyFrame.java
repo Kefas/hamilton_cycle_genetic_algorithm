@@ -14,6 +14,7 @@ import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
 import myPkg.MyGraph;
+import myPkg.MyGraph2;
 import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
 import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
@@ -29,7 +30,7 @@ import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
 public class MyFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	static MyFrame frame;
-	static MyGraph main;
+	static MyGraph2 main;
 	JMenuBar menuBar;
 	JMenu op1, op2, op3;
 	JMenuItem genGraph, about, finish;
@@ -37,7 +38,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	private GenFrame ramka;
 	private static Graph g;
 	public MyFrame(){
-		main = new MyGraph();
+		//main = new MyGraph2();
 		
 		menuBar = new JMenuBar();
 		op1 = new JMenu("Opcja1");
@@ -46,7 +47,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		genGraph = new JMenuItem("Generuj graf");
 		about = new JMenuItem("O programie");
-		finish = new JMenuItem("Zakoñcz");
+		finish = new JMenuItem("Zakoï¿½cz");
 		
 		setJMenuBar(menuBar);
 		menuBar.add(op1);
@@ -94,15 +95,16 @@ public class MyFrame extends JFrame implements ActionListener {
 	}
 
 	static void setGraph(int v){
-		main.makeGraph(v);
-		main.printGraph(main.getGraph());
+//		main.makeGraph(v);
+		main = new MyGraph2(v);
+//		main.printGraph(main.getGraph());
 		SwingUtilities.updateComponentTreeUI(frame);
 	}
 	
 	public static Graph paintGraph() {
 	    Graph<Integer, String> g = new UndirectedSparseMultigraph<Integer, String>();
 
-	    for(int i=0; i< main.getGraph().size()-1;i++){
+	    for(int i=0; i< main.getGraph().size()-1 ;i++){
 	    	g.addVertex((Integer)i);
 	    	for(int j=0; j< main.getGraph().get(i).getList().size(); j++){
 	    		g.addEdge("Edge-"+i+"-"+j, i, main.getGraph().get(i).getList().get(j).getL());
