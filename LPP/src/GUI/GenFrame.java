@@ -26,8 +26,8 @@ import edu.uci.ics.jung.visualization.VisualizationViewer;
 
 public class GenFrame extends JFrame implements ActionListener {
 	static final int FPS_MIN = 0;
-	static final int FPS_MAX = 500;
-	static final int FPS_INIT = 250; 
+	static final int FPS_MAX = 100;
+	static final int FPS_INIT = 50; 
 	
 	private int h,w;
 	private JPanel sliderPanel;
@@ -62,10 +62,10 @@ public class GenFrame extends JFrame implements ActionListener {
 		        
 		         slider.setPaintTicks(true);
 		         slider.setPaintLabels(true);
-		         slider.setMajorTickSpacing(50);
-		         slider.setMinorTickSpacing(25);
+		         slider.setMajorTickSpacing(10);
+		         slider.setMinorTickSpacing(5);
 		         slider.setPreferredSize(new Dimension(300, 60));
-		         textField = new JTextField("250", 3);
+		         textField = new JTextField("50", 3);
 		        
 		         addSlider("Liczba Wierzcho³ków:  ",slider, textField);
 		         add(sliderPanel, BorderLayout.CENTER);
