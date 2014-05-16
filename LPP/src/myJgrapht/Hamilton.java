@@ -56,11 +56,11 @@ public class Hamilton {
 //				  output.remove(Long.valueOf(0l));
 				  return output;
 			 }
-			 public void export(SimpleWeightedGraph<Integer, DefaultWeightedEdge> g){
+			 public void export(SimpleWeightedGraph<Integer, DefaultWeightedEdge> g, String path){
 				 Writer writer = null;
 //				 MatrixExporter<int, DefaultWeightedEdge> exporter = new MatrixExporter<>();
 				 try {
-					writer = new FileWriter("output.txt");
+					writer = new FileWriter(path);
 					for(int x : g.vertexSet()){
 						for(int y : g.vertexSet()){
 							if(x == y)
