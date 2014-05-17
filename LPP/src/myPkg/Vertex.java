@@ -24,7 +24,6 @@ public class Vertex {
 	public int getDistanceToNeigbour(int idOfNeighbour){
 		return tabOfNeigh[idOfNeighbour];
 	}
-	
 	public int[] getTabOfNeigh(){
 		return tabOfNeigh;
 	}

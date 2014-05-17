@@ -55,13 +55,23 @@ public class MyGraph {
 				System.out.print( tableOfVertexes[i].getDistanceToNeigbour(j) + "\t");
 			System.out.println("");
 		}
+		
 	}
-
-
+	int getNodesAmount(){
+		return tableOfVertexes.length;
+	}
+	int getDistance(int vertex1, int vertex2){
+		return tableOfVertexes[vertex1].getDistanceToNeigbour(vertex2);
+	}
 	public static void main(String [] args){
 		MyGraph nowy = new MyGraph(5);
 		nowy.wypisz();
+		Individual osobnik = new Individual(nowy);
+		System.out.println(osobnik + "\n" + osobnik.getRouteLength());
 		
+	}
+	int getSize(){
+		return tableOfVertexes.length;
 	}
 	public ArrayList<VertexJUNG> getGraph(){
 		graph = new ArrayList<>();
@@ -69,7 +79,5 @@ public class MyGraph {
 			graph.add(new VertexJUNG(tableOfVertexes[i].getTabOfNeigh()));
 		}
 		return graph;
-	}
-	
-	
+	}	
 }
