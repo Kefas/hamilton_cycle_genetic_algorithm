@@ -1,12 +1,25 @@
 package myPkg;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
-import cern.jet.random.Gamma;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 public class MainLoop{
 	Random random = new Random();
@@ -15,25 +28,47 @@ public class MainLoop{
 	int iterationsLimit = 100;
 	MyGraph graph;
 	ArrayList<Individual> generation = new ArrayList<>();
-	
+	 private static XYPlot plot;
+	 private static ChartPanel chartPanel;
+	 private static int datasetIndex = 0;
+	 private static List<XYSeriesCollection> seriesArrayList = new ArrayList<XYSeriesCollection>();
+	 
 	public MainLoop(MyGraph graph) {
 		this.graph = graph;
 		sizeOfPopulation = graph.getSize()/2;
+		
 		for(int i=0; i<sizeOfPopulation; i++){
 			generation.add(new Individual(graph));
 		}
 	}
+	
 
 	void start(){
+		AdaptionValues generation = null;
 			while( continueOrNot() ){
 				reproduction();
 				performCrossing();
 				performMutation(1);
-				System.out.println(assessPopulation()+"\n#################################");
+				generation = assessPopulation();
+				updateChart(generation);
+				System.out.println(generation+"\n#################################");
 				iterationCounter++;			
 			}
 			
 	}
+	private void updateChart(AdaptionValues generation2) {
+		 getXYSeries(0).getSeries(0).add(iterationCounter, generation2.getBest());
+		 getXYSeries(1).getSeries(0).add(iterationCounter, generation2.getAverage());
+		 getXYSeries(2).getSeries(0).add(iterationCounter, generation2.getWorst());
+//		 try {
+//			Thread.sleep(100);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	}
+
+	
 	/**
 	 * It appraise newGeneration - how it is adapted to environment
 	 * the lower value returned - the better adaption
@@ -139,8 +174,61 @@ public class MainLoop{
 		}		
 	}
 	
+	private static XYSeriesCollection createDataset(String name) {
+        XYSeries series = new XYSeries(name);
+        return new XYSeriesCollection(series);
+    }
+ 
+    public static ChartPanel getChart() {
+        return chartPanel;
+    }
+ 
+    public static void createAdditionalDataset() {
+        seriesArrayList.add(createDataset("S" + datasetIndex));
+        plot.setDataset(datasetIndex, seriesArrayList.get(datasetIndex));
+        plot.setRenderer(datasetIndex, new StandardXYItemRenderer());
+        datasetIndex++;
+    }
+ 
+    public XYSeriesCollection getXYSeries(int datasetIndex) {
+        return seriesArrayList.get(datasetIndex);
+    }
+ 
+    public int getDatasetCount() {
+        return this.plot.getDatasetCount();
+    }
+	
 	public static void main(String [] args){
-		MainLoop m = new MainLoop(new MyGraph(20));
+		XYSeriesCollection dataset = createDataset("Populacje");
+		 JFreeChart chart = ChartFactory.createXYLineChart("", "Numer Populacji", "Wartoœæ",dataset, PlotOrientation.VERTICAL, false, false, false);
+		 chart.setBackgroundPaint(Color.white);
+	        plot = chart.getXYPlot();
+	        plot.setBackgroundPaint(Color.lightGray);
+	        plot.setDomainGridlinePaint(Color.white);
+	        plot.setRangeGridlinePaint(Color.white);
+	        ValueAxis axis = plot.getDomainAxis();
+	        axis.setAutoRange(true);
+	        NumberAxis rangeAxis2 = new NumberAxis("Range Axis 2");
+	        rangeAxis2.setAutoRangeIncludesZero(false);
+	        JPanel content = new JPanel(new BorderLayout());
+	        chartPanel = new ChartPanel(chart);
+	        content.add(chartPanel);
+	        
+	        JFrame frame = new JFrame();
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        JPanel panel = new JPanel();
+	        panel.add(getChart());
+	        frame.add(panel);
+	        frame.pack();
+	        frame.setLocationRelativeTo(null);
+	        frame.setVisible(true);
+	        
+	        createAdditionalDataset();
+	        createAdditionalDataset();
+	        createAdditionalDataset();
+	        
+	        
+		 MainLoop m = new MainLoop(new MyGraph(20));
 		/*m.graph.wypisz();
 		System.out.println("Stara generacja: "+Arrays.toString(m.generation.toArray()));
 		m.reproduction();
