@@ -26,6 +26,7 @@ import org.jgrapht.graph.WeightedMultigraph;
 public class Hamilton {
 	 private static SimpleWeightedGraph<Integer, DefaultWeightedEdge> g = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(
 			   DefaultWeightedEdge.class);
+	 private static int [][] tab;
 		
 			 public void addVertex(Integer vertices) {
 			  g.addVertex(vertices);
@@ -45,7 +46,7 @@ public class Hamilton {
 			 public List<Integer> execute() {
 				 Set<Integer> vertices = g.vertexSet();
 //				  addVertex(0);
-				  System.out.println(vertices);
+				//  System.out.println(vertices);
 //				  for (int v : vertices) {
 //				   if (v == 0)
 //				    continue;
@@ -54,6 +55,21 @@ public class Hamilton {
 //				  }
 				  List<Integer> output = HamiltonianCycle.getApproximateOptimalForCompleteGraph(g);
 //				  output.remove(Long.valueOf(0l));
+				  
+//				  write output to file
+				  Writer writer = null;
+				  try {
+					writer = new FileWriter("output.txt");
+					for(int i=0;i<output.size();i++){
+						writer.append(output.get(i).toString());
+						writer.append(" ");
+					}
+					writer.append("\n");
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				  			  
 				  return output;
 			 }
 			 public void export(SimpleWeightedGraph<Integer, DefaultWeightedEdge> g, String path){
@@ -61,19 +77,26 @@ public class Hamilton {
 //				 MatrixExporter<int, DefaultWeightedEdge> exporter = new MatrixExporter<>();
 				 try {
 					writer = new FileWriter(path);
-					for(int x : g.vertexSet()){
-						for(int y : g.vertexSet()){
-							if(x == y)
-								writer.append("0");
-							else
-								writer.append(Integer.toString((int)(g.getEdgeWeight(g.getEdge(x, y)))));
+//					for(int x : g.vertexSet()){
+//						for(int y : g.vertexSet()){
+//							if(x == y)
+//								writer.append("0");
+//							else
+//								writer.append(Integer.toString((int)(g.getEdgeWeight(g.getEdge(x, y)))));
+//							writer.append(" ");
+//						}
+//						
+//						writer.append("\n");
+//					}
+					
+					for(int i=0;i<tab.length;i++){
+						for(int j=0;j<tab.length;j++){
+							writer.append(Integer.toString(tab[i][j]));
 							writer.append(" ");
 						}
-						
 						writer.append("\n");
 					}
-					
-					
+				
 					writer.close();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -112,13 +135,19 @@ public class Hamilton {
 					h.addVertex(vertices);
 	
 					for(x=0;x<matrix.size();x++){
-						for(y=x+1;y<matrix.get(x).size();y++){
-							h.addEdge(x, y, matrix.get(x).get(y));
-							
-						}
+						for(y=x+1;y<matrix.get(x).size();y++)
+							h.addEdge(x, y, matrix.get(x).get(y));												
 					}
-
 					reader.close();
+					
+					/* Tworzenie reprezentacji macierzowej */
+					tab = new int[matrix.size()][matrix.size()];
+					for(int i=0;i<tab.length; i++){
+						for(int j=0;j<tab[i].length;j++)
+							tab[i][j] = matrix.get(i).get(j);
+					}
+					
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -143,9 +172,8 @@ public class Hamilton {
 
 
 		 Hamilton h = new Hamilton();
-		 importFromFile("output.txt");
+		 importFromFile("input.txt");
 		 List<Integer> output = h.execute();
-		  System.out.println(g);
 		 System.out.println("Cykl hamiltona:" + output);
 	}
 }	
