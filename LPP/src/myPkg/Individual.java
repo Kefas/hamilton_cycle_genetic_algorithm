@@ -11,7 +11,10 @@ import sun.security.util.Length;
 public class Individual {
 	int codedRoute[];
 	int nodesAmount;
-	double mutProbabMod; //mutation probability modifier
+	
+	double mutProbabMod1 = 1;//mutation probability modifier from [0.5; 1.5]
+	double mutProbabMod2 = 1;
+	double mutProbabMod3 = 1;
 	MyGraph graph;
 	Random random = new Random();
 	
@@ -21,7 +24,7 @@ public class Individual {
 	Individual(MyGraph graph, int size, int mutProbabMod){
 		this.graph = graph;
 		nodesAmount = size;
-		this.mutProbabMod = mutProbabMod;
+		this.mutProbabMod1 = mutProbabMod;
 		codedRoute = new int[size];
 		for(int i=0; i<size; i++){
 			codedRoute[i] = random.nextInt(size - i );
@@ -55,13 +58,26 @@ public class Individual {
 		return lengthSubSum;
 	}
 	
-	void crossing(Individual other){
+	void crossing1(Individual other){
+		int cut = random.nextInt(this.nodesAmount);
+		//cut specifies position AFTER which there'll be cut
+		int [] newCodedRoute1 = new int[nodesAmount];
+		int [] newCodedRoute2 = new int[nodesAmount];
+		for(int i=0; i<nodesAmount; i++){
+			if(i<=cut){
+				newCodedRoute1[i] = this.codedRoute[i];
+				newCodedRoute2[i] = other.codedRoute[i];
+			}else{
+				newCodedRoute1[i] = other.codedRoute[i];
+				newCodedRoute2[i] = this.codedRoute[i];
+			}
+		}	
+	}
+	void crossing2(Individual other){
 		int firstCut = random.nextInt(this.nodesAmount);
 		//firstCut specifies position BEFORE which there'll be cut
 		//secondCut specifies position AFTER which there'll be cut
 		int secondCut = random.nextInt(this.nodesAmount - firstCut) + firstCut;
-		Individual newIndividual1 = new Individual(graph,nodesAmount,1);
-		Individual newIndividual2 = new Individual(graph,nodesAmount,1);
 		int [] newCodedRoute1 = new int[nodesAmount];
 		int [] newCodedRoute2 = new int[nodesAmount];
 		for(int i=0; i<nodesAmount; i++){
@@ -86,11 +102,12 @@ public class Individual {
 	 */
 	void mutation1(){
 		double basicProbability = 1./nodesAmount;
+		double probabilityOfMut = basicProbability * mutProbabMod1;
 		double tmpToTest;
 		for(int i=0; i<nodesAmount; i++){
-			if((tmpToTest = random.nextDouble()) <= basicProbability){
+			if((tmpToTest = random.nextDouble()) <= probabilityOfMut){
 				for(int j=0; j<nodesAmount; j++)
-					if((tmpToTest = random.nextDouble()) <= basicProbability){
+					if((tmpToTest = random.nextDouble()) <= probabilityOfMut){
 						this.swapElements(i, j);
 						//System.out.println("Swap: '"+i+"' and '"+j+"'");
 					}
@@ -167,7 +184,7 @@ public class Individual {
 		}
 		System.out.println("\n"+nowy);
 		System.out.println(nowy2);
-		nowy.crossing(nowy2);
+		nowy.crossing2(nowy2);
 		System.out.println("\n"+nowy);
 		System.out.println(nowy2);
 		
