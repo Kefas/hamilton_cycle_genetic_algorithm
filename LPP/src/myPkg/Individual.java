@@ -12,19 +12,18 @@ public class Individual {
 	int codedRoute[];
 	int nodesAmount;
 	
-	double mutProbabMod1 = 1;//mutation probability modifier from [0.5; 1.5]
-	double mutProbabMod2 = 1;
-	double mutProbabMod3 = 1;
+	ParamsOfIndividual indParams;
+	//double mutProbabMod = 1;//mutation probability modifier from [0.5; 1.5]
 	MyGraph graph;
 	static Random random = new Random();
 	
-	public Individual(MyGraph graph){
-		this(graph, graph.getNodesAmount(),1);
+	public Individual(MyGraph graph, ParamsOfIndividual params){
+		this(graph, graph.getNodesAmount(),params);
 	}
-	Individual(MyGraph graph, int size, int mutProbabMod){
+	Individual(MyGraph graph, int size, ParamsOfIndividual params){
 		this.graph = graph;
 		nodesAmount = size;
-		this.mutProbabMod1 = mutProbabMod;
+		this.indParams = params;
 		codedRoute = new int[size];
 		for(int i=0; i<size; i++){
 			codedRoute[i] = random.nextInt(size - i );
@@ -34,7 +33,7 @@ public class Individual {
 	
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		Individual newOne = new Individual(graph);
+		Individual newOne = new Individual(graph, indParams);
 		newOne.codedRoute = this.codedRoute.clone();
 		return newOne;
 	}
@@ -113,7 +112,7 @@ public class Individual {
 	 */
 	void mutation1(){
 		double basicProbability = 1./nodesAmount;
-		double probabilityOfMut = basicProbability * mutProbabMod1;
+		double probabilityOfMut = basicProbability * indParams.getMutProbabMod();
 		double tmpToTest;
 		for(int i=0; i<nodesAmount; i++){
 			if((tmpToTest = random.nextDouble()) <= probabilityOfMut){
@@ -144,14 +143,19 @@ public class Individual {
 			newCodedRoute[i] = auxiliaryList.indexOf(decodedRoute[i]);
 			auxiliaryList.remove(newCodedRoute[i]);
 		}
-		Individual nowy = new Individual(graph);
+		Individual nowy = new Individual(graph, indParams);
 		this.codedRoute = newCodedRoute;
 	}
 	
+	/**
+	 * this mutation increments or decrements value of random element(s) in codedRoute
+	 */
 	void mutation2(){
 		double basicProbability = 1./nodesAmount;
+		double probabilityOfMut = basicProbability * indParams.getMutProbabMod();
+		
 		for(int i=0; i<nodesAmount-1; i++){
-			if(random.nextDouble()<= basicProbability){
+			if(random.nextDouble()<= probabilityOfMut){
 				//System.out.println("Mutation at "+i+" th position");
 				if(this.codedRoute[i] < nodesAmount-1 -i){
 					if(this.codedRoute[i] > 0){
@@ -165,10 +169,15 @@ public class Individual {
 		
 	}
 	
+	/**
+	 * this mutation changes randomly value of random element(s) in codedRoute
+	 */
 	void mutation3(){
 		double basicProbability = 1./nodesAmount;
+		double probabilityOfMut = basicProbability * indParams.getMutProbabMod();
+		
 		for(int i=0; i<nodesAmount-1; i++){
-			if(random.nextDouble()<= basicProbability){
+			if(random.nextDouble()<= probabilityOfMut){
 				//System.out.println("Mutation at "+i+" th position");
 				codedRoute[i] = random.nextInt(nodesAmount-i);
 			}
@@ -188,8 +197,8 @@ public class Individual {
 	
 	public static void main(String [] args){
 		MyGraph graph = new MyGraph(5);
-		Individual nowy = new Individual(graph,5,1);
-		Individual nowy2 = new Individual(graph,5,1);
+		Individual nowy = new Individual(graph,new ParamsOfIndividual());
+		Individual nowy2 = new Individual(graph,new ParamsOfIndividual());
 		int tab[]=nowy.getRoute();
 		for (int i : tab) {
 			System.out.print(i+" ");

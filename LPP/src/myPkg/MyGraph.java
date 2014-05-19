@@ -65,7 +65,7 @@ public class MyGraph {
 	public static void main(String [] args){
 		MyGraph nowy = new MyGraph(5);
 		nowy.wypisz();
-		Individual osobnik = new Individual(nowy);
+		Individual osobnik = new Individual(nowy, new ParamsOfIndividual());
 		System.out.println(osobnik + "\n" + osobnik.getRouteLength());
 		
 	}

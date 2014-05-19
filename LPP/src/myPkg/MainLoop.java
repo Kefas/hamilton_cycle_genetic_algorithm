@@ -21,11 +21,14 @@ import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import edu.uci.ics.jung.algorithms.generators.EvolvingGraphGenerator;
+
 public class MainLoop{
 	Random random = new Random();
 	int sizeOfPopulation;
 	int iterationCounter = 0;
-	int iterationsLimit = 6000;
+	int iterationsLimit = 1000;
+	ParametersOfEvolution evolParams;
 	MyGraph graph;
 	ArrayList<Individual> generation = new ArrayList<>();
 	 private static XYPlot plot;
@@ -33,12 +36,14 @@ public class MainLoop{
 	 private static int datasetIndex = 0;
 	 private static List<XYSeriesCollection> seriesArrayList = new ArrayList<XYSeriesCollection>();
 	 
-	public MainLoop(MyGraph graph) {
+	public MainLoop(MyGraph graph, ParametersOfEvolution params) {
 		this.graph = graph;
-		sizeOfPopulation = graph.getSize()/2;
+		this.evolParams = params;
+		sizeOfPopulation = (int) ( graph.getSize()* params.getSizeOfPopulation());
+		iterationsLimit = evolParams.numberOfIterations;
 		
 		for(int i=0; i<sizeOfPopulation; i++){
-			generation.add(new Individual(graph));
+			generation.add(new Individual(graph, params.getIndividualParams()));
 		}
 	}
 	
@@ -46,24 +51,14 @@ public class MainLoop{
 	void start(){
 		AdaptionValues appraisal = null;
 			while( continueOrNot() ){
-				/*System.out.println("Przed reprodukcj¹");
-				for(Individual x: generation){
-					System.out.println("  "+x.getRouteLength());
-				}*/
+				
 				reproduction();
-				performCrossing();
-				/*System.out.println("Przed mutacj¹");				
-				for(Individual x: generation){
-					System.out.println("  "+x.getRouteLength());
-				}*/
-				performMutation(3);
+				performCrossing(evolParams.getMethodOfCrossing());
+				
+				performMutation(evolParams.getMethodOfMutation());
 				appraisal = assessPopulation();
 				updateChart(appraisal);
-				/*System.out.println("Po mutacji");				
-				for(Individual x: generation){
-					System.out.println("  "+x.getRouteLength());
-				}
-				System.out.println(appraisal+"\n#################################");*/
+				
 				iterationCounter++;			
 			}	
 			
@@ -155,7 +150,7 @@ public class MainLoop{
 		}
 		generation = newGen;
 	}
-	void performCrossing(){
+	void performCrossing(int typeOfCrossing){
 		Individual ind1, ind2;
 		ArrayList<Individual> newGeneration = new ArrayList<Individual>();
 		int tmp;
@@ -164,7 +159,14 @@ public class MainLoop{
 			generation.remove(0);
 			ind2 = generation.get( tmp = random.nextInt(generation.size()) );
 			generation.remove(tmp);
-			ind1.crossing1(ind2);
+			switch(typeOfCrossing){
+				case 1: 
+					ind1.crossing1(ind2);
+					break;
+				case 2:
+					ind1.crossing2(ind2);
+					break;
+			}
 			newGeneration.add(ind1);
 			newGeneration.add(ind2);
 		}
@@ -250,7 +252,8 @@ public class MainLoop{
 	        createAdditionalDataset();
 	        
 	        
-		 MainLoop m = new MainLoop(new MyGraph(100));
+		 MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution());
+		 
 		/*m.graph.wypisz();
 		System.out.println("Stara generacja: "+Arrays.toString(m.generation.toArray()));
 		m.reproduction();
