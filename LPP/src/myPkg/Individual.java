@@ -16,7 +16,7 @@ public class Individual {
 	double mutProbabMod2 = 1;
 	double mutProbabMod3 = 1;
 	MyGraph graph;
-	Random random = new Random();
+	static Random random = new Random();
 	
 	public Individual(MyGraph graph){
 		this(graph, graph.getNodesAmount(),1);
@@ -30,6 +30,15 @@ public class Individual {
 			codedRoute[i] = random.nextInt(size - i );
 		}	
 	}
+	
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		Individual newOne = new Individual(graph);
+		newOne.codedRoute = this.codedRoute.clone();
+		return newOne;
+	}
+	
 	int [] getRoute(){
 		ArrayList<Integer> auxiliaryList = new ArrayList<Integer>();
 		for(int i=0; i<nodesAmount; i++){
@@ -72,6 +81,8 @@ public class Individual {
 				newCodedRoute2[i] = this.codedRoute[i];
 			}
 		}	
+		this.codedRoute = newCodedRoute1;
+		other.codedRoute = newCodedRoute2;
 	}
 	void crossing2(Individual other){
 		int firstCut = random.nextInt(this.nodesAmount);
@@ -89,7 +100,7 @@ public class Individual {
 				newCodedRoute2[i] = this.codedRoute[i];
 			}
 		}
-		System.out.println("FirstCut: "+firstCut+" Second Cut: "+secondCut+"\n");
+	//	System.out.println("FirstCut: "+firstCut+" Second Cut: "+secondCut+"\n");
 		
 		this.codedRoute = newCodedRoute1;
 		other.codedRoute = newCodedRoute2;
@@ -109,7 +120,7 @@ public class Individual {
 				for(int j=0; j<nodesAmount; j++)
 					if((tmpToTest = random.nextDouble()) <= probabilityOfMut){
 						this.swapElements(i, j);
-						//System.out.println("Swap: '"+i+"' and '"+j+"'");
+					//	System.out.println("Swap: '"+i+"' and '"+j+"'");
 					}
 			}	
 		}
@@ -133,6 +144,7 @@ public class Individual {
 			newCodedRoute[i] = auxiliaryList.indexOf(decodedRoute[i]);
 			auxiliaryList.remove(newCodedRoute[i]);
 		}
+		Individual nowy = new Individual(graph);
 		this.codedRoute = newCodedRoute;
 	}
 	
@@ -140,7 +152,7 @@ public class Individual {
 		double basicProbability = 1./nodesAmount;
 		for(int i=0; i<nodesAmount-1; i++){
 			if(random.nextDouble()<= basicProbability){
-				System.out.println("Mutation at "+i+" th position");
+				//System.out.println("Mutation at "+i+" th position");
 				if(this.codedRoute[i] < nodesAmount-1 -i){
 					if(this.codedRoute[i] > 0){
 						codedRoute[i] += (random.nextBoolean())? -1 : 1;
@@ -157,7 +169,7 @@ public class Individual {
 		double basicProbability = 1./nodesAmount;
 		for(int i=0; i<nodesAmount-1; i++){
 			if(random.nextDouble()<= basicProbability){
-				System.out.println("Mutation at "+i+" th position");
+				//System.out.println("Mutation at "+i+" th position");
 				codedRoute[i] = random.nextInt(nodesAmount-i);
 			}
 		}

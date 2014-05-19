@@ -25,7 +25,7 @@ public class MainLoop{
 	Random random = new Random();
 	int sizeOfPopulation;
 	int iterationCounter = 0;
-	int iterationsLimit = 100;
+	int iterationsLimit = 6000;
 	MyGraph graph;
 	ArrayList<Individual> generation = new ArrayList<>();
 	 private static XYPlot plot;
@@ -44,16 +44,28 @@ public class MainLoop{
 	
 
 	void start(){
-		AdaptionValues generation = null;
+		AdaptionValues appraisal = null;
 			while( continueOrNot() ){
+				/*System.out.println("Przed reprodukcj¹");
+				for(Individual x: generation){
+					System.out.println("  "+x.getRouteLength());
+				}*/
 				reproduction();
 				performCrossing();
-				performMutation(1);
-				generation = assessPopulation();
-				updateChart(generation);
-				System.out.println(generation+"\n#################################");
+				/*System.out.println("Przed mutacj¹");				
+				for(Individual x: generation){
+					System.out.println("  "+x.getRouteLength());
+				}*/
+				performMutation(3);
+				appraisal = assessPopulation();
+				updateChart(appraisal);
+				/*System.out.println("Po mutacji");				
+				for(Individual x: generation){
+					System.out.println("  "+x.getRouteLength());
+				}
+				System.out.println(appraisal+"\n#################################");*/
 				iterationCounter++;			
-			}
+			}	
 			
 	}
 	private void updateChart(AdaptionValues generation2) {
@@ -134,7 +146,12 @@ public class MainLoop{
 			while(genVal>tabOfProbablity[k]){
 				k++;
 			}
-			newGen.add(generation.get(k));
+			try {
+				newGen.add( (Individual) generation.get(k).clone() );
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		generation = newGen;
 	}
@@ -147,6 +164,7 @@ public class MainLoop{
 			generation.remove(0);
 			ind2 = generation.get( tmp = random.nextInt(generation.size()) );
 			generation.remove(tmp);
+			ind1.crossing1(ind2);
 			newGeneration.add(ind1);
 			newGeneration.add(ind2);
 		}
@@ -155,6 +173,10 @@ public class MainLoop{
 	void performMutation(int type){
 		switch(type){
 		case 1:
+			/*for(int i=0; i<generation.size(); i++){
+				generation.get(i).mutation1();
+			}
+			break;*/
 			for(Individual x: generation){
 				x.mutation1();
 			}
@@ -228,7 +250,7 @@ public class MainLoop{
 	        createAdditionalDataset();
 	        
 	        
-		 MainLoop m = new MainLoop(new MyGraph(20));
+		 MainLoop m = new MainLoop(new MyGraph(100));
 		/*m.graph.wypisz();
 		System.out.println("Stara generacja: "+Arrays.toString(m.generation.toArray()));
 		m.reproduction();
