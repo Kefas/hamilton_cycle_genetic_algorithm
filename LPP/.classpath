@@ -14,8 +14,8 @@
 	<classpathentry kind="lib" path="jars/jung-io-2.0.1.jar"/>
 	<classpathentry kind="lib" path="jars/jung-jai-2.0.1.jar"/>
 	<classpathentry kind="lib" path="jars/jung-jai-samples-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Krzysiek P/git/longest_path_problem/LPP/jars/jgrapht-jdk1.6-0.8.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Krzysiek P/git/longest_path_problem/LPP/jars/jcommon-1.0.21.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Krzysiek P/git/longest_path_problem/LPP/jars/jfreechart-1.0.17.jar"/>
+	<classpathentry kind="lib" path="jars/jgrapht-jdk1.6-0.8.1.jar"/>
+	<classpathentry kind="lib" path="jars/jcommon-1.0.21.jar"/>
+	<classpathentry kind="lib" path="jars/jfreechart-1.0.17.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
