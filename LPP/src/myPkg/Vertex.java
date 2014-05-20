@@ -9,6 +9,7 @@ public class Vertex {
 		this.id = id;		
 		tabOfNeigh = values.clone();		
 	}
+	
 	public Vertex(int id, int noOfAllVertexes){
 		numberOfAllVertexes = noOfAllVertexes;
 		this.id = id;
@@ -26,5 +27,8 @@ public class Vertex {
 	}
 	public int[] getTabOfNeigh(){
 		return tabOfNeigh;
+	}
+	public void setTabOfNeigh(int[] tabOfNeigh) {
+		this.tabOfNeigh = tabOfNeigh;
 	}
 }

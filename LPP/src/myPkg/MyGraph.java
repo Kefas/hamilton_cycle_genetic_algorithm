@@ -3,6 +3,8 @@ package myPkg;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.sound.midi.SysexMessage;
+
 public class MyGraph {
 	private final int maxDistance = 1000;
 	Vertex tableOfVertexes[];
@@ -11,6 +13,10 @@ public class MyGraph {
 	
 	int tmpDistance = 0, tmpMinSumDistance = Integer.MAX_VALUE;
 	
+	/**
+	 * Generates indirected graph of specified size
+	 * @param size
+	 */
 	public MyGraph(int size){
 		tableOfVertexes = new Vertex[size];
 		/*
@@ -45,7 +51,22 @@ public class MyGraph {
 		}			
 	}
 	
-	
+	public MyGraph(String path){
+		int [][] matrix = ExportImport.importFromFile(path);
+		int size = matrix.length;
+		tableOfVertexes = new Vertex[size];
+		for(int i=0; i<size; i++){
+			tableOfVertexes[i] = new Vertex(i, size);
+			tableOfVertexes[i].setTabOfNeigh(matrix[i]);
+		}		
+	}
+	public void exportToFile(String path){
+		int [][]matrix = new int[tableOfVertexes.length][tableOfVertexes.length];
+		for(int i=0; i<tableOfVertexes.length; i++)
+			for(int j=0; j<tableOfVertexes.length; j++)
+				matrix[i][j] = tableOfVertexes[i].getDistanceToNeigbour(j);
+		ExportImport.exportToFile(matrix, path);
+	}
 
 	public void wypisz() {
 		
@@ -65,8 +86,12 @@ public class MyGraph {
 	public static void main(String [] args){
 		MyGraph nowy = new MyGraph(5);
 		nowy.wypisz();
-		Individual osobnik = new Individual(nowy, new ParamsOfIndividual());
-		System.out.println(osobnik + "\n" + osobnik.getRouteLength());
+		nowy.exportToFile("nowyGraf5.csv");
+		MyGraph nowy2 = new MyGraph("nowyGraf5.csv");
+		System.out.println("");
+		nowy2.wypisz();
+		//Individual osobnik = new Individual(nowy, new ParamsOfIndividual());
+		//System.out.println(osobnik + "\n" + osobnik.getRouteLength());
 		
 	}
 	int getSize(){

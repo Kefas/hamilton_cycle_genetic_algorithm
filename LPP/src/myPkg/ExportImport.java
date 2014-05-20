@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class ExportImport {
 
-	public int exportToFile(int [][] matrix, String path){
+	public static int exportToFile(int [][] matrix, String path){
 		Writer writer = null;
 		try {
 			writer = new FileWriter(new File(path));
@@ -32,7 +32,7 @@ public class ExportImport {
 		return 1;
 	}
 	
-	public int[][] importFromFile(String path){
+	public static int[][] importFromFile(String path){
 		Scanner scanner;
 		Scanner liner;
 		List<List<Integer> > list = new ArrayList<>();
