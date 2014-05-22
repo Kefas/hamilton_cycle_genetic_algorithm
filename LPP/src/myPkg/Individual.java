@@ -119,8 +119,8 @@ public class Individual implements Comparable<Individual> {
 		if( random.nextDouble() > probabilityOfMutForInd)
 			return;
 		numberOfMutations++;
-		if(numberOfMutations > 1000)
-			System.out.println("Hej");
+		/*if(numberOfMutations > 1000)
+			System.out.println("Hej");*/
 		double tmpToTest;
 		for(int i=0; i<nodesAmount; i++){
 			if((tmpToTest = random.nextDouble()) <= probabilityOfMutForGene){

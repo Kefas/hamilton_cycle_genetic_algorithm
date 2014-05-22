@@ -212,17 +212,9 @@ public class MainLoop {
 				newGeneration.add(generation.get(0));
 				generation.remove(0);
 		}
-		/*for(int i=generation.size()/2; i>0; i--){
-			try {
-				newGeneration.add((Individual) generation.get(0).clone());
-			} catch (CloneNotSupportedException e) {
-				System.out.println("Sth in crossing must be utterly wrong!");
-			}
-			generation.remove(0);			
-		}*/
 		//and now we need to cross those individuals from that better half of population 
 		// both - parents and their children go into new Generation
-		generation = (ArrayList<Individual>)newGeneration.clone();
+		generation = (ArrayList<Individual>) newGeneration.clone();
 		int tmp;
 		for (int i = generation.size() / 2; i > 0 ; i--) {
 			ind1 = generation.get(0);
