@@ -8,10 +8,10 @@ import javax.media.j3d.Leaf;
 
 import sun.security.util.Length;
 
-public class Individual {
+public class Individual implements Comparable<Individual> {
 	int codedRoute[];
 	int nodesAmount;
-	
+	static int numberOfMutations = 0;
 	ParamsOfIndividual indParams;
 	//double mutProbabMod = 1;//mutation probability modifier from [0.5; 1.5]
 	MyGraph graph;
@@ -111,13 +111,21 @@ public class Individual {
 	 * @return
 	 */
 	void mutation1(){
-		double basicProbability = 1./nodesAmount;
-		double probabilityOfMut = basicProbability * indParams.getMutProbabMod();
+		//double basicProbability = 1./nodesAmount;
+		double probabilityOfMutForInd = 0.01* indParams.getMutProbabMod(); //modifier from [0.5; 1.5], one percent of pupulation mutates on average
+		double probabilityOfMutForGene =  1./nodesAmount; // if individual mutates - an average there is only one mutation
+		
+		//whether this individual mutates or not:
+		if( random.nextDouble() > probabilityOfMutForInd)
+			return;
+		numberOfMutations++;
+		if(numberOfMutations > 1000)
+			System.out.println("Hej");
 		double tmpToTest;
 		for(int i=0; i<nodesAmount; i++){
-			if((tmpToTest = random.nextDouble()) <= probabilityOfMut){
+			if((tmpToTest = random.nextDouble()) <= probabilityOfMutForGene){
 				for(int j=0; j<nodesAmount; j++)
-					if((tmpToTest = random.nextDouble()) <= probabilityOfMut){
+					if((tmpToTest = random.nextDouble()) <= probabilityOfMutForGene){
 						this.swapElements(i, j);
 					//	System.out.println("Swap: '"+i+"' and '"+j+"'");
 					}
@@ -151,11 +159,17 @@ public class Individual {
 	 * this mutation increments or decrements value of random element(s) in codedRoute
 	 */
 	void mutation2(){
-		double basicProbability = 1./nodesAmount;
-		double probabilityOfMut = basicProbability * indParams.getMutProbabMod();
+		//double basicProbability = 1./nodesAmount;
+		//double probabilityOfMut = basicProbability * indParams.getMutProbabMod();
 		
+		double probabilityOfMutForInd = 0.01* indParams.getMutProbabMod(); //modifier from [0.5; 1.5], one percent of pupulation mutates on average
+		double probabilityOfMutForGene =  1./nodesAmount; // if individual mutates - an average there is only one mutation
+		
+		//whether this individual mutates or not:
+		if( random.nextDouble() > probabilityOfMutForInd)
+			return;		
 		for(int i=0; i<nodesAmount-1; i++){
-			if(random.nextDouble()<= probabilityOfMut){
+			if(random.nextDouble()<= probabilityOfMutForGene){
 				//System.out.println("Mutation at "+i+" th position");
 				if(this.codedRoute[i] < nodesAmount-1 -i){
 					if(this.codedRoute[i] > 0){
@@ -173,11 +187,17 @@ public class Individual {
 	 * this mutation changes randomly value of random element(s) in codedRoute
 	 */
 	void mutation3(){
-		double basicProbability = 1./nodesAmount;
-		double probabilityOfMut = basicProbability * indParams.getMutProbabMod();
+		//double basicProbability = 1./nodesAmount;
+		//double probabilityOfMutForGene = basicProbability * indParams.getMutProbabMod();
 		
+		double probabilityOfMutForInd = 0.01* indParams.getMutProbabMod(); //modifier from [0.5; 1.5], one percent of pupulation mutates on average
+		double probabilityOfMutForGene =  1./nodesAmount; // if individual mutates - an average there is only one mutation
+		
+		//whether this individual mutates or not:
+		if( random.nextDouble() > probabilityOfMutForInd)
+			return;		
 		for(int i=0; i<nodesAmount-1; i++){
-			if(random.nextDouble()<= probabilityOfMut){
+			if(random.nextDouble()<= probabilityOfMutForGene){
 				//System.out.println("Mutation at "+i+" th position");
 				codedRoute[i] = random.nextInt(nodesAmount-i);
 			}
@@ -214,6 +234,10 @@ public class Individual {
 		//System.out.println(nowy);
 		/*System.out.println(nowy2);
 		System.out.println(nowy.crossing(nowy2));*/
+	}
+	@Override
+	public int compareTo(Individual o) {
+		return (new Long( this.getRouteLength() ) ).compareTo(new Long(o.getRouteLength()));
 	}
 	
 	

@@ -29,6 +29,8 @@ public class MainLoop {
 	int iterationCounter = 0;
 	int iterationsLimit = 1000;
 	ParametersOfEvolution evolParams;
+	AdaptionValues appraisal = null;
+	
 	MyGraph graph;
 	ArrayList<Individual> generation = new ArrayList<>();
 	private static XYPlot plot;
@@ -39,8 +41,7 @@ public class MainLoop {
 	public MainLoop(MyGraph graph, ParametersOfEvolution params) {
 		this.graph = graph;
 		this.evolParams = params;
-		sizeOfPopulation = (int) (graph.getSize() * params
-				.getSizeOfPopulation());
+		sizeOfPopulation = (int) (graph.getSize() * params.getSizeOfPopulation());
 		iterationsLimit = evolParams.numberOfIterations;
 
 		for (int i = 0; i < sizeOfPopulation; i++) {
@@ -49,11 +50,10 @@ public class MainLoop {
 	}
 
 	void start() {
-		AdaptionValues appraisal = null;
-		while (continueOrNot()) {
+		while ( continueOrNot(evolParams.methodToFinish) ) {
 
 			reproduction();
-			performCrossing(evolParams.getMethodOfCrossing());
+			performCrossing(evolParams.getMethodOfBreeding(), evolParams.getMethodOfCrossing());
 
 			performMutation(evolParams.getMethodOfMutation());
 			appraisal = assessPopulation();
@@ -103,13 +103,23 @@ public class MainLoop {
 		return toReturn;
 	}
 
-	boolean continueOrNot() {
+	boolean continueOrNot(int methodOfFinishing) {
 		boolean condition = true;
 
-		if (iterationCounter > iterationsLimit)
-			condition = false;
-
-		return condition;
+		switch(methodOfFinishing){
+		case 1:
+			if (iterationCounter > iterationsLimit)
+				condition = false;
+			return condition;
+		case 2:
+			//domyœlne podobieñstwo do ukoñczenia jest ustawione na 98%
+			if( evolParams.getCorrectResult() / ((double)appraisal.best) < evolParams.getSimiliarityInTest())
+				condition = false;
+			return condition;
+		default: 
+			return condition;
+		}
+		
 	}
 
 	void reproduction() {
@@ -157,7 +167,19 @@ public class MainLoop {
 		generation = newGen;
 	}
 
-	void performCrossing(int typeOfCrossing) {
+	void performCrossing(int typeOfBreeding, int typeOfCrossing) {
+		switch(typeOfBreeding){
+		case 1:
+			selectiveBreedingCrossing(typeOfCrossing);
+			break;
+		case 2:
+			wholePopulationBreedingCrossing(typeOfCrossing);
+			break;
+		default:
+				System.out.println("Wrong arg of preformCrossing");
+		}
+	}
+	void wholePopulationBreedingCrossing(int typeOfCrossing){
 		Individual ind1, ind2;
 		ArrayList<Individual> newGeneration = new ArrayList<Individual>();
 		int tmp;
@@ -177,6 +199,53 @@ public class MainLoop {
 			newGeneration.add(ind1);
 			newGeneration.add(ind2);
 		}
+		generation = newGeneration;
+	}
+	
+	void selectiveBreedingCrossing(int typeOfCrossing){
+		Individual ind1, ind2;
+		ArrayList<Individual> newGeneration = new ArrayList<Individual>();
+		
+		//before reproduction we reduce the population removing the worse half of it
+		Collections.sort(generation);
+		for(int i=generation.size()/2; i>0; i--){
+				newGeneration.add(generation.get(0));
+				generation.remove(0);
+		}
+		/*for(int i=generation.size()/2; i>0; i--){
+			try {
+				newGeneration.add((Individual) generation.get(0).clone());
+			} catch (CloneNotSupportedException e) {
+				System.out.println("Sth in crossing must be utterly wrong!");
+			}
+			generation.remove(0);			
+		}*/
+		//and now we need to cross those individuals from that better half of population 
+		// both - parents and their children go into new Generation
+		generation = (ArrayList<Individual>)newGeneration.clone();
+		int tmp;
+		for (int i = generation.size() / 2; i > 0 ; i--) {
+			ind1 = generation.get(0);
+			generation.remove(0);
+			ind2 = generation.get(tmp = random.nextInt(generation.size()));
+			generation.remove(tmp);
+			//tu po wybraniu pary - robimy krzy¿owanie i te parê tak czy siak wklepujemy do nowej populacji
+			switch (typeOfCrossing) {
+			case 1:
+				ind1.crossing1(ind2);
+				break;
+			case 2:
+				ind1.crossing2(ind2);
+				break;
+			}
+			newGeneration.add(ind1);
+			newGeneration.add(ind2);
+		}
+		if( generation.size() > 0)
+			newGeneration.add(generation.get(0));
+		if(generation.size() > 1)
+			System.out.println("Error in performing crossing in interation: "+ iterationCounter+" size: "+generation.size());
+		
 		generation = newGeneration;
 	}
 
