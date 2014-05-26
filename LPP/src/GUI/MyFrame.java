@@ -1,7 +1,9 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import myPkg.MyGraph;
@@ -34,12 +37,15 @@ public class MyFrame extends JFrame implements ActionListener {
 	static MyGraph main;
 	JMenuBar menuBar;
 	JMenu op1, op2, op3;
-	JMenuItem genGraph, about, finish;
+	JMenuItem drawGraph, genGraph, about, finish;
 	JDesktopPane desktop;
 	private GenFrame ramka;
+	private DrawPanel drawPanel;
 	private static Graph g;
+
 	public MyFrame(){
 		//main = new MyGraph2();
+	
 		
 		menuBar = new JMenuBar();
 		op1 = new JMenu("Opcja1");
@@ -47,13 +53,15 @@ public class MyFrame extends JFrame implements ActionListener {
 		op3 = new JMenu("Pomoc");
 		
 		genGraph = new JMenuItem("Generuj graf");
+		drawGraph = new JMenuItem("Rysuj graf");
 		about = new JMenuItem("O programie");
-		finish = new JMenuItem("Zakoï¿½cz");
+		finish = new JMenuItem("Zakoñcz");
 		
 		setJMenuBar(menuBar);
 		menuBar.add(op1);
 		menuBar.add(op2);
 		menuBar.add(op3);
+		op1.add(drawGraph);
 		op1.add(genGraph);
 		op1.addSeparator();
 		op1.add(finish);
@@ -61,11 +69,14 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		finish.addActionListener(this);
 		genGraph.addActionListener(this);
+		drawGraph.addActionListener(this);
 		
+	
 	}
 	
 	public static void main(String[] args) {
 		frame = new MyFrame();
+		
 		frame.setBackground(Color.gray);
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -87,6 +98,17 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		if(source == finish)
 			dispose();
+		
+		if(source == drawGraph){
+			if(drawPanel != null)
+				this.remove(drawPanel);
+			this.setLayout(new FlowLayout( FlowLayout.LEFT));
+			drawPanel = new DrawPanel((int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()*0.8), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()*0.8));
+			this.add(drawPanel);
+			revalidate();
+			repaint();
+		}
+	
 		if(source == genGraph){
 			ramka = new GenFrame();
 			frame.getContentPane().removeAll();
