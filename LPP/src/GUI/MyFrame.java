@@ -110,9 +110,16 @@ public class MyFrame extends JFrame implements ActionListener {
 		}
 	
 		if(source == genGraph){
-			ramka = new GenFrame();
-			frame.getContentPane().removeAll();
-			ramka.setVisible(true);
+//			ramka = new GenFrame();
+//			frame.getContentPane().removeAll();
+//			ramka.setVisible(true);
+			int tab[] = new int[5];
+			tab[0] = 0;
+			tab[1] = 1;
+			tab[2] = 2;
+			tab[3] = 3;
+			tab[4] = 4;
+			drawPanel.drawPath(tab);
 		}
 			
 	}
