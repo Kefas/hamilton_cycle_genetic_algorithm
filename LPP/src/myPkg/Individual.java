@@ -50,11 +50,11 @@ public class Individual implements Comparable<Individual> {
 		}
 		return routeTab;
 	}
-	long getRouteLength(){
-		int lengthSubSum = 0;
-		int routeTab[] = getRoute();
-		int previous = routeTab[routeTab.length-1];
-		int next = routeTab[0];
+	double getRouteLength(){
+		double lengthSubSum = 0;
+		int routeTab[] = getRoute(); //uncoded route
+		int previous = routeTab[routeTab.length-1]; //previous node 
+		int next = routeTab[0];						//next node
 		lengthSubSum += graph.getDistance(previous, next);
 
 		for(int i=1; i<nodesAmount; i++){
@@ -237,7 +237,7 @@ public class Individual implements Comparable<Individual> {
 	}
 	@Override
 	public int compareTo(Individual o) {
-		return (new Long( this.getRouteLength() ) ).compareTo(new Long(o.getRouteLength()));
+		return (new Double( this.getRouteLength() ) ).compareTo(new Double(o.getRouteLength()));
 	}
 	
 	

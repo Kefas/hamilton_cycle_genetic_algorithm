@@ -29,7 +29,7 @@ public class MainLoop {
 	int iterationCounter = 0;
 	int iterationsLimit = 1000;
 	ParametersOfEvolution evolParams;
-	AdaptionValues appraisal = null;
+	AdaptationValues appraisal = null;
 	
 	MyGraph graph;
 	ArrayList<Individual> generation = new ArrayList<>();
@@ -64,7 +64,7 @@ public class MainLoop {
 
 	}
 
-	private void updateChart(AdaptionValues generation2) {
+	private void updateChart(AdaptationValues generation2) {
 		getXYSeries(0).getSeries(0)
 				.add(iterationCounter, generation2.getBest());
 		getXYSeries(1).getSeries(0).add(iterationCounter,
@@ -85,17 +85,19 @@ public class MainLoop {
 	 * 
 	 * @return length of path
 	 */
-	AdaptionValues assessPopulation() {
-		AdaptionValues toReturn = new AdaptionValues();
-		ArrayList<Long> distances = new ArrayList<Long>();
+	AdaptationValues assessPopulation() {
+		AdaptationValues toReturn = new AdaptationValues();
+		ArrayList<Double> distances = new ArrayList<Double>();
 		for (Individual x : generation) {
 			distances.add(x.getRouteLength());
 		}
 
 		toReturn.setWorst(Collections.max(distances));
 		toReturn.setBest(Collections.min(distances));
+		int idOfBestInd = generation.indexOf(toReturn.getBest());
+		toReturn.setTheBestCycle(generation.get(idOfBestInd).getRoute());
 		long average = 0;
-		for (Long x : distances) {
+		for (Double x : distances) {
 			average += x;
 		}
 		average /= distances.size();
