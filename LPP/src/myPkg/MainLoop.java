@@ -94,7 +94,15 @@ public class MainLoop {
 
 		toReturn.setWorst(Collections.max(distances));
 		toReturn.setBest(Collections.min(distances));
-		int idOfBestInd = generation.indexOf(toReturn.getBest());
+		int idOfBestInd = 0;
+		for(Individual x: generation){
+			if(x.getRouteLength()==toReturn.getBest())
+				break;
+			idOfBestInd++;
+		}
+		if(idOfBestInd>generation.size()-1)
+			System.out.println("Error in assess population");
+		
 		toReturn.setTheBestCycle(generation.get(idOfBestInd).getRoute());
 		long average = 0;
 		for (Double x : distances) {
