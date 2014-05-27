@@ -1,33 +1,64 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 
 public class DrawPanel extends JPanel implements MouseListener {
 
 	List<Pair<Integer, Integer>> list;
 	int path[];
-
+	private JSlider population, iteration;
+	private JTextField pop, iter;
+	private JLabel title1, title2;
+	
+	
+	
 	public DrawPanel(int w, int h) {
-		// pressed = false;
-		this.setPreferredSize(new Dimension(w, h));
-		this.setBackground(Color.white);
-		list = new ArrayList<>();
-		addMouseListener(this);
+//				
+//		this.setPreferredSize(new Dimension(w, h));
+//		this.setBackground(Color.white);
+//		list = new ArrayList<>();
+//		addMouseListener(this);
 	}
 
+	public DrawPanel(){
+		
+		list = new ArrayList<>();
+		addMouseListener(this);
+		
+		JSplitPane splitPane = new JSplitPane();
+		splitPane.getLeftComponent().setBackground(Color.white);
+//		System.out.println("No hey");
+//		this.setLayout(new BorderLayout());
+//
+//		population = new JSlider(JSlider.HORIZONTAL, 100,5000,2500);
+//		population.setPreferredSize(new Dimension(getPreferredSize().width+250,getPreferredSize().height+250));
+//		population.setMajorTickSpacing(1000);
+//		population.setPaintTicks(true);
+//		population.setPaintLabels(true);
+//		this.add(population, BorderLayout.NORTH);
+//		
+//		iteration = new JSlider(JSlider.HORIZONTAL, 1000,20000,10000);
+//		iteration.setPreferredSize(new Dimension(getPreferredSize().width+22,getPreferredSize().height+250));
+//		iteration.setMajorTickSpacing(5000);
+//		iteration.setPaintTicks(true);
+//		iteration.setPaintLabels(true);
+//		this.add(iteration);
+		
+	
+		
+	}
 	public void paint(Graphics g) {
 		// if(pressed == true){
 		System.out.println("WUT");
@@ -63,11 +94,7 @@ public class DrawPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// pressed = true;
-		// int x = e.getX();
-		// int y = e.getY();
-		// tabX[count] = x;
-		// tabY[count] = y;
+		
 		int x = e.getX();
 		int y = e.getY();
 		list.add(new Pair<Integer, Integer>(x, y));
