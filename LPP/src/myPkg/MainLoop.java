@@ -126,28 +126,27 @@ public class MainLoop {
 
 	void reproduction() {
 		ArrayList<Individual> newGen = new ArrayList<Individual>();
-		ArrayList<Long> distances = new ArrayList<Long>();
+		ArrayList<Double> distances = new ArrayList<Double>();
 		for (Individual x : generation) {
 			distances.add(x.getRouteLength());
 		}
-		long max = Collections.max(distances);
+		double max = Collections.max(distances);
 		max++;
 		long totalSum = 0;
-		ArrayList<Long> appraisals = new ArrayList<Long>();
-		for (Long x : distances) {
+		ArrayList<Double> appraisals = new ArrayList<Double>();
+		for (Double x : distances) {
 			appraisals.add(max - x); // the shortest routes will have the
 										// highest value of assessment
 			totalSum += max - x;
 		}
 		double tabOfProbablity[] = new double[distances.size()];
 		int i = 0;
-		for (Long x : appraisals) {
+		for (Double x : appraisals) {
 			if (i == 0)
 				tabOfProbablity[i] = ((double) x) / totalSum;
 			else
 				tabOfProbablity[i] = ((double) x) / totalSum
 						+ tabOfProbablity[i - 1];
-
 			i++;
 		}// last value in tabOfProbability should be 1, but it may not be
 			// because of numerical errors
