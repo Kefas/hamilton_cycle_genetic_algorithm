@@ -62,17 +62,23 @@ public class MyGraph {
 		}		
 	}
 	public MyGraph(String path, int _){
-		tableOfCoordinates = null;
-		
-		// to zmieniamy ^^
-		for(int currVer=0; currVer<tableOfCoordinates.length; currVer++)
+		tableOfCoordinates = null;		
+		// to zmieniamy ^^ tu ma byæ wczytywanie
+		double distanceTmp = 0;
+		for(int currVer=0; currVer<tableOfCoordinates.length; currVer++){
+			tableOfVertexes[currVer] = new Vertex(currVer, tableOfCoordinates.length);
 			for(int currNeigh=0; currNeigh<tableOfCoordinates.length; currNeigh++){
-				if(currVer==currNeigh)
-					tableOfVertexes[currVer][currNeigh] = ;//it's totally temporary
+				if(currVer==currNeigh){
+					tableOfVertexes[currVer].setDistanceToNeighbour(currNeigh, 0);
+				}
 				else{
-					
+					distanceTmp = Math.pow(tableOfCoordinates[currVer][0] - tableOfCoordinates[currNeigh][0],2) +
+							Math.pow(tableOfCoordinates[currVer][1] - tableOfCoordinates[currNeigh][1], 2);
+					distanceTmp = Math.sqrt(distanceTmp);							
+					tableOfVertexes[currVer].setDistanceToNeighbour(currNeigh, distanceTmp);
 				}
 			}
+		}
 	}
 	public void exportToFile(String path){
 		double [][]matrix = new double[tableOfVertexes.length][tableOfVertexes.length];
