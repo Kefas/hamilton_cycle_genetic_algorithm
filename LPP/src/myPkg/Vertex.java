@@ -2,33 +2,33 @@ package myPkg;
 
 public class Vertex {
 	int numberOfAllVertexes;
-	int [] tabOfNeigh;
+	double [] tabOfDistToNeigh;
 	int id;
-	public Vertex(int id, int noOfAllVertexes, int [] values){
+	public Vertex(int id, int noOfAllVertexes, double [] values){
 		numberOfAllVertexes = noOfAllVertexes;
 		this.id = id;		
-		tabOfNeigh = values.clone();		
+		tabOfDistToNeigh = values.clone();	
 	}
 	
 	public Vertex(int id, int noOfAllVertexes){
 		numberOfAllVertexes = noOfAllVertexes;
 		this.id = id;
-		tabOfNeigh = new int[numberOfAllVertexes];		
+		tabOfDistToNeigh = new double[numberOfAllVertexes];		
 	}
 	/* index of 'tab' indicates the id of vertex, value at this index is the distance to this vertex
 	 * at 'id' position in tab - 0 is placed
 	 */
 	
-	public void setDistanceToNeighbour(int idOfNeighbour, int distance){
-		tabOfNeigh[idOfNeighbour] = distance;
+	public void setDistanceToNeighbour(int idOfNeighbour, double distance){
+		tabOfDistToNeigh[idOfNeighbour] = distance;
 	}
-	public int getDistanceToNeigbour(int idOfNeighbour){
-		return tabOfNeigh[idOfNeighbour];
+	public double getDistanceToNeigbour(int idOfNeighbour){
+		return tabOfDistToNeigh[idOfNeighbour];
 	}
-	public int[] getTabOfNeigh(){
-		return tabOfNeigh;
+	public double[] getTabOfNeigh(){
+		return tabOfDistToNeigh;
 	}
-	public void setTabOfNeigh(int[] tabOfNeigh) {
-		this.tabOfNeigh = tabOfNeigh;
+	public void setTabOfNeigh(double[] tabOfNeigh) {
+		this.tabOfDistToNeigh = tabOfNeigh;
 	}
 }

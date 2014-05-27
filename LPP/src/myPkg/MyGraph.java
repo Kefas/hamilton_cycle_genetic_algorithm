@@ -8,10 +8,11 @@ import javax.sound.midi.SysexMessage;
 public class MyGraph {
 	private final int maxDistance = 1000;
 	Vertex tableOfVertexes[];
+	int tableOfCoordinates[][];
 	private Random random = new Random();
 	private ArrayList<VertexJUNG> graph;
 	
-	int tmpDistance = 0, tmpMinSumDistance = Integer.MAX_VALUE;
+	double tmpDistance = 0, tmpMinSumDistance = Integer.MAX_VALUE;
 	
 	/**
 	 * Generates indirected graph of specified size
@@ -45,14 +46,14 @@ public class MyGraph {
 							tmpMinSumDistance = tableOfVertexes[x].getDistanceToNeigbour(currNeigh)+ tableOfVertexes[x].getDistanceToNeigbour(currVer);
 					}
 					tmpMinSumDistance = tmpMinSumDistance <=1000? tmpMinSumDistance : 1000;
-					tableOfVertexes[currVer].setDistanceToNeighbour(currNeigh, random.nextInt(tmpMinSumDistance-1) + 1 );
+					tableOfVertexes[currVer].setDistanceToNeighbour(currNeigh, (double) random.nextInt((int)tmpMinSumDistance-1) + 1 );
 				}
 			}
 		}			
 	}
 	
 	public MyGraph(String path){
-		int [][] matrix = ExportImport.importFromFile(path);
+		double [][] matrix = ExportImport.importFromFile(path);
 		int size = matrix.length;
 		tableOfVertexes = new Vertex[size];
 		for(int i=0; i<size; i++){
@@ -60,8 +61,21 @@ public class MyGraph {
 			tableOfVertexes[i].setTabOfNeigh(matrix[i]);
 		}		
 	}
+	public MyGraph(String path, int _){
+		tableOfCoordinates = null;
+		
+		// to zmieniamy ^^
+		for(int currVer=0; currVer<tableOfCoordinates.length; currVer++)
+			for(int currNeigh=0; currNeigh<tableOfCoordinates.length; currNeigh++){
+				if(currVer==currNeigh)
+					tableOfVertexes[currVer][currNeigh] = ;//it's totally temporary
+				else{
+					
+				}
+			}
+	}
 	public void exportToFile(String path){
-		int [][]matrix = new int[tableOfVertexes.length][tableOfVertexes.length];
+		double [][]matrix = new double[tableOfVertexes.length][tableOfVertexes.length];
 		for(int i=0; i<tableOfVertexes.length; i++)
 			for(int j=0; j<tableOfVertexes.length; j++)
 				matrix[i][j] = tableOfVertexes[i].getDistanceToNeigbour(j);
@@ -80,7 +94,7 @@ public class MyGraph {
 	int getNodesAmount(){
 		return tableOfVertexes.length;
 	}
-	int getDistance(int vertex1, int vertex2){
+	double getDistance(int vertex1, int vertex2){
 		return tableOfVertexes[vertex1].getDistanceToNeigbour(vertex2);
 	}
 	public static void main(String [] args){
@@ -97,12 +111,12 @@ public class MyGraph {
 	int getSize(){
 		return tableOfVertexes.length;
 	}
-	public ArrayList<VertexJUNG> getGraph(){
+/*	public ArrayList<VertexJUNG> getGraph(){
 		graph = new ArrayList<>();
 		for(int i=0; i<tableOfVertexes.length; i++){
 			graph.add(new VertexJUNG(tableOfVertexes[i].getTabOfNeigh()));
 		}
 		return graph;
 	}	
-	
+	*/
 }

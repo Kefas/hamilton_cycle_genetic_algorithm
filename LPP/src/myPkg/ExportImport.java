@@ -11,13 +11,13 @@ import java.util.Scanner;
 
 public class ExportImport {
 
-	public static int exportToFile(int [][] matrix, String path){
+	public static double exportToFile(double [][] matrix, String path){
 		Writer writer = null;
 		try {
 			writer = new FileWriter(new File(path));
 			for(int i=0;i<matrix.length;i++){
 				for(int j=0;j<matrix.length;j++){
-					writer.append(Integer.toString(matrix[i][j]));
+					writer.append(Double.toString(matrix[i][j]));
 					writer.append(" ");
 				}
 				writer.append("\n");
@@ -32,12 +32,12 @@ public class ExportImport {
 		return 1;
 	}
 	
-	public static int[][] importFromFile(String path){
+	public static double[][] importFromFile(String path){
 		Scanner scanner;
 		Scanner liner;
 		List<List<Integer> > list = new ArrayList<>();
 		List<Integer> lineList;
-		int [][] matrix = null;
+		double [][] matrix = null;
 		try {
 			scanner = new Scanner(new File(path));
 			while(scanner.hasNextLine()){
@@ -53,9 +53,9 @@ public class ExportImport {
 			e.printStackTrace();
 			return null;
 		}
-		matrix = new int[list.size()][];
+		matrix = new double[list.size()][];
 		for(int i=0;i<list.size();i++){
-			matrix[i] = new int[list.size()];
+			matrix[i] = new double[list.size()];
 			for(int j=0;j<list.size();j++)
 				matrix[i][j] = list.get(i).get(j);
 		}
@@ -66,7 +66,7 @@ public class ExportImport {
 	
 	public static void main(String [] args){
 		ExportImport ex = new ExportImport();
-		int [][] tab = ex.importFromFile("input.txt");
+		double [][] tab = ex.importFromFile("input.txt");
 		ex.exportToFile(tab, "test.txt");
 	}
 }

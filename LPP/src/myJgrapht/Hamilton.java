@@ -27,7 +27,7 @@ import org.jgrapht.graph.WeightedMultigraph;
 public class Hamilton {
 	private static SimpleWeightedGraph<Integer, DefaultWeightedEdge> g = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(
 			DefaultWeightedEdge.class);
-	private static int[][] tab;
+	private static double[][] tab;
 
 	public void addVertex(Integer vertices) {
 		g.addVertex(vertices);
@@ -90,7 +90,7 @@ public class Hamilton {
 
 		for (x = 0; x < tab.length; x++) {
 			for (y = x + 1; y < tab.length; y++)
-				h.addEdge(x, y, tab[x][y]);
+				h.addEdge(x, y,  tab[x][y]);
 		}
 
 	}
