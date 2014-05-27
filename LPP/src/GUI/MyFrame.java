@@ -57,7 +57,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		if(o == drawGraph){
 			
-			My2Panel p = new My2Panel();
+			MyPanel p = new MyPanel();
 			getContentPane().add(p);
 			
 			revalidate();
