@@ -17,12 +17,17 @@ public class MyFrame extends JFrame implements ActionListener {
 
 	static MyFrame frame;
 
-	JMenuBar menuBar;
-	JMenu op1, op2, op3;
-	JMenuItem drawGraph, genGraph, about, finish;
-	JDesktopPane desktop;
+	private JMenuBar menuBar;
+	private JMenu op1, op2, op3;
+	private JMenuItem drawGraph, genGraph, about, finish;
+	private JDesktopPane desktop;
+	private DrawPanel p;
+	private GenPanel gen;
 	
 	public MyFrame() {
+		p = new DrawPanel();
+		gen = new GenPanel();
+		
 		menuBar = new JMenuBar();
 		op1 = new JMenu("Opcja1");
 		op2 = new JMenu("Opcja2");
@@ -56,12 +61,19 @@ public class MyFrame extends JFrame implements ActionListener {
 		Object o = e.getSource();
 		
 		if(o == drawGraph){
-			
-			MyPanel p = new MyPanel();
+			getContentPane().removeAll();
 			getContentPane().add(p);
-			
 			revalidate();
-//			repaint();
+			//repaint();
+		}
+		if(o == genGraph){
+			getContentPane().removeAll();
+			getContentPane().add(gen);
+			revalidate();
+			//repaint();
+		}
+		if(o == finish){
+			dispose();
 		}
 		
 	}

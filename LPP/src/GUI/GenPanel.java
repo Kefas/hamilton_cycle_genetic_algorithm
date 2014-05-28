@@ -26,14 +26,15 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
-public class MyPanel extends JPanel {
+public class GenPanel extends JPanel {
+	
 	List<Pair<Integer, Integer>> list;
 	int path[];
 	
 	private JTextField textField;
 	private JTextField textField_1;
 	private ChangeListener listener;
-	private JSlider slider, slider_1 ;
+	private JSlider slider, slider_1, slider_2 ;
 	private boolean roundGraph;
 	private static final int SIZE = 256;
     private int a = SIZE / 2;
@@ -41,32 +42,23 @@ public class MyPanel extends JPanel {
     private int r = 4 * SIZE / 5;
     private int n;
     private JPanel panel;
+    private JTextField textField_2;
+ 
     
 	/**
 	 * Create the panel.
 	 */
-	public MyPanel() {
+	public GenPanel() {
 		
 		list = new ArrayList<>();
 		roundGraph = false;
 		
 		panel = new JPanel();
-		panel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				int x = e.getX();
-				int y = e.getY();
-				list.add(new Pair<Integer, Integer>(x, y));
-				System.out.println("Dzieje sie");
-				// revalidate();
-				repaint();
-
-			}
-		});
+		
 		panel.setBackground(Color.WHITE);
 		
-		slider = new JSlider(0,5000,2500);
-		slider.setMajorTickSpacing(2500);
+		slider = new JSlider(100,5000,2500);
+		slider.setMajorTickSpacing(1400);
 		slider.setPaintLabels(true);
 		slider.setPaintTicks(true);
 		
@@ -76,8 +68,8 @@ public class MyPanel extends JPanel {
 		JLabel lblLiczbaIteracji = new JLabel("Liczba iteracji:");
 		lblLiczbaIteracji.setFont(new Font("Tahoma", Font.BOLD, 9));
 		
-		slider_1 = new JSlider(0,10000,5000);
-		slider_1.setMajorTickSpacing(5000);
+		slider_1 = new JSlider(1000,20000,10000);
+		slider_1.setMajorTickSpacing(4000);
 		slider_1.setPaintTicks(true);
 		slider_1.setPaintLabels(true);
 		
@@ -107,7 +99,7 @@ public class MyPanel extends JPanel {
 		
 		textField_1 = new JTextField();
 		textField_1.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_1.setText("5000");
+		textField_1.setText("10000");
 		textField_1.setColumns(1);
 		
 
@@ -125,9 +117,7 @@ public class MyPanel extends JPanel {
             }
             
         });
-		
-		
-		
+	
 		JRadioButton rdbtnRep = new JRadioButton("rep1");
 		
 		JRadioButton rdbtnRep_1 = new JRadioButton("rep2");
@@ -140,70 +130,95 @@ public class MyPanel extends JPanel {
 				roundGraph = !roundGraph;
 			}
 		});
+		
+		JLabel lblLiczbaWierzchokw = new JLabel("Liczba wierzcho\u0142k\u00F3w:");
+		lblLiczbaWierzchokw.setFont(new Font("Tahoma", Font.BOLD, 9));
+		
+		slider_2 = new JSlider(100,100000,50000);
+		slider_2.setMajorTickSpacing(49900);
+		slider_2.setPaintTicks(true);
+		slider_2.setPaintLabels(true);
+		
+		textField_2 = new JTextField();
+		textField_2.setText("2500");
+		textField_2.setHorizontalAlignment(SwingConstants.CENTER);
+		textField_2.setColumns(1);
         
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(slider_1, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-												.addComponent(slider, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-												.addGroup(groupLayout.createSequentialGroup()
-													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-														.addComponent(rdbtnMut, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-														.addComponent(rdbtnKrz_1, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
-													.addPreferredGap(ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-														.addComponent(rdbtnKrz, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-														.addComponent(rdbtnMut_1)))
-												.addGroup(groupLayout.createSequentialGroup()
-													.addComponent(rdbtnRep)
-													.addPreferredGap(ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-													.addComponent(rdbtnRep_1)
-													.addGap(10))
-												.addComponent(btnGrafNaKole)))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(79)
-											.addComponent(lblMutacje)))
-									.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblLiczbaIteracji)
-									.addGap(69))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-									.addGap(82))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblLiczbaPopulacji)
-									.addGap(61))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-									.addGap(80))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(82)
-							.addComponent(lblKrzyowania, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(78)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnWykonaj)
-								.addComponent(lblReprodukcje))))
-					.addGap(32))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(18)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+												.addGroup(groupLayout.createSequentialGroup()
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+														.addComponent(slider_1, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+														.addComponent(slider, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+														.addGroup(groupLayout.createSequentialGroup()
+															.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+																.addComponent(rdbtnMut, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
+																.addComponent(rdbtnKrz_1, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
+															.addPreferredGap(ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+															.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+																.addComponent(rdbtnKrz, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+																.addComponent(rdbtnMut_1)))
+														.addGroup(groupLayout.createSequentialGroup()
+															.addComponent(rdbtnRep)
+															.addPreferredGap(ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+															.addComponent(rdbtnRep_1)
+															.addGap(10))
+														.addComponent(slider_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
+												.addGroup(groupLayout.createSequentialGroup()
+													.addGap(79)
+													.addComponent(lblMutacje)))
+											.addPreferredGap(ComponentPlacement.RELATED))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(lblLiczbaIteracji)
+											.addGap(69))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+											.addGap(82))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(lblLiczbaPopulacji)
+											.addGap(61))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(textField, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+											.addGap(80))))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(82)
+									.addComponent(lblKrzyowania, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(78)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnGrafNaKole)
+										.addComponent(btnWykonaj))))
+							.addGap(32))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblReprodukcje)
+							.addGap(94))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblLiczbaWierzchokw)
+							.addGap(78))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+							.addGap(112))))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblLiczbaPopulacji, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -234,9 +249,15 @@ public class MyPanel extends JPanel {
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(rdbtnRep)
 								.addComponent(rdbtnRep_1))
-							.addGap(34)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblLiczbaWierzchokw)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(slider_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(31)
 							.addComponent(btnGrafNaKole)
-							.addPreferredGap(ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
 							.addComponent(btnWykonaj)))
 					.addContainerGap())
 		);
@@ -297,6 +318,4 @@ public class MyPanel extends JPanel {
 			//roundGraph = false;
 		}
 	}
-	
-	
 }
