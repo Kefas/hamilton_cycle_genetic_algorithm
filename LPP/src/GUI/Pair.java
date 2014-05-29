@@ -20,6 +20,13 @@ public class Pair<T1, T2> {
 	public T2 getY(){
 		return y;
 	}
+	@Override
+	public String toString() {
+		return "(" + x + "," + y + ")";
+		
+	}
+	
+	
 	
 	
 }
