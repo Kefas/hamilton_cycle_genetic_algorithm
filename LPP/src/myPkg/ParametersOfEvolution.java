@@ -6,15 +6,38 @@ public class ParametersOfEvolution {
 	int methodOfMutation = 1;
 	int methodOfCrossing = 1;
 	int methodOfBreeding = 1;
+	
+	int methodToFinish = 2;
+	//parameters for the 2nd method
+	int maxAmountOfAncestors = 2000; //how many ancestors do I check to identify end of evolution
+	double similarityToAncestors = 0.98; //how much must the best individual be similar to the best ancestor from the latest 'amountOfAncestors'
+	//parameters for the 3rd method
+	double similiarityInTest = 0.98;
+	long correctResult = 0;
+	
+	
+	ParamsOfIndividual individualParams = new ParamsOfIndividual();
+	
+	
+	public int getMaxAmountOfAncestors() {
+		return maxAmountOfAncestors;
+	}
+	public void setMaxAmountOfAncestors(int amountOfAncestors) {
+		this.maxAmountOfAncestors = amountOfAncestors;
+	}
+	public double getSimilarityToAncestors() {
+		return similarityToAncestors;
+	}
+	public void setSimilarityToAncestors(double similarityToAncestors) {
+		this.similarityToAncestors = similarityToAncestors;
+	}
+		
 	public int getMethodOfBreeding() {
 		return methodOfBreeding;
 	}
 	public void setMethodOfBreeding(int methodOfBreeding) {
 		this.methodOfBreeding = methodOfBreeding;
 	}
-	int methodToFinish = 1;
-	double similiarityInTest = 0.98;
-	ParamsOfIndividual individualParams = new ParamsOfIndividual();
 	
 	public double getSimiliarityInTest() {
 		return similiarityInTest;
@@ -34,7 +57,6 @@ public class ParametersOfEvolution {
 	public void setCorrectResult(long correctResult) {
 		this.correctResult = correctResult;
 	}
-	long correctResult = 0;
 	
 	public ParamsOfIndividual getIndividualParams() {
 		return individualParams;

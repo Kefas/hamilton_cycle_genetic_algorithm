@@ -21,13 +21,15 @@ import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import sun.security.krb5.internal.APRep;
 import edu.uci.ics.jung.algorithms.generators.EvolvingGraphGenerator;
 
-public class MainLoop {
+public class MainLoop extends Thread{
 	Random random = new Random();
 	int sizeOfPopulation;
 	int iterationCounter = 0;
 	int iterationsLimit = 1000;
+	ArrayList<Double> extremeAncestors = new ArrayList<Double>();
 	ParametersOfEvolution evolParams;
 	AdaptationValues appraisal = null;
 	
@@ -38,9 +40,10 @@ public class MainLoop {
 	private static int datasetIndex = 0;
 	private static List<XYSeriesCollection> seriesArrayList = new ArrayList<XYSeriesCollection>();
 
-	public MainLoop(MyGraph graph, ParametersOfEvolution params) {
+	public MainLoop(MyGraph graph, ParametersOfEvolution params, AdaptationValues appraisal) {
 		this.graph = graph;
 		this.evolParams = params;
+		this.appraisal = appraisal;
 		sizeOfPopulation = (int) (graph.getSize() * params.getSizeOfPopulation());
 		iterationsLimit = evolParams.numberOfIterations;
 
@@ -49,14 +52,15 @@ public class MainLoop {
 		}
 	}
 
-	void start() {
+	public void run() {
 		while ( continueOrNot(evolParams.methodToFinish) ) {
 
 			reproduction();
 			performCrossing(evolParams.getMethodOfBreeding(), evolParams.getMethodOfCrossing());
 
 			performMutation(evolParams.getMethodOfMutation());
-			appraisal = assessPopulation();
+	//KONSEK: tu jest jedyna linika która Cie interesuje!!!		
+			/*appraisal =*/ assessPopulation(); //this function modifies 'appraisal'
 			updateChart(appraisal);
 
 			iterationCounter++;
@@ -85,8 +89,10 @@ public class MainLoop {
 	 * 
 	 * @return length of path
 	 */
-	AdaptationValues assessPopulation() {
-		AdaptationValues toReturn = new AdaptationValues();
+	//AdaptationValues assessPopulation() {
+	void assessPopulation() {
+				//AdaptationValues toReturn = new AdaptationValues();
+		AdaptationValues toReturn = appraisal; // pokrecony sposob, ale to przez to, ze zmienilismy koncepcje w trakcie
 		ArrayList<Double> distances = new ArrayList<Double>();
 		for (Individual x : generation) {
 			distances.add(x.getRouteLength());
@@ -110,18 +116,36 @@ public class MainLoop {
 		}
 		average /= distances.size();
 		toReturn.setAverage(average);
-		return toReturn;
+		//return toReturn;
 	}
 
 	boolean continueOrNot(int methodOfFinishing) {
 		boolean condition = true;
-
+		
 		switch(methodOfFinishing){
 		case 1:
 			if (iterationCounter > iterationsLimit)
 				condition = false;
 			return condition;
-		case 2:
+		case 2:			
+			if(extremeAncestors.size() < evolParams.getMaxAmountOfAncestors()){
+				extremeAncestors.add(appraisal.getBest());
+				return condition;
+			}			
+			double bestAncestor = Collections.min(extremeAncestors);
+			double worstFromBestAncestor = Collections.max(extremeAncestors);
+			if(  	appraisal.getBest() / bestAncestor > evolParams.getSimilarityToAncestors()
+				&&  appraisal.getBest() / bestAncestor <= 1
+				&& 	appraisal.getBest() / worstFromBestAncestor > evolParams.getSimilarityToAncestors()
+				&&  appraisal.getBest() / worstFromBestAncestor <= 1 )
+			{
+				condition = false;
+				return condition;
+			} 			
+			extremeAncestors.remove(0);		
+			extremeAncestors.add(appraisal.getBest());
+			return condition;
+		case 3:
 			//domyœlne podobieñstwo do ukoñczenia jest ustawione na 98%
 			if( evolParams.getCorrectResult() / ((double)appraisal.best) < evolParams.getSimiliarityInTest())
 				condition = false;
@@ -331,7 +355,7 @@ public class MainLoop {
 		createAdditionalDataset();
 		createAdditionalDataset();
 
-		MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution());
+		MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());
 
 		/*
 		 * m.graph.wypisz();
@@ -340,7 +364,7 @@ public class MainLoop {
 		 * "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55\n"+
 		 * "Nowa generacja: "+Arrays.toString(m.generation.toArray()));
 		 */
-		m.start();
+		m.run();
 	}
 
 }
