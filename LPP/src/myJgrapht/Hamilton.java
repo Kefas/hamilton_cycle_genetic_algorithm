@@ -28,6 +28,15 @@ public class Hamilton {
 	private static SimpleWeightedGraph<Integer, DefaultWeightedEdge> g = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(
 			DefaultWeightedEdge.class);
 	private static double[][] tab;
+	private List<Integer> hamiltonCycle;
+
+	public List<Integer> getHamiltonCycle() {
+		return hamiltonCycle;
+	}
+
+	public void setHamiltonCycle(List<Integer> hamiltonCycle) {
+		this.hamiltonCycle = hamiltonCycle;
+	}
 
 	public void addVertex(Integer vertices) {
 		g.addVertex(vertices);
@@ -39,9 +48,9 @@ public class Hamilton {
 		}
 	}
 
-	public void addEdge(int source, int destination, int weight) {
+	public void addEdge(int source, int destination, double tab2) {
 		DefaultWeightedEdge edge = g.addEdge(source, destination);
-		g.setEdgeWeight(edge, weight);
+		g.setEdgeWeight(edge, tab2);
 	}
 
 	public List<Integer> execute() {
@@ -114,8 +123,8 @@ public class Hamilton {
 
 		Hamilton h = new Hamilton();
 		importFromFile("input.txt");
-		// new ExportImport().exportToFile(tab, "test2.txt");
-		List<Integer> output = h.execute();
-		System.out.println("Cykl hamiltona:" + output);
+		new ExportImport().exportToFile(tab, "test2.txt");
+		h.hamiltonCycle = h.execute();
+		System.out.println("Cykl hamiltona:" + h.hamiltonCycle);
 	}
 }
