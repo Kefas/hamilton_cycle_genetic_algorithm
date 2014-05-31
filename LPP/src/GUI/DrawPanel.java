@@ -40,7 +40,7 @@ public class DrawPanel extends JPanel {
 	private JTextField textField_1;
 	private ChangeListener listener;
 	private JSlider slider, slider_1 ;
-	private boolean roundGraph;
+	private boolean roundGraph, addVertex;
 	private static final int SIZE = 256;
     private int a = SIZE / 2;
     private int b = a;
@@ -56,18 +56,19 @@ public class DrawPanel extends JPanel {
 		
 		list = new ArrayList<>();
 		roundGraph = false;
-		
+		addVertex = true;
 		panel = new JPanel();
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				int x = e.getX();
-				int y = e.getY();
-				list.add(new Pair<Integer, Integer>(x, y));
-				System.out.println("Dzieje sie");
-				// revalidate();
-				repaint();
-
+				if(addVertex){
+					int x = e.getX();
+					int y = e.getY();
+					list.add(new Pair<Integer, Integer>(x, y));
+					System.out.println("Dzieje sie");
+					// revalidate();
+					repaint();
+				}
 			}
 		});
 		panel.setBackground(Color.WHITE);
@@ -151,6 +152,7 @@ public class DrawPanel extends JPanel {
 		JButton btnWykonaj = new JButton("Wykonaj");
 		btnWykonaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				addVertex = false;
 				double adjacencyMatrix[][] = new double[list.size()][list.size()];
 				for(int i=0;i<list.size()-1;i++)
 					for(int j=i+1;j<list.size();j++)
@@ -327,13 +329,15 @@ public class DrawPanel extends JPanel {
 		revalidate();
 		repaint();
 	    
-		super.paint(g);
-		for (int i = 0; i < list.size(); i++) {
-			g.setColor(Color.red);
-			g.fillOval(list.get(i).getX(), list.get(i).getY(), 10, 10);
-			// System.out.println(tabX[i]);
-		}
-
+		
+			super.paint(g);
+			for (int i = 0; i < list.size(); i++) {
+				g.setColor(Color.red);
+				g.fillOval(list.get(i).getX(), list.get(i).getY(), 10, 10);
+				g.drawString(Integer.toString(i), list.get(i).getX()+5, list.get(i).getY()-5);
+				// System.out.println(tabX[i]);
+			}
+		
 		
 		
 		if(roundGraph == true){
@@ -360,7 +364,7 @@ public class DrawPanel extends JPanel {
 	            g2d.fillOval(x - r2-100, y - r2,10, 10);
 	            list.get(i).setX(x-r2-100);
 	            list.get(i).setY(y-r2);
-	            
+	            g.drawString(Integer.toString(i), list.get(i).getX()+5, list.get(i).getY()-5);
 			}
 			
 			
