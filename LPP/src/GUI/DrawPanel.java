@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -25,6 +27,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import myJgrapht.Hamilton;
+import myPkg.ExportImport;
 
 
 public class DrawPanel extends JPanel {
@@ -95,7 +100,7 @@ public class DrawPanel extends JPanel {
 		textField_1.setText("10000");
 		textField_1.setColumns(1);
 		
-	// RadioButtony dla mutacji, krzy¿owañ i reprodukcji
+	// RadioButtony dla mutacji, krzyï¿½owaï¿½ i reprodukcji
 		JLabel lblMutacje = new JLabel("Mutacje:");
 		lblMutacje.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMutacje.setFont(new Font("Tahoma", Font.BOLD, 9));
@@ -144,6 +149,24 @@ public class DrawPanel extends JPanel {
 		
 		
 		JButton btnWykonaj = new JButton("Wykonaj");
+		btnWykonaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				double adjacencyMatrix[][] = new double[list.size()][list.size()];
+				for(int i=0;i<list.size()-1;i++)
+					for(int j=i+1;j<list.size();j++)
+						adjacencyMatrix[i][j] = distance(list.get(i), list.get(j));
+				
+				Hamilton hamilton = new Hamilton(adjacencyMatrix);
+				List<Integer> result = hamilton.execute();
+				System.out.println(result);
+				int cycle [] = new int[result.size()];
+				for(int i=0;i<result.size();i++)
+					cycle[i] = result.get(i);
+				drawPath(cycle);
+			}
+
+			
+		});
 		
 		JButton btnGrafNaKole = new JButton("Graf na kole");
 		btnGrafNaKole.addActionListener(new ActionListener() {
@@ -155,6 +178,22 @@ public class DrawPanel extends JPanel {
 		JButton btnWczytajZPliku = new JButton("Wczytaj z pliku");
 		btnWczytajZPliku.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String path;
+				JFileChooser fileChooser = new JFileChooser();
+				int ret = fileChooser.showOpenDialog(null);
+				if(ret  == JFileChooser.APPROVE_OPTION){
+					File selectedFile = fileChooser.getSelectedFile();
+					path = selectedFile.getAbsolutePath();
+					clear();
+					int tab[][] = new ExportImport().newImportFromFile(path);
+					
+					for(int i=0;i<tab.length;i++)
+						list.add(new Pair(tab[i][0],tab[i][1]));
+					
+					repaint();
+							
+				}
+				
 			}
 		});
 		btnWczytajZPliku.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -275,6 +314,15 @@ public class DrawPanel extends JPanel {
 
 	
 	
+	protected double distance(Pair<Integer, Integer> pair,
+			Pair<Integer, Integer> pair2) {
+			
+		return Math.sqrt(Math.pow(pair.getX() - pair2.getX(),2) + Math.pow(pair.getY() - pair2.getX(), 2));
+	}
+
+
+
+
 	public void paint(Graphics g){
 		revalidate();
 		repaint();
@@ -286,16 +334,7 @@ public class DrawPanel extends JPanel {
 			// System.out.println(tabX[i]);
 		}
 
-		if (path != null) {
-			for (int i = 0; i < path.length - 1; i++) {
-				g.drawLine(list.get(path[i]).getX() + 5, list.get(path[i])
-						.getY() + 5, list.get(path[i + 1]).getX() + 5, list
-						.get(path[i + 1]).getY() + 5);
-			}
-			g.drawLine(list.get(path.length - 1).getX() + 5,
-					list.get(path.length - 1).getY() + 5,
-					list.get(0).getX() + 5, list.get(0).getY() + 5);
-		}
+		
 		
 		if(roundGraph == true){
 			g.setColor(Color.white);
@@ -319,10 +358,24 @@ public class DrawPanel extends JPanel {
 	            int y = (int) Math.round(b + r * Math.sin(t));
 	            g2d.setColor(Color.red);
 	            g2d.fillOval(x - r2-100, y - r2,10, 10);
+	            list.get(i).setX(x-r2-100);
+	            list.get(i).setY(y-r2);
 	            
 			}
 			
+			
+			
 			//roundGraph = false;
+		}
+		if (path != null) {
+			for (int i = 0; i < path.length - 1; i++) {
+				g.drawLine(list.get(path[i]).getX() + 5, list.get(path[i])
+						.getY() + 5, list.get(path[i + 1]).getX() + 5, list
+						.get(path[i + 1]).getY() + 5);
+			}
+			g.drawLine(list.get(path.length - 1).getX() + 5,
+					list.get(path.length - 1).getY() + 5,
+					list.get(0).getX() + 5, list.get(0).getY() + 5);
 		}
 	}
 	

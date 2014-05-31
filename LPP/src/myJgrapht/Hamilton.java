@@ -29,6 +29,24 @@ public class Hamilton {
 			DefaultWeightedEdge.class);
 	private static double[][] tab;
 	private List<Integer> hamiltonCycle;
+	
+	public Hamilton(double [][] initTab){
+		tab  = initTab;
+		
+		int x = 0, y = 0;
+
+		List<Integer> vertices = new ArrayList<Integer>();
+		
+		for (int i = 0; i < tab.length; i++)
+			vertices.add(i);
+
+		addVertex(vertices);
+
+		for (x = 0; x < tab.length; x++) {
+			for (y = x + 1; y < tab.length; y++)
+				addEdge(x, y,  tab[x][y]);
+		}
+	}
 
 	public List<Integer> getHamiltonCycle() {
 		return hamiltonCycle;
@@ -42,13 +60,13 @@ public class Hamilton {
 		g.addVertex(vertices);
 	}
 
-	public void addVertex(List<Integer> ids) {
+	public static void addVertex(List<Integer> ids) {
 		for (int id : ids) {
 			g.addVertex(id);
 		}
 	}
 
-	public void addEdge(int source, int destination, double tab2) {
+	public static void addEdge(int source, int destination, double tab2) {
 		DefaultWeightedEdge edge = g.addEdge(source, destination);
 		g.setEdgeWeight(edge, tab2);
 	}
@@ -94,37 +112,37 @@ public class Hamilton {
 
 		for (int i = 0; i < tab.length; i++)
 			vertices.add(i);
-		Hamilton h = new Hamilton();
-		h.addVertex(vertices);
+	//	Hamilton h = new Hamilton();
+		addVertex(vertices);
 
 		for (x = 0; x < tab.length; x++) {
 			for (y = x + 1; y < tab.length; y++)
-				h.addEdge(x, y,  tab[x][y]);
+				addEdge(x, y,  tab[x][y]);
 		}
 
 	}
 
-	public static void main(String[] args) {
-		// List<Integer> vertices = new ArrayList<Integer>();
-		// vertices.add(0);
-		// vertices.add(1);
-		// vertices.add(2);
-		// Hamilton h = new Hamilton();
-		//
-		// h.addVertex(vertices);
-		// h.addEdge(0, 1, 1);
-		// h.addEdge(0, 2, 5);
-		// h.export(g);
-		// h.addEdge(1, 2, 3);
-		// List<Integer> output = h.execute();
-		//
-		// System.out.println("wut" + output);
-		// System.out.println(g);
-
-		Hamilton h = new Hamilton();
-		importFromFile("input.txt");
-		new ExportImport().exportToFile(tab, "test2.txt");
-		h.hamiltonCycle = h.execute();
-		System.out.println("Cykl hamiltona:" + h.hamiltonCycle);
-	}
+//	public static void main(String[] args) {
+//		// List<Integer> vertices = new ArrayList<Integer>();
+//		// vertices.add(0);
+//		// vertices.add(1);
+//		// vertices.add(2);
+//		// Hamilton h = new Hamilton();
+//		//
+//		// h.addVertex(vertices);
+//		// h.addEdge(0, 1, 1);
+//		// h.addEdge(0, 2, 5);
+////		 h.export(g);
+//		// h.addEdge(1, 2, 3);
+//		// List<Integer> output = h.execute();
+//		//
+//		// System.out.println("wut" + output);
+//		// System.out.println(g);
+//
+//		Hamilton h = new Hamilton();
+//		importFromFile("input.txt");
+//		new ExportImport().exportToFile(tab, "test2.txt");
+//		h.hamiltonCycle = h.execute();
+//		System.out.println("Cykl hamiltona:" + h.hamiltonCycle);
+//	}
 }
