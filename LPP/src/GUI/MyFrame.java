@@ -62,6 +62,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		if(o == drawGraph){
 			getContentPane().removeAll();
+			p.clear();
 			getContentPane().add(p);
 			revalidate();
 			//repaint();
