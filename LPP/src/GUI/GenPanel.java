@@ -158,7 +158,7 @@ public class GenPanel extends JPanel {
 		JButton btnWykonaj = new JButton("Wykonaj");
 		
 		JButton btnWczytajZPliku = new JButton("Wczytaj z pliku");
-		btnWczytajZPliku.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		
 		
 		
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -232,8 +232,8 @@ public class GenPanel extends JPanel {
 							.addGap(80))))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
