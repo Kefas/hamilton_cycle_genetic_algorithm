@@ -31,24 +31,22 @@ import javax.swing.event.ChangeListener;
 import myJgrapht.Hamilton;
 import myPkg.ExportImport;
 
-
 public class DrawPanel extends JPanel {
 	List<Pair<Integer, Integer>> list;
 	int path[];
-	
+
 	private JTextField textField;
 	private JTextField textField_1;
 	private ChangeListener listener;
-	private JSlider slider, slider_1 ;
+	private JSlider slider, slider_1;
 	private boolean roundGraph, addVertex;
 	private static final int SIZE = 256;
-    private int a = SIZE / 2;
-    private int b = a;
-    private int r = 4 * SIZE / 5;
-    private int n;
-    private JPanel panel;
- 
-    
+	private int a = SIZE / 2;
+	private int b = a;
+	private int r = 4 * SIZE / 5;
+	private int n;
+	private JPanel panel;
+
 	/**
 	 * Create the panel.
 	 */
@@ -156,14 +154,100 @@ public class DrawPanel extends JPanel {
 				double adjacencyMatrix[][] = new double[list.size()][list.size()];
 				for(int i=0;i<list.size()-1;i++)
 					for(int j=i+1;j<list.size();j++)
-						adjacencyMatrix[i][j] = distance(list.get(i), list.get(j));
-				
+						adjacencyMatrix[i][j] = distance(list.get(i), list.get(j));				
+//				for(int i=0; i<list.size();i++){
+//					for(int j=0;j<list.size(); j++)
+//						System.out.print(adjacencyMatrix[i][j] + " ");
+//					System.out.println();
+//				}			
 				Hamilton hamilton = new Hamilton(adjacencyMatrix);
 				List<Integer> result = hamilton.execute();
 				System.out.println(result);
 				int cycle [] = new int[result.size()];
 				for(int i=0;i<result.size();i++)
 					cycle[i] = result.get(i);
+				
+				
+				if(cycle.length>26){
+					int fixCycle[] = new int[cycle.length];
+					for(int i=0;i<cycle.length;i++){
+						fixCycle[i] = cycle[i];
+						if(cycle[i] == 1){
+							System.out.println(Integer.toString((cycle.length-i)/2));
+							i++;
+							int temp2;
+							int w =0;
+							for(w=0;w<((cycle.length-i)/2);w++){
+//								cycle[i+w] = cycle[cycle.length-1-w];
+//								cycle[cycle.length-1-w] = temp2;
+								fixCycle[i+w]= cycle[cycle.length-1-w];
+								fixCycle[fixCycle.length-1-w] = cycle[i+w];
+							}
+							fixCycle[w] = cycle[w];
+							i = cycle.length;
+//							for(int h=0;h<cycle.length;h++)
+//								System.out.print(Integer.toString(fixCycle[h])+ ", ");
+							if(fixCycle.length > 10){
+								int temp;
+								int z=0;
+								int j=0;
+								for(int m=0;m<fixCycle.length;m++){
+									if(fixCycle[m] == 0)
+										z = m;
+									if(fixCycle[m] == 1)
+										j = m;
+								}
+								temp = fixCycle[z];
+								
+								if(j!=fixCycle.length-1){
+									fixCycle[z] = fixCycle[j+1];
+									fixCycle[j+1] = temp;
+								}
+								else{
+									fixCycle[z] = fixCycle[0];
+									fixCycle[0] = temp;
+								}
+							}
+//							System.out.println();
+//							for(int h=0;h<cycle.length;h++)
+//								System.out.print(Integer.toString(fixCycle[h])+ ", ");
+							
+							if(cycle.length > 63){
+								boolean flaga = false;
+								for(int n=0;n<fixCycle.length;n++)
+									if(fixCycle[n] == 0)
+										if(flaga)
+											fixCycle[n] = fixCycle[n-1];
+										else
+											flaga = true;
+							}
+							drawPath(fixCycle);
+							return;
+						}
+					}
+				}
+				if(cycle.length > 10){
+					int temp;
+					int z=0;
+					int j=0;
+					for(int i=0;i<cycle.length;i++){
+						if(cycle[i] == 0)
+							z = i;
+						if(cycle[i] == 1)
+							j = i;
+					}
+					temp = cycle[z];
+					
+					if(j!=cycle.length-1){
+						cycle[z] = cycle[j+1];
+						cycle[j+1] = temp;
+					}
+					else{
+						cycle[z] = cycle[0];
+						cycle[0] = temp;
+					}
+				}
+				
 				drawPath(cycle);
 			}
 
@@ -312,87 +396,86 @@ public class DrawPanel extends JPanel {
 		setLayout(groupLayout);
 
 	}
-	
 
-	
-	
 	protected double distance(Pair<Integer, Integer> pair,
 			Pair<Integer, Integer> pair2) {
-			
-		return Math.sqrt(Math.pow(pair.getX() - pair2.getX(),2) + Math.pow(pair.getY() - pair2.getX(), 2));
+
+		return Math.sqrt(Math.pow(pair.getX() - pair2.getX(), 2)
+				+ Math.pow(pair.getY() - pair2.getY(), 2));
 	}
 
-
-
-
-	public void paint(Graphics g){
+	public void paint(Graphics g) {
 		revalidate();
 		repaint();
-	    
-		
-			super.paint(g);
-			for (int i = 0; i < list.size(); i++) {
-				g.setColor(Color.red);
-				g.fillOval(list.get(i).getX(), list.get(i).getY(), 10, 10);
-				g.drawString(Integer.toString(i), list.get(i).getX()+5, list.get(i).getY()-5);
-				// System.out.println(tabX[i]);
-			}
-		
-		
-		
-		if(roundGraph == true){
-			g.setColor(Color.white);
-			g.fillRect(panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
-			
-			for(int i = 0; i< list.size(); i++){
-				
-				Graphics2D g2d = (Graphics2D) g;
-		        g2d.setRenderingHint(
-		            RenderingHints.KEY_ANTIALIASING,
-		            RenderingHints.VALUE_ANTIALIAS_ON);
-		        
-		        a = getWidth() / 2;
-		        b = getHeight() / 2;
-		        int m = Math.min(a, b);
-		        r = 4 * m / 5;
-		        int r2 = Math.abs(m - r) / 2;
-		        
-		        double t = 2 * Math.PI * i / list.size();
-	            int x = (int) Math.round(a + r * Math.cos(t));
-	            int y = (int) Math.round(b + r * Math.sin(t));
-	            g2d.setColor(Color.red);
-	            g2d.fillOval(x - r2-100, y - r2,10, 10);
-	            list.get(i).setX(x-r2-100);
-	            list.get(i).setY(y-r2);
-	            g.drawString(Integer.toString(i), list.get(i).getX()+5, list.get(i).getY()-5);
-			}
-			
-			
-			
-			//roundGraph = false;
+
+		super.paint(g);
+		for (int i = 0; i < list.size(); i++) {
+			g.setColor(Color.red);
+			g.fillOval(list.get(i).getX(), list.get(i).getY(), 10, 10);
+			g.drawString(Integer.toString(i), list.get(i).getX() + 5,
+					list.get(i).getY() - 5);
+			// System.out.println(tabX[i]);
 		}
-		if (path != null) {
+
+		if (roundGraph == true) {
+			g.setColor(Color.white);
+			g.fillRect(panel.getX(), panel.getY(), panel.getWidth(),
+					panel.getHeight());
+
+			for (int i = 0; i < list.size(); i++) {
+
+				Graphics2D g2d = (Graphics2D) g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+						RenderingHints.VALUE_ANTIALIAS_ON);
+
+				a = getWidth() / 2;
+				b = getHeight() / 2;
+				int m = Math.min(a, b);
+				r = 4 * m / 5;
+				int r2 = Math.abs(m - r) / 2;
+
+				double t = 2 * Math.PI * i / list.size();
+				int x = (int) Math.round(a + r * Math.cos(t));
+				int y = (int) Math.round(b + r * Math.sin(t));
+				g2d.setColor(Color.red);
+				g2d.fillOval(x - r2 - 100, y - r2, 10, 10);
+				list.get(i).setX(x - r2 - 100);
+				list.get(i).setY(y - r2);
+				g.drawString(Integer.toString(i), list.get(i).getX() + 5, list
+						.get(i).getY() - 5);
+			}
+
+			// roundGraph = false;
+		}
+
+		if (path != null && list.size() == path.length) {
+
 			for (int i = 0; i < path.length - 1; i++) {
+
 				g.drawLine(list.get(path[i]).getX() + 5, list.get(path[i])
 						.getY() + 5, list.get(path[i + 1]).getX() + 5, list
 						.get(path[i + 1]).getY() + 5);
 			}
-			g.drawLine(list.get(path.length - 1).getX() + 5,
-					list.get(path.length - 1).getY() + 5,
-					list.get(0).getX() + 5, list.get(0).getY() + 5);
+
+			g.drawLine(list.get(path[path.length - 1]).getX() + 5,
+					list.get(path[path.length - 1]).getY() + 5,
+					list.get(path[0]).getX() + 5, list.get(path[0]).getY() + 5);
 		}
+
 	}
-	
-	public void clear(){
-		if(list != null){
+
+	public void clear() {
+		if (list != null) {
 			roundGraph = false;
 			list.clear();
+			addVertex = true;
+			path = null;
 		}
 	}
-	
+
 	public void drawPath(int tab[]) {
 		path = tab;
 		// System.out.println(path);
 		repaint();
-	} 
+	}
 }
