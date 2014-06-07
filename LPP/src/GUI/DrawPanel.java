@@ -30,6 +30,7 @@ import javax.swing.event.ChangeListener;
 
 import myJgrapht.Hamilton;
 import myPkg.ExportImport;
+
 import java.awt.FlowLayout;
 
 public class DrawPanel extends JPanel {
@@ -57,6 +58,7 @@ public class DrawPanel extends JPanel {
 		roundGraph = false;
 		addVertex = true;
 		panel = new JPanel();
+		
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -71,7 +73,7 @@ public class DrawPanel extends JPanel {
 			}
 		});
 		panel.setBackground(Color.WHITE);
-		
+	
 	//liczba populacji (napis, slider i textField
 		JLabel lblLiczbaPopulacji = new JLabel("Liczba populacji:");
 		lblLiczbaPopulacji.setFont(new Font("Tahoma", Font.BOLD, 9));
@@ -154,6 +156,7 @@ public class DrawPanel extends JPanel {
 		JButton btnWykonaj = new JButton("Wykonaj");
 		btnWykonaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				addVertex = false;
 				double adjacencyMatrix[][] = new double[list.size()][list.size()];
 				for(int i=0;i<list.size()-1;i++)
