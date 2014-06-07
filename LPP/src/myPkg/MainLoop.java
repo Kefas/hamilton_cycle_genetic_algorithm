@@ -44,7 +44,7 @@ public class MainLoop extends Thread{
 		this.graph = graph;
 		this.evolParams = params;
 		this.appraisal = appraisal;
-		sizeOfPopulation = (int) (graph.getSize() * params.getSizeOfPopulation());
+		sizeOfPopulation = params.getSizeOfPopulation();
 		iterationsLimit = evolParams.numberOfIterations;
 
 		for (int i = 0; i < sizeOfPopulation; i++) {
@@ -325,8 +325,8 @@ public class MainLoop extends Thread{
 		return this.plot.getDatasetCount();
 	}
 
-//	public static void main(String[] args) {
-	public void mainFunction(){
+	public static void main(String[] args) {
+	//public void mainFunction(){
 		XYSeriesCollection dataset = createDataset("Populacje");
 		JFreeChart chart = ChartFactory.createXYLineChart("",
 				"Numer Populacji", "Warto��", dataset,
@@ -357,7 +357,7 @@ public class MainLoop extends Thread{
 		createAdditionalDataset();
 		createAdditionalDataset();
 		System.out.println("Jestem przed uruchomienie MainLoop");
-//		MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());
+		MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());
 
 		/*
 		 * m.graph.wypisz();
@@ -366,7 +366,7 @@ public class MainLoop extends Thread{
 		 * "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55\n"+
 		 * "Nowa generacja: "+Arrays.toString(m.generation.toArray()));
 		 */
-//		m.run();
+		m.run();
 	}
 
 }
