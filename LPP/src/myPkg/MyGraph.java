@@ -97,7 +97,11 @@ public class MyGraph {
 		for(int currVer=0; currVer<tableOfCoordinates.length; currVer++){
 			tableOfVertexes[currVer] = new Vertex(currVer, tableOfCoordinates.length);
 			for(int currNeigh=0; currNeigh<tableOfCoordinates.length; currNeigh++){
-				if(currVer==currNeigh){
+				if(currNeigh < currVer){
+					// these distances has been already generated
+					tmpDistance = tableOfVertexes[currNeigh].getDistanceToNeigbour(currVer);
+					tableOfVertexes[currVer].setDistanceToNeighbour(currNeigh, tmpDistance);
+				}else if(currVer==currNeigh){
 					tableOfVertexes[currVer].setDistanceToNeighbour(currNeigh, 0);
 				}
 				else{
@@ -134,7 +138,7 @@ public class MyGraph {
 	}
 	public static void main(String [] args){
 		//MyGraph nowy = new MyGraph("./zestaw5.txt");
-		MyGraph nowy = new MyGraph(5, 10, 10);
+		MyGraph nowy = new MyGraph(5000, 10, 10);
 		System.out.println("Zrobilo");
 		nowy.wypisz();
 		//nowy.exportToFile("nowyGraf5.csv");
