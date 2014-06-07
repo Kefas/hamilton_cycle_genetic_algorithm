@@ -24,6 +24,9 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import myPkg.AdaptationValues;
+import myPkg.MainLoop;
+import myPkg.MyGraph;
 import myPkg.ParametersOfEvolution;
 
 public class GenPanel extends JPanel {
@@ -169,25 +172,42 @@ public class GenPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+//				parameters settings
 				ParametersOfEvolution params = new ParametersOfEvolution();
 				params.setSizeOfPopulation(Integer.parseInt(textField.getText()));
 				params.setNumberOfIterations(Integer.parseInt(textField_1.getText()));
-				
+								
 				if(rdbtnMut.isSelected())
-					params.setMethodOfMutation(0);
-				else
 					params.setMethodOfMutation(1);
+				else
+					params.setMethodOfMutation(0);
 				
 				if( rdbtnKrz.isSelected())
-					params.setMethodOfCrossing(0);
-				else
 					params.setMethodOfCrossing(1);
+				else
+					params.setMethodOfCrossing(0);
 				
 				if( rdbtnRep.isSelected())
-					params.setMethodOfBreeding(0);
-				else
 					params.setMethodOfBreeding(1);
+				else
+					params.setMethodOfBreeding(0);
 				
+//				random graph creation
+//				zakomentuj ta linijke to od razu zobaczysz ze pojdzie
+//				pewnie trzeba bedzie wygenerowac graf predzej i wczytac go z pliku
+				MyGraph graph = new MyGraph(Integer.parseInt(textField_2.getText()));
+
+				AdaptationValues appraisal = new AdaptationValues();
+				
+				System.out.println("Uruchamiam algorytm z paramterami:");
+				System.out.println("Liczba populacji:" + textField.getText());
+				System.out.println("Liczba iteracji:" + textField_1.getText());
+				System.out.println("Liczba wierzołków:" + textField_2.getText());
+				
+				MainLoop algorithm = new MainLoop(graph, params, appraisal);
+				algorithm.mainFunction();
+								
 			}
 		});
 		

@@ -59,7 +59,7 @@ public class MainLoop extends Thread{
 			performCrossing(evolParams.getMethodOfBreeding(), evolParams.getMethodOfCrossing());
 
 			performMutation(evolParams.getMethodOfMutation());
-	//KONSEK: tu jest jedyna linika która Cie interesuje!!!		
+	//KONSEK: tu jest jedyna linika ktï¿½ra Cie interesuje!!!		
 			/*appraisal =*/ assessPopulation(); //this function modifies 'appraisal'
 			updateChart(appraisal);
 
@@ -146,7 +146,7 @@ public class MainLoop extends Thread{
 			extremeAncestors.add(appraisal.getBest());
 			return condition;
 		case 3:
-			//domyœlne podobieñstwo do ukoñczenia jest ustawione na 98%
+			//domyï¿½lne podobieï¿½stwo do ukoï¿½czenia jest ustawione na 98%
 			if( evolParams.getCorrectResult() / ((double)appraisal.best) < evolParams.getSimiliarityInTest())
 				condition = false;
 			return condition;
@@ -254,7 +254,7 @@ public class MainLoop extends Thread{
 			generation.remove(0);
 			ind2 = generation.get(tmp = random.nextInt(generation.size()));
 			generation.remove(tmp);
-			//tu po wybraniu pary - robimy krzy¿owanie i te parê tak czy siak wklepujemy do nowej populacji
+			//tu po wybraniu pary - robimy krzyï¿½owanie i te parï¿½ tak czy siak wklepujemy do nowej populacji
 			switch (typeOfCrossing) {
 			case 1:
 				ind1.crossing1(ind2);
@@ -324,7 +324,8 @@ public class MainLoop extends Thread{
 		return this.plot.getDatasetCount();
 	}
 
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
+	public void mainFunction(){
 		XYSeriesCollection dataset = createDataset("Populacje");
 		JFreeChart chart = ChartFactory.createXYLineChart("",
 				"Numer Populacji", "Wartoï¿½ï¿½", dataset,
