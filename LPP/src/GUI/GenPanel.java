@@ -121,7 +121,7 @@ public class GenPanel extends JPanel {
 		JRadioButton rdbtnKrz_1 = new JRadioButton("krz1");
 		final JRadioButton rdbtnKrz = new JRadioButton("krz2");
 		rdbtnKrz_1.setSelected(true);
-		JRadioButton rdbtnKrz = new JRadioButton("krz2");
+		
 
 		bg2.add(rdbtnKrz);
 		bg2.add(rdbtnKrz_1);
@@ -132,7 +132,6 @@ public class GenPanel extends JPanel {
 
 		ButtonGroup bg3 = new ButtonGroup();
 		final JRadioButton rdbtnRep = new JRadioButton("rep1");
-		JRadioButton rdbtnRep = new JRadioButton("rep1");
 		rdbtnRep.setSelected(true);
 
 		JRadioButton rdbtnRep_1 = new JRadioButton("rep2");
