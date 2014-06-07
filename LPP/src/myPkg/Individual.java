@@ -107,6 +107,7 @@ public class Individual implements Comparable<Individual> {
 	
 	
 	/**
+	 * this mutation swaps particular vertexes in uncoded routes in individuals
 	 * Pair mutation
 	 * @return
 	 */
@@ -155,10 +156,33 @@ public class Individual implements Comparable<Individual> {
 		this.codedRoute = newCodedRoute;
 	}
 	
+	
+	/**
+	 * this mutation changes randomly value of random element(s) in codedRoute
+	 */
+	void mutation2(){
+		//double basicProbability = 1./nodesAmount;
+		//double probabilityOfMutForGene = basicProbability * indParams.getMutProbabMod();
+		
+		double probabilityOfMutForInd = 0.01* indParams.getMutProbabMod(); //modifier from [0.5; 1.5], one percent of pupulation mutates on average
+		double probabilityOfMutForGene =  1./nodesAmount; // if individual mutates - an average there is only one mutation
+		
+		//whether this individual mutates or not:
+		if( random.nextDouble() > probabilityOfMutForInd)
+			return;		
+		for(int i=0; i<nodesAmount-1; i++){
+			if(random.nextDouble()<= probabilityOfMutForGene){
+				//System.out.println("Mutation at "+i+" th position");
+				codedRoute[i] = random.nextInt(nodesAmount-i);
+			}
+		}
+		
+	}
+	
 	/**
 	 * this mutation increments or decrements value of random element(s) in codedRoute
 	 */
-	void mutation2(){
+	void mutation3(){
 		//double basicProbability = 1./nodesAmount;
 		//double probabilityOfMut = basicProbability * indParams.getMutProbabMod();
 		
@@ -183,27 +207,6 @@ public class Individual implements Comparable<Individual> {
 		
 	}
 	
-	/**
-	 * this mutation changes randomly value of random element(s) in codedRoute
-	 */
-	void mutation3(){
-		//double basicProbability = 1./nodesAmount;
-		//double probabilityOfMutForGene = basicProbability * indParams.getMutProbabMod();
-		
-		double probabilityOfMutForInd = 0.01* indParams.getMutProbabMod(); //modifier from [0.5; 1.5], one percent of pupulation mutates on average
-		double probabilityOfMutForGene =  1./nodesAmount; // if individual mutates - an average there is only one mutation
-		
-		//whether this individual mutates or not:
-		if( random.nextDouble() > probabilityOfMutForInd)
-			return;		
-		for(int i=0; i<nodesAmount-1; i++){
-			if(random.nextDouble()<= probabilityOfMutForGene){
-				//System.out.println("Mutation at "+i+" th position");
-				codedRoute[i] = random.nextInt(nodesAmount-i);
-			}
-		}
-		
-	}
 	
 	@Override
 	public String toString() {
