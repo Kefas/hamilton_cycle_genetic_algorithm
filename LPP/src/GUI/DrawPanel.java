@@ -439,6 +439,7 @@ public class DrawPanel extends JPanel {
 		JButton btnGeneruj = new JButton("Generuj");
 		btnGeneruj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				clear();
 				graph = new MyGraph(Integer.parseInt(textField_2.getText()),
 						panel.getX() + 10, panel.getY() + 10, panel.getWidth(),
 						panel.getHeight());
