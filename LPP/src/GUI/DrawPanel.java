@@ -506,59 +506,60 @@ public class DrawPanel extends JPanel {
 		repaint();
 
 		super.paint(g);
-		for (int i = 0; i < list.size(); i++) {
-			g.setColor(Color.red);
-			g.fillOval(list.get(i).getX(), list.get(i).getY(), 10, 10);
-			g.drawString(Integer.toString(i), list.get(i).getX() + 5,
-					list.get(i).getY() - 5);
-			// System.out.println(tabX[i]);
-		}
-
-		if (roundGraph == true) {
-			g.setColor(Color.white);
-			g.fillRect(panel.getX(), panel.getY(), panel.getWidth(),
-					panel.getHeight());
-
+		if(list.size() < 100){
 			for (int i = 0; i < list.size(); i++) {
-
-				Graphics2D g2d = (Graphics2D) g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-						RenderingHints.VALUE_ANTIALIAS_ON);
-
-				a = getWidth() / 2;
-				b = getHeight() / 2;
-				int m = Math.min(a, b);
-				r = 4 * m / 5;
-				int r2 = Math.abs(m - r) / 2;
-
-				double t = 2 * Math.PI * i / list.size();
-				int x = (int) Math.round(a + r * Math.cos(t));
-				int y = (int) Math.round(b + r * Math.sin(t));
-				g2d.setColor(Color.red);
-				g2d.fillOval(x - r2 - 100, y - r2, 10, 10);
-				list.get(i).setX(x - r2 - 100);
-				list.get(i).setY(y - r2);
-				g.drawString(Integer.toString(i), list.get(i).getX() + 5, list
-						.get(i).getY() - 5);
+				g.setColor(Color.red);
+				g.fillOval(list.get(i).getX(), list.get(i).getY(), 10, 10);
+				g.drawString(Integer.toString(i), list.get(i).getX() + 5,
+						list.get(i).getY() - 5);
+				// System.out.println(tabX[i]);
 			}
-
-			// roundGraph = false;
-		}
-
-		if (path != null && list.size() == path.length) {
-
-			for (int i = 0; i < path.length - 1; i++) {
-
-				g.drawLine(list.get(path[i]).getX() + 5, list.get(path[i])
-						.getY() + 5, list.get(path[i + 1]).getX() + 5, list
-						.get(path[i + 1]).getY() + 5);
+	
+			if (roundGraph == true) {
+				g.setColor(Color.white);
+				g.fillRect(panel.getX(), panel.getY(), panel.getWidth(),
+						panel.getHeight());
+	
+				for (int i = 0; i < list.size(); i++) {
+	
+					Graphics2D g2d = (Graphics2D) g;
+					g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+							RenderingHints.VALUE_ANTIALIAS_ON);
+	
+					a = getWidth() / 2;
+					b = getHeight() / 2;
+					int m = Math.min(a, b);
+					r = 4 * m / 5;
+					int r2 = Math.abs(m - r) / 2;
+	
+					double t = 2 * Math.PI * i / list.size();
+					int x = (int) Math.round(a + r * Math.cos(t));
+					int y = (int) Math.round(b + r * Math.sin(t));
+					g2d.setColor(Color.red);
+					g2d.fillOval(x - r2 - 100, y - r2, 10, 10);
+					list.get(i).setX(x - r2 - 100);
+					list.get(i).setY(y - r2);
+					g.drawString(Integer.toString(i), list.get(i).getX() + 5, list
+							.get(i).getY() - 5);
+				}
+	
+				// roundGraph = false;
 			}
-
-			g.drawLine(list.get(path[path.length - 1]).getX() + 5,
-					list.get(path[path.length - 1]).getY() + 5,
-					list.get(path[0]).getX() + 5, list.get(path[0]).getY() + 5);
+	
+			if (path != null && list.size() == path.length) {
+	
+				for (int i = 0; i < path.length - 1; i++) {
+	
+					g.drawLine(list.get(path[i]).getX() + 5, list.get(path[i])
+							.getY() + 5, list.get(path[i + 1]).getX() + 5, list
+							.get(path[i + 1]).getY() + 5);
+				}
+	
+				g.drawLine(list.get(path[path.length - 1]).getX() + 5,
+						list.get(path[path.length - 1]).getY() + 5,
+						list.get(path[0]).getX() + 5, list.get(path[0]).getY() + 5);
+			}
 		}
-
 	}
 
 	public void clear() {

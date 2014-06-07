@@ -179,24 +179,24 @@ public class GenPanel extends JPanel {
 				params.setNumberOfIterations(Integer.parseInt(textField_1.getText()));
 								
 				if(rdbtnMut.isSelected())
-					params.setMethodOfMutation(1);
+					params.setMethodOfMutation(2);
 				else
-					params.setMethodOfMutation(0);
+					params.setMethodOfMutation(1);
 				
 				if( rdbtnKrz.isSelected())
-					params.setMethodOfCrossing(1);
+					params.setMethodOfCrossing(2);
 				else
-					params.setMethodOfCrossing(0);
+					params.setMethodOfCrossing(1);
 				
 				if( rdbtnRep.isSelected())
-					params.setMethodOfBreeding(1);
+					params.setMethodOfBreeding(2);
 				else
-					params.setMethodOfBreeding(0);
+					params.setMethodOfBreeding(1);
 				
 //				random graph creation
 //				zakomentuj ta linijke to od razu zobaczysz ze pojdzie
 //				pewnie trzeba bedzie wygenerowac graf predzej i wczytac go z pliku
-				MyGraph graph = new MyGraph(100);
+				MyGraph graph = new MyGraph(Integer.parseInt(textField_2.getText()));
 
 				AdaptationValues appraisal = new AdaptationValues();
 				
@@ -207,13 +207,12 @@ public class GenPanel extends JPanel {
 				
 				MainLoop algorithm = new MainLoop(graph, params, appraisal);
 				algorithm.mainFunction();
+				algorithm.start();
 				
 			}
 		});
 		
 		JButton btnWczytajZPliku = new JButton("Wczytaj z pliku");
-		
-		
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
