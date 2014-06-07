@@ -2,7 +2,7 @@ package myPkg;
 
 public class ParametersOfEvolution {
 	int numberOfIterations = 5000;
-	double sizeOfPopulation = 0.5; //that is in relation to the number of vertexes of graph
+	int sizeOfPopulation = 1000; //that is in relation to the number of vertexes of graph
 	int methodOfMutation = 1;
 	int methodOfCrossing = 1;
 	int methodOfBreeding = 1;
@@ -67,10 +67,10 @@ public class ParametersOfEvolution {
 	public void setNumberOfIterations(int numberOfIterations) {
 		this.numberOfIterations = numberOfIterations;
 	}
-	public double getSizeOfPopulation() {
+	public int getSizeOfPopulation() {
 		return sizeOfPopulation;
 	}
-	public void setSizeOfPopulation(double sizeOfPopulation) {
+	public void setSizeOfPopulation(int sizeOfPopulation) {
 		this.sizeOfPopulation = sizeOfPopulation;
 	}
 	public int getMethodOfMutation() {

@@ -24,6 +24,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import myPkg.ParametersOfEvolution;
+
 public class GenPanel extends JPanel {
 
 	List<Pair<Integer, Integer>> list;
@@ -98,13 +100,13 @@ public class GenPanel extends JPanel {
 		textField_2.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_2.setColumns(1);
 
-		// RadioButtony dla mutacji, krzy¿owañ i reprodukcji
+		// RadioButtony dla mutacji, krzyï¿½owaï¿½ i reprodukcji
 		JLabel lblMutacje = new JLabel("Mutacje:");
 		lblMutacje.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMutacje.setFont(new Font("Tahoma", Font.BOLD, 9));
 
 		ButtonGroup bg1 = new ButtonGroup();
-		JRadioButton rdbtnMut = new JRadioButton("mut1");
+		final JRadioButton rdbtnMut = new JRadioButton("mut1");
 		JRadioButton rdbtnMut_1 = new JRadioButton("mut2");
 		bg1.add(rdbtnMut);
 		bg1.add(rdbtnMut_1);
@@ -115,7 +117,7 @@ public class GenPanel extends JPanel {
 
 		ButtonGroup bg2 = new ButtonGroup();
 		JRadioButton rdbtnKrz_1 = new JRadioButton("krz1");
-		JRadioButton rdbtnKrz = new JRadioButton("krz2");
+		final JRadioButton rdbtnKrz = new JRadioButton("krz2");
 		bg2.add(rdbtnKrz);
 		bg2.add(rdbtnKrz_1);
 
@@ -124,7 +126,7 @@ public class GenPanel extends JPanel {
 		lblReprodukcje.setFont(new Font("Tahoma", Font.BOLD, 9));
 
 		ButtonGroup bg3 = new ButtonGroup();
-		JRadioButton rdbtnRep = new JRadioButton("rep1");
+		final JRadioButton rdbtnRep = new JRadioButton("rep1");
 		JRadioButton rdbtnRep_1 = new JRadioButton("rep2");
 		bg3.add(rdbtnRep);
 		bg3.add(rdbtnRep_1);
@@ -156,6 +158,31 @@ public class GenPanel extends JPanel {
 
 		
 		JButton btnWykonaj = new JButton("Wykonaj");
+		btnWykonaj.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ParametersOfEvolution params = new ParametersOfEvolution();
+				params.setSizeOfPopulation(Integer.parseInt(textField.getText()));
+				params.setNumberOfIterations(Integer.parseInt(textField_1.getText()));
+				
+				if(rdbtnMut.isSelected())
+					params.setMethodOfMutation(0);
+				else
+					params.setMethodOfMutation(1);
+				
+				if( rdbtnKrz.isSelected())
+					params.setMethodOfCrossing(0);
+				else
+					params.setMethodOfCrossing(1);
+				
+				if( rdbtnRep.isSelected())
+					params.setMethodOfBreeding(0);
+				else
+					params.setMethodOfBreeding(1);
+				
+			}
+		});
 		
 		JButton btnWczytajZPliku = new JButton("Wczytaj z pliku");
 		
