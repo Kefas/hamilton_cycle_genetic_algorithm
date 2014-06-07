@@ -2,6 +2,7 @@ package myPkg;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +40,7 @@ public class MainLoop extends Thread{
 	private static ChartPanel chartPanel;
 	private static int datasetIndex = 0;
 	private static List<XYSeriesCollection> seriesArrayList = new ArrayList<XYSeriesCollection>();
+	private boolean exitPressed = false;
 
 	public MainLoop(MyGraph graph, ParametersOfEvolution params, AdaptationValues appraisal) {
 		this.graph = graph;
@@ -51,10 +53,17 @@ public class MainLoop extends Thread{
 			generation.add(new Individual(graph, params.getIndividualParams()));
 		}
 	}
+	
+	static public void clearStatic(){
+		plot = null;
+		chartPanel = null;
+		datasetIndex = 0;
+		seriesArrayList = new ArrayList<XYSeriesCollection>();
+	}
 
 	public void run() {
 		Thread.currentThread().setPriority(MAX_PRIORITY);
-		while ( continueOrNot(evolParams.methodToFinish) ) {
+		while ( continueOrNot(evolParams.methodToFinish) && !exitPressed) {
 			
 			reproduction();
 			performCrossing(evolParams.getMethodOfBreeding(), evolParams.getMethodOfCrossing());
@@ -62,7 +71,8 @@ public class MainLoop extends Thread{
 			performMutation(evolParams.getMethodOfMutation());
 	
 			/*appraisal =*/ assessPopulation(); //this function modifies 'appraisal'
-			updateChart(appraisal);
+			if(!exitPressed)
+				updateChart(appraisal);
 			System.out.println(Integer.toString(iterationCounter));
 			iterationCounter++;
 		}
@@ -338,18 +348,44 @@ public class MainLoop extends Thread{
 		axis.setAutoRange(true);
 		NumberAxis rangeAxis2 = new NumberAxis("Range Axis 2");
 		rangeAxis2.setAutoRangeIncludesZero(false);
+		
+		
 		JPanel content = new JPanel(new BorderLayout());
 		chartPanel = new ChartPanel(chart);
 		content.add(chartPanel);
+		class ChartFrame extends JFrame{
+			
+			
+			public void windowClosing(final WindowEvent evt){
+				if(evt.getWindow() == this){
+				dispose();
+				
 
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				}
+			}
+			@SuppressWarnings("deprecation")
+			@Override
+			public void dispose() {
+				super.dispose();
+				System.out.println("Hello");
+				exitPressed = true;
+				MainLoop.clearStatic();
+				
+			}
+			
+		}
+
+		ChartFrame frame = new ChartFrame();
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		
 		JPanel panel = new JPanel();
 		panel.add(getChart());
 		frame.add(panel);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		
 
 		createAdditionalDataset();
 		createAdditionalDataset();
@@ -366,6 +402,7 @@ public class MainLoop extends Thread{
 		 */
 		//m.run();
 	}
+	
 
 	public static void main(String[] args) {
 		MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());

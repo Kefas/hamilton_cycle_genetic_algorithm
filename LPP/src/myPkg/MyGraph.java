@@ -9,6 +9,13 @@ public class MyGraph {
 	private final int maxDistance = 1000;
 	Vertex tableOfVertexes[];
 	int tableOfCoordinates[][];
+	public int[][] getTableOfCoordinates() {
+		return tableOfCoordinates;
+	}
+
+	public void setTableOfCoordinates(int[][] tableOfCoordinates) {
+		this.tableOfCoordinates = tableOfCoordinates;
+	}
 	private Random random = new Random();
 	private ArrayList<VertexJUNG> graph;
 	
@@ -51,11 +58,11 @@ public class MyGraph {
 		}			
 	}
 	
-	public MyGraph(int size, int xBound, int yBound){	
+	public MyGraph(int size, int j, int k, int xBound, int yBound){	
 		tableOfCoordinates = new int[size][2];
 		for(int i=0; i<size; i++){
-			tableOfCoordinates[i][0] = random.nextInt(xBound);
-			tableOfCoordinates[i][1] = random.nextInt(yBound);
+			tableOfCoordinates[i][0] = random.nextInt(xBound-j)+j;
+			tableOfCoordinates[i][1] = random.nextInt(yBound-k)+k;
 		}
 		tableOfVertexes = new Vertex[tableOfCoordinates.length];
 		
@@ -138,7 +145,7 @@ public class MyGraph {
 	}
 	public static void main(String [] args){
 		//MyGraph nowy = new MyGraph("./zestaw5.txt");
-		MyGraph nowy = new MyGraph(5000, 10, 10);
+		MyGraph nowy = new MyGraph(5000, 10, 10,0,0);
 		System.out.println("Zrobilo");
 		nowy.wypisz();
 		//nowy.exportToFile("nowyGraf5.csv");

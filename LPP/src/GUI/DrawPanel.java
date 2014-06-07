@@ -53,6 +53,8 @@ public class DrawPanel extends JPanel {
 	private int n;
 	private JPanel panel;
 	private JTextField textField_2;
+	
+	private MyGraph graph;
 
 	/**
 	 * Create the panel.
@@ -213,107 +215,108 @@ public class DrawPanel extends JPanel {
 		JButton btnWykonaj = new JButton("Wykonaj");
 		btnWykonaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				addVertex = false;
-				double adjacencyMatrix[][] = new double[list.size()][list.size()];
-				for(int i=0;i<list.size()-1;i++)
-					for(int j=i+1;j<list.size();j++)
-						adjacencyMatrix[i][j] = distance(list.get(i), list.get(j));				
-//				for(int i=0; i<list.size();i++){
-//					for(int j=0;j<list.size(); j++)
-//						System.out.print(adjacencyMatrix[i][j] + " ");
-//					System.out.println();
-//				}			
-				Hamilton hamilton = new Hamilton(adjacencyMatrix);
-				List<Integer> result = hamilton.execute();
-				System.out.println(result);
-				int cycle [] = new int[result.size()];
-				for(int i=0;i<result.size();i++)
-					cycle[i] = result.get(i);
-				
-				
-				if(cycle.length>17){
-					int fixCycle[] = new int[cycle.length];
-					for(int i=0;i<cycle.length;i++){
-						fixCycle[i] = cycle[i];
-						if(cycle[i] == 1){
-							System.out.println(Integer.toString((cycle.length-i)/2));
-							i++;
-							int temp2;
-							int w =0;
-							for(w=0;w<((cycle.length-i)/2);w++){
-//								cycle[i+w] = cycle[cycle.length-1-w];
-//								cycle[cycle.length-1-w] = temp2;
-								fixCycle[i+w]= cycle[cycle.length-1-w];
-								fixCycle[fixCycle.length-1-w] = cycle[i+w];
-							}
-							fixCycle[w] = cycle[w];
-							i = cycle.length;
-//							for(int h=0;h<cycle.length;h++)
-//								System.out.print(Integer.toString(fixCycle[h])+ ", ");
-							if(fixCycle.length > 10){
-								int temp;
-								int z=0;
-								int j=0;
-								for(int m=0;m<fixCycle.length;m++){
-									if(fixCycle[m] == 0)
-										z = m;
-									if(fixCycle[m] == 1)
-										j = m;
+				System.out.println("Wykonaj button");
+				if(list.size() <150){
+					addVertex = false;
+					double adjacencyMatrix[][] = new double[list.size()][list.size()];
+					for(int i=0;i<list.size()-1;i++)
+						for(int j=i+1;j<list.size();j++)
+							adjacencyMatrix[i][j] = distance(list.get(i), list.get(j));				
+	//				for(int i=0; i<list.size();i++){
+	//					for(int j=0;j<list.size(); j++)
+	//						System.out.print(adjacencyMatrix[i][j] + " ");
+	//					System.out.println();
+	//				}			
+					Hamilton hamilton = new Hamilton(adjacencyMatrix);
+					List<Integer> result = hamilton.execute();
+					System.out.println(result);
+					int cycle [] = new int[result.size()];
+					for(int i=0;i<result.size();i++)
+						cycle[i] = result.get(i);
+					
+					
+					if(cycle.length>17){
+						int fixCycle[] = new int[cycle.length];
+						for(int i=0;i<cycle.length;i++){
+							fixCycle[i] = cycle[i];
+							if(cycle[i] == 1){
+								System.out.println(Integer.toString((cycle.length-i)/2));
+								i++;
+								int temp2;
+								int w =0;
+								for(w=0;w<((cycle.length-i)/2);w++){
+	//								cycle[i+w] = cycle[cycle.length-1-w];
+	//								cycle[cycle.length-1-w] = temp2;
+									fixCycle[i+w]= cycle[cycle.length-1-w];
+									fixCycle[fixCycle.length-1-w] = cycle[i+w];
 								}
-								temp = fixCycle[z];
+								fixCycle[w] = cycle[w];
+								i = cycle.length;
+	//							for(int h=0;h<cycle.length;h++)
+	//								System.out.print(Integer.toString(fixCycle[h])+ ", ");
+								if(fixCycle.length > 10){
+									int temp;
+									int z=0;
+									int j=0;
+									for(int m=0;m<fixCycle.length;m++){
+										if(fixCycle[m] == 0)
+											z = m;
+										if(fixCycle[m] == 1)
+											j = m;
+									}
+									temp = fixCycle[z];
+									
+									if(j!=fixCycle.length-1){
+										fixCycle[z] = fixCycle[j+1];
+										fixCycle[j+1] = temp;
+									}
+									else{
+										fixCycle[z] = fixCycle[0];
+										fixCycle[0] = temp;
+									}
+								}
+	//							System.out.println();
+	//							for(int h=0;h<cycle.length;h++)
+	//								System.out.print(Integer.toString(fixCycle[h])+ ", ");
 								
-								if(j!=fixCycle.length-1){
-									fixCycle[z] = fixCycle[j+1];
-									fixCycle[j+1] = temp;
+								if(cycle.length > 63){
+									boolean flaga = false;
+									for(int n=0;n<fixCycle.length;n++)
+										if(fixCycle[n] == 0)
+											if(flaga)
+												fixCycle[n] = fixCycle[n-1];
+											else
+												flaga = true;
 								}
-								else{
-									fixCycle[z] = fixCycle[0];
-									fixCycle[0] = temp;
-								}
+								drawPath(fixCycle);
+								return;
 							}
-//							System.out.println();
-//							for(int h=0;h<cycle.length;h++)
-//								System.out.print(Integer.toString(fixCycle[h])+ ", ");
-							
-							if(cycle.length > 63){
-								boolean flaga = false;
-								for(int n=0;n<fixCycle.length;n++)
-									if(fixCycle[n] == 0)
-										if(flaga)
-											fixCycle[n] = fixCycle[n-1];
-										else
-											flaga = true;
-							}
-							drawPath(fixCycle);
-							return;
 						}
 					}
-				}
-				if(cycle.length > 9){
-					int temp;
-					int z=0;
-					int j=0;
-					for(int i=0;i<cycle.length;i++){
-						if(cycle[i] == 0)
-							z = i;
-						if(cycle[i] == 1)
-							j = i;
+					if(cycle.length > 9){
+						int temp;
+						int z=0;
+						int j=0;
+						for(int i=0;i<cycle.length;i++){
+							if(cycle[i] == 0)
+								z = i;
+							if(cycle[i] == 1)
+								j = i;
+						}
+						temp = cycle[z];
+						
+						if(j!=cycle.length-1){
+							cycle[z] = cycle[j+1];
+							cycle[j+1] = temp;
+						}
+						else{
+							cycle[z] = cycle[0];
+							cycle[0] = temp;
+						}
 					}
-					temp = cycle[z];
 					
-					if(j!=cycle.length-1){
-						cycle[z] = cycle[j+1];
-						cycle[j+1] = temp;
-					}
-					else{
-						cycle[z] = cycle[0];
-						cycle[0] = temp;
-					}
+					drawPath(cycle);
 				}
-				
-				drawPath(cycle);
-			
 			
 			
 			
@@ -343,6 +346,8 @@ public class DrawPanel extends JPanel {
 //			zakomentuj ta linijke to od razu zobaczysz ze pojdzie
 //			pewnie trzeba bedzie wygenerowac graf predzej i wczytac go z pliku
 //			MyGraph graph = new MyGraph(Integer.parseInt(textField_2.getText()));
+			System.out.println("Dlugosc listy: " + list.size());
+			
 			if( list.size() > 0){
 				ExportImport.newExportToFile(toIntTable(list), "temp.txt");
 				MyGraph graph = new MyGraph("temp.txt");
@@ -394,6 +399,8 @@ public class DrawPanel extends JPanel {
 		JButton btnGeneruj = new JButton("Generuj");
 		btnGeneruj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				graph = new MyGraph(Integer.parseInt(textField_2.getText()),panel.getX()+10, panel.getY()+10, panel.getWidth(), panel.getHeight());
+				fromIntTable(graph.getTableOfCoordinates());
 			}
 		});
 		
@@ -635,6 +642,16 @@ public class DrawPanel extends JPanel {
 		}
 		return tab;
 	}
+	
+	void fromIntTable(int tab[][]){
+		if(list != null)
+			list.clear();
+		
+		for(int i=0;i<tab.length;i++)
+			list.add(new Pair(tab[i][0],tab[i][1]));
+		
+	
+	}
 
 	protected double distance(Pair<Integer, Integer> pair,
 			Pair<Integer, Integer> pair2) {
@@ -648,7 +665,7 @@ public class DrawPanel extends JPanel {
 		repaint();
 
 		super.paint(g);
-		if( list.size()>0 && list.size() < 100){
+		if( list.size()>0 && list.size() < 150){
 			for (int i = 0; i < list.size(); i++) {
 				g.setColor(Color.red);
 				g.fillOval(list.get(i).getX(), list.get(i).getY(), 10, 10);
