@@ -53,6 +53,7 @@ public class MainLoop extends Thread{
 	}
 
 	public void run() {
+		Thread.currentThread().setPriority(MAX_PRIORITY);
 		while ( continueOrNot(evolParams.methodToFinish) ) {
 			
 			reproduction();
