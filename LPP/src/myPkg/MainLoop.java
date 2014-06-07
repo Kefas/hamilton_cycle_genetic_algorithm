@@ -60,7 +60,7 @@ public class MainLoop extends Thread{
 			performCrossing(evolParams.getMethodOfBreeding(), evolParams.getMethodOfCrossing());
 
 			performMutation(evolParams.getMethodOfMutation());
-	//KONSEK: tu jest jedyna linika kt�ra Cie interesuje!!!		
+	
 			/*appraisal =*/ assessPopulation(); //this function modifies 'appraisal'
 			updateChart(appraisal);
 			System.out.println(Integer.toString(iterationCounter));
@@ -77,12 +77,6 @@ public class MainLoop extends Thread{
 				generation2.getAverage());
 		getXYSeries(2).getSeries(0).add(iterationCounter,
 				generation2.getWorst());
-		// try {
-		// Thread.sleep(100);
-		// } catch (InterruptedException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
 	}
 
 	/**
@@ -126,10 +120,14 @@ public class MainLoop extends Thread{
 		
 		switch(methodOfFinishing){
 		case 1:
+			//finishes when iterations limit was exceeded
 			if (iterationCounter > iterationsLimit)
 				condition = false;
 			return condition;
-		case 2:			
+		case 2:	
+			//searches the 'evolParams.getMaxAmountOfAncestors()' amount of ancestors, choses the best and the worst one 
+			// and checks the similarity to them - if is higher then 'evolParams.getSimilarityToAncestors()' the evolution (by default 98%)
+			// is finished
 			if(extremeAncestors.size() < evolParams.getMaxAmountOfAncestors()){
 				extremeAncestors.add(appraisal.getBest());
 				return condition;
@@ -148,7 +146,8 @@ public class MainLoop extends Thread{
 			extremeAncestors.add(appraisal.getBest());
 			return condition;
 		case 3:
-			//domy�lne podobie�stwo do uko�czenia jest ustawione na 98%
+			//this is finish test when we have somehow the correct solution
+			// evolution ends when the similarity to exact solution is highet then 'evolParams.getSimiliarityInTest()' (by default 98%)
 			if( evolParams.getCorrectResult() / ((double)appraisal.best) < evolParams.getSimiliarityInTest())
 				condition = false;
 			return condition;
@@ -289,12 +288,12 @@ public class MainLoop extends Thread{
 			break;
 		case 2:
 			for (Individual x : generation) {
-				x.mutation2();
+				x.mutation3();
 			}
 			break;
 		case 3:
 			for (Individual x : generation) {
-				x.mutation3();
+				x.mutation2();
 			}
 			break;
 		default:
@@ -325,8 +324,6 @@ public class MainLoop extends Thread{
 	public int getDatasetCount() {
 		return this.plot.getDatasetCount();
 	}
-
-	//public static void main(String[] args) {
 	public void mainFunction(){
 		XYSeriesCollection dataset = createDataset("Populacje");
 		JFreeChart chart = ChartFactory.createXYLineChart("",
@@ -358,7 +355,7 @@ public class MainLoop extends Thread{
 		createAdditionalDataset();
 		createAdditionalDataset();
 		System.out.println("Jestem przed uruchomienie MainLoop");
-	//	MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());
+		//MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());
 
 		/*
 		 * m.graph.wypisz();
@@ -367,7 +364,14 @@ public class MainLoop extends Thread{
 		 * "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55\n"+
 		 * "Nowa generacja: "+Arrays.toString(m.generation.toArray()));
 		 */
-	//	m.run();
+		//m.run();
+	}
+
+	public static void main(String[] args) {
+		MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());
+		m.mainFunction();
+		m.run();
+		
 	}
 
 }
