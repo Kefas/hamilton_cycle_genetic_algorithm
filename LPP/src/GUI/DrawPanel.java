@@ -44,7 +44,7 @@ public class DrawPanel extends JPanel {
 	private JTextField textField;
 	private JTextField textField_1;
 	private ChangeListener listener;
-	private JSlider slider, slider_1;
+	private JSlider slider, slider_1, slider_2;
 	private boolean roundGraph, addVertex;
 	private static final int SIZE = 256;
 	private int a = SIZE / 2;
@@ -52,6 +52,7 @@ public class DrawPanel extends JPanel {
 	private int r = 4 * SIZE / 5;
 	private int n;
 	private JPanel panel;
+	private JTextField textField_2;
 
 	/**
 	 * Create the panel.
@@ -139,6 +140,50 @@ public class DrawPanel extends JPanel {
 		JRadioButton rdbtnRep_1 = new JRadioButton("rep2");
 		bg3.add(rdbtnRep);
 		bg3.add(rdbtnRep_1);
+		
+		JPanel panel_2 = new JPanel();
+		
+		JLabel lblNewLabel = new JLabel("Metoda ko\u0144czenia:\r\n");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 9));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JPanel panel_3 = new JPanel();
+		
+		JLabel lblLiczbaWierzchokw = new JLabel("Liczba wierzcho\u0142k\u00F3w:");
+		lblLiczbaWierzchokw.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLiczbaWierzchokw.setFont(new Font("Tahoma", Font.BOLD, 9));
+		
+		
+		slider_2 = new JSlider(100,10000,1000);
+		slider_2.setMajorTickSpacing(4900);
+		slider_2.setPaintTicks(true);
+		slider_2.setPaintLabels(true);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setLayout(null);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(70, 11, 45, 20);
+		textField_2.setText("1000");
+		textField_2.setHorizontalAlignment(SwingConstants.CENTER);
+		textField_2.setColumns(1);
+		panel_4.add(textField_2);
+		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		ButtonGroup bg4 = new ButtonGroup();
+		JRadioButton rdbtnZak = new JRadioButton("zak1");
+		rdbtnZak.setSelected(true);
+		bg4.add(rdbtnZak);
+		panel_3.add(rdbtnZak);
+		
+		JRadioButton rdbtnZak_1 = new JRadioButton("zak2");
+		bg4.add(rdbtnZak_1);
+		panel_3.add(rdbtnZak_1);
+		
+		JRadioButton rdbtnZak_2 = new JRadioButton("zak3");
+		bg4.add(rdbtnZak_2);
+		panel_3.add(rdbtnZak_2);
+		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 	
 	//ChangeListener dla sliderow
 		slider.addChangeListener(new ChangeListener(){
@@ -155,6 +200,14 @@ public class DrawPanel extends JPanel {
             }
             
         });
+		slider_2.addChangeListener(new ChangeListener(){
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                textField_2.setText(String.valueOf(slider_2.getValue()));
+            }
+            
+        });
+		
 		
 		
 		JButton btnWykonaj = new JButton("Wykonaj");
@@ -312,53 +365,6 @@ public class DrawPanel extends JPanel {
 			}
 		});
 		
-		JButton btnWczytajZPliku = new JButton("Wczytaj z pliku");
-		btnWczytajZPliku.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String path;
-				JFileChooser fileChooser = new JFileChooser();
-				int ret = fileChooser.showOpenDialog(null);
-				if(ret  == JFileChooser.APPROVE_OPTION){
-					File selectedFile = fileChooser.getSelectedFile();
-					path = selectedFile.getAbsolutePath();
-					clear();
-					int tab[][] = new ExportImport().newImportFromFile(path);
-					
-					for(int i=0;i<tab.length;i++)
-						list.add(new Pair(tab[i][0],tab[i][1]));
-					
-					repaint();
-							
-				}
-				
-			}
-		});
-		
-		JButton btnZapiszDoPliku = new JButton("Zapisz do pliku");
-		btnZapiszDoPliku.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String path;
-				int tab[][] = new int[list.size()][2];
-				JFileChooser fileChooser = new JFileChooser();
-				int ret = fileChooser.showOpenDialog(null);
-				if(ret  == JFileChooser.APPROVE_OPTION){
-					File selectedFile = fileChooser.getSelectedFile();
-					path = selectedFile.getAbsolutePath();
-					//clear();
-					
-					for(int i=0; i < list.size(); i++){
-						tab[i][0] = list.get(i).getX();
-						tab[i][1] = list.get(i).getY();
-					}
-					ExportImport.newExportToFile(tab, path);
-					
-					repaint();
-							
-				}
-				
-			}
-		});
-		
 		JPanel panel_1 = new JPanel();
 		
 		JLabel lblZestawy = new JLabel("Zestawy ");
@@ -366,6 +372,7 @@ public class DrawPanel extends JPanel {
 		lblZestawy.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JButton btnNewButton = new JButton("20 rozproszony");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
@@ -378,13 +385,16 @@ public class DrawPanel extends JPanel {
 				repaint();
 			}
 		});
+		
+		
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-					.addGap(8)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+					.addGap(10)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -405,13 +415,23 @@ public class DrawPanel extends JPanel {
 															.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 																.addComponent(rdbtnKrz, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
 																.addComponent(rdbtnMut_1)))
+														.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 202, Short.MAX_VALUE)
+														.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+														.addGroup(groupLayout.createSequentialGroup()
+															.addComponent(lblZestawy)
+															.addGap(76))
+														.addGroup(groupLayout.createSequentialGroup()
+															.addComponent(btnNewButton)
+															.addGap(43))
 														.addGroup(groupLayout.createSequentialGroup()
 															.addComponent(rdbtnRep)
 															.addPreferredGap(ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
 															.addComponent(rdbtnRep_1)
 															.addGap(10))
-														.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-														.addComponent(panel_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)))
+														.addComponent(panel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+														.addComponent(slider_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)))
 												.addGroup(groupLayout.createSequentialGroup()
 													.addGap(79)
 													.addComponent(lblMutacje)))
@@ -432,31 +452,24 @@ public class DrawPanel extends JPanel {
 									.addGap(82)
 									.addComponent(lblKrzyowania, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(64)
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(btnWczytajZPliku)
-										.addComponent(btnGrafNaKole)
-										.addComponent(btnZapiszDoPliku)))
-								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(78)
 									.addComponent(btnWykonaj)))
 							.addGap(32))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblReprodukcje)
-							.addGap(94))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblZestawy)
-							.addGap(108))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnNewButton)
-							.addGap(75))))
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblReprodukcje)
+								.addComponent(lblNewLabel)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(lblLiczbaWierzchokw)
+									.addComponent(btnGrafNaKole)))
+							.addGap(94))))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
+						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblLiczbaPopulacji, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -487,22 +500,82 @@ public class DrawPanel extends JPanel {
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(rdbtnRep)
 								.addComponent(rdbtnRep_1))
-							.addGap(18)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblNewLabel)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblLiczbaWierzchokw)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(slider_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnGrafNaKole)
-							.addGap(18)
-							.addComponent(btnWczytajZPliku)
-							.addGap(18)
-							.addComponent(btnZapiszDoPliku)
-							.addGap(18)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(lblZestawy)
 							.addGap(2)
 							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnNewButton)
-							.addPreferredGap(ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
 							.addComponent(btnWykonaj)))
 					.addContainerGap())
 		);
+		
+		
+		JButton btnWczytajZPliku = new JButton("Wczytaj z pliku");
+		panel_2.add(btnWczytajZPliku);
+		btnWczytajZPliku.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		
+		JButton btnZapiszDoPliku = new JButton("Zapisz do pliku");
+		panel_2.add(btnZapiszDoPliku);
+		btnZapiszDoPliku.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnZapiszDoPliku.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String path;
+				int tab[][] = new int[list.size()][2];
+				JFileChooser fileChooser = new JFileChooser();
+				int ret = fileChooser.showOpenDialog(null);
+				if(ret  == JFileChooser.APPROVE_OPTION){
+					File selectedFile = fileChooser.getSelectedFile();
+					path = selectedFile.getAbsolutePath();
+					//clear();
+					
+					for(int i=0; i < list.size(); i++){
+						tab[i][0] = list.get(i).getX();
+						tab[i][1] = list.get(i).getY();
+					}
+					ExportImport.newExportToFile(tab, path);
+					
+					repaint();
+							
+				}
+				
+			}
+		});
+		btnWczytajZPliku.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String path;
+				JFileChooser fileChooser = new JFileChooser();
+				int ret = fileChooser.showOpenDialog(null);
+				if(ret  == JFileChooser.APPROVE_OPTION){
+					File selectedFile = fileChooser.getSelectedFile();
+					path = selectedFile.getAbsolutePath();
+					clear();
+					int tab[][] = new ExportImport().newImportFromFile(path);
+					
+					for(int i=0;i<tab.length;i++)
+						list.add(new Pair(tab[i][0],tab[i][1]));
+					
+					repaint();
+							
+				}
+				
+			}
+		});
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton button = new JButton("20");
