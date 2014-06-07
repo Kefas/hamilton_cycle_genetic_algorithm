@@ -41,6 +41,15 @@ public class MainLoop extends Thread{
 	private static int datasetIndex = 0;
 	private static List<XYSeriesCollection> seriesArrayList = new ArrayList<XYSeriesCollection>();
 	private boolean exitPressed = false;
+	
+
+	public boolean isExitPressed() {
+		return exitPressed;
+	}
+
+	public void setExitPressed(boolean exitPressed) {
+		this.exitPressed = exitPressed;
+	}
 
 	public MainLoop(MyGraph graph, ParametersOfEvolution params, AdaptationValues appraisal) {
 		this.graph = graph;
