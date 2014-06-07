@@ -29,7 +29,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import myJgrapht.Hamilton;
+import myPkg.AdaptationValues;
 import myPkg.ExportImport;
+import myPkg.MainLoop;
+import myPkg.MyGraph;
+import myPkg.ParametersOfEvolution;
 
 import java.awt.FlowLayout;
 
@@ -108,7 +112,7 @@ public class DrawPanel extends JPanel {
 		lblMutacje.setFont(new Font("Tahoma", Font.BOLD, 9));
 		
 		ButtonGroup bg1 = new ButtonGroup();
-		JRadioButton rdbtnMut = new JRadioButton("mut1");
+		final JRadioButton rdbtnMut = new JRadioButton("mut1");
 		rdbtnMut.setSelected(true);
 		JRadioButton rdbtnMut_1 = new JRadioButton("mut2");
 		bg1.add(rdbtnMut);
@@ -121,7 +125,7 @@ public class DrawPanel extends JPanel {
 		ButtonGroup bg2 = new ButtonGroup();
 		JRadioButton rdbtnKrz_1 = new JRadioButton("krz1");
 		rdbtnKrz_1.setSelected(true);
-		JRadioButton rdbtnKrz = new JRadioButton("krz2");
+		final JRadioButton rdbtnKrz = new JRadioButton("krz2");
 		bg2.add(rdbtnKrz);
 		bg2.add(rdbtnKrz_1);
 		
@@ -130,7 +134,7 @@ public class DrawPanel extends JPanel {
 		lblReprodukcje.setFont(new Font("Tahoma", Font.BOLD, 9));
 		
 		ButtonGroup bg3 = new ButtonGroup();
-		JRadioButton rdbtnRep = new JRadioButton("rep1");
+		final JRadioButton rdbtnRep = new JRadioButton("rep1");
 		rdbtnRep.setSelected(true);
 		JRadioButton rdbtnRep_1 = new JRadioButton("rep2");
 		bg3.add(rdbtnRep);
@@ -256,9 +260,49 @@ public class DrawPanel extends JPanel {
 				}
 				
 				drawPath(cycle);
-			}
-
 			
+			
+			
+			
+			
+//			algorithms settings
+			
+			ParametersOfEvolution params = new ParametersOfEvolution();
+			params.setSizeOfPopulation(Integer.parseInt(textField.getText()));
+			params.setNumberOfIterations(Integer.parseInt(textField_1.getText()));
+							
+			if(rdbtnMut.isSelected())
+				params.setMethodOfMutation(2);
+			else
+				params.setMethodOfMutation(1);
+			
+			if( rdbtnKrz.isSelected())
+				params.setMethodOfCrossing(2);
+			else
+				params.setMethodOfCrossing(1);
+			
+			if( rdbtnRep.isSelected())
+				params.setMethodOfBreeding(2);
+			else
+				params.setMethodOfBreeding(1);
+			
+//			random graph creation
+//			zakomentuj ta linijke to od razu zobaczysz ze pojdzie
+//			pewnie trzeba bedzie wygenerowac graf predzej i wczytac go z pliku
+			MyGraph graph = new MyGraph(Integer.parseInt(textField_2.getText()));
+
+			AdaptationValues appraisal = new AdaptationValues();
+			
+			System.out.println("Uruchamiam algorytm z paramterami:");
+			System.out.println("Liczba populacji:" + textField.getText());
+			System.out.println("Liczba iteracji:" + textField_1.getText());
+			System.out.println("Liczba wierzołków:" + textField_2.getText());
+			
+			MainLoop algorithm = new MainLoop(graph, params, appraisal);
+			algorithm.mainFunction();
+			algorithm.start();
+
+			}
 		});
 		
 		JButton btnGrafNaKole = new JButton("Graf na kole");
