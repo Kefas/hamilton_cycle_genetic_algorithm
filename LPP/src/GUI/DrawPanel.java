@@ -107,6 +107,7 @@ public class DrawPanel extends JPanel {
 		
 		ButtonGroup bg1 = new ButtonGroup();
 		JRadioButton rdbtnMut = new JRadioButton("mut1");
+		rdbtnMut.setSelected(true);
 		JRadioButton rdbtnMut_1 = new JRadioButton("mut2");
 		bg1.add(rdbtnMut);
 		bg1.add(rdbtnMut_1);
@@ -117,6 +118,7 @@ public class DrawPanel extends JPanel {
 		
 		ButtonGroup bg2 = new ButtonGroup();
 		JRadioButton rdbtnKrz_1 = new JRadioButton("krz1");
+		rdbtnKrz_1.setSelected(true);
 		JRadioButton rdbtnKrz = new JRadioButton("krz2");
 		bg2.add(rdbtnKrz);
 		bg2.add(rdbtnKrz_1);
@@ -127,6 +129,7 @@ public class DrawPanel extends JPanel {
 		
 		ButtonGroup bg3 = new ButtonGroup();
 		JRadioButton rdbtnRep = new JRadioButton("rep1");
+		rdbtnRep.setSelected(true);
 		JRadioButton rdbtnRep_1 = new JRadioButton("rep2");
 		bg3.add(rdbtnRep);
 		bg3.add(rdbtnRep_1);
