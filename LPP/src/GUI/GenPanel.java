@@ -207,7 +207,7 @@ public class GenPanel extends JPanel {
 				
 				MainLoop algorithm = new MainLoop(graph, params, appraisal);
 				algorithm.mainFunction();
-				algorithm.run();
+				algorithm.start();
 								
 			}
 		});
