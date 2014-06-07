@@ -42,7 +42,6 @@ public class MyGraph {
 									tableOfVertexes[x].getDistanceToNeigbour(currNeigh) 
 									+ tableOfVertexes[x].getDistanceToNeigbour(currVer) 
 								)
-							//tmpMinSumDistance = tableOfVertexes[x].getDistanceToNeigbour(currNeigh);
 							tmpMinSumDistance = tableOfVertexes[x].getDistanceToNeigbour(currNeigh)+ tableOfVertexes[x].getDistanceToNeigbour(currVer);
 					}
 					tmpMinSumDistance = tmpMinSumDistance <=1000? tmpMinSumDistance : 1000;
@@ -52,7 +51,23 @@ public class MyGraph {
 		}			
 	}
 	
-	public MyGraph(String path){
+	public MyGraph(int size, int xBound, int yBound){	
+		tableOfCoordinates = new int[size][2];
+		for(int i=0; i<size; i++){
+			tableOfCoordinates[i][0] = random.nextInt(xBound);
+			tableOfCoordinates[i][1] = random.nextInt(yBound);
+		}
+		tableOfVertexes = new Vertex[tableOfCoordinates.length];
+		
+		tableOfCoordinatesToTableOfVertexes();
+	}
+	
+	/**
+	 * Wczytywanie z macierzy
+	 * @param path
+	 * @param _ - parametr tylko zeby odroznic od wczytywania z tableOfCoordinates
+	 */
+	public MyGraph(String path, int _){
 		double [][] matrix = ExportImport.importFromFile(path);
 		int size = matrix.length;
 		tableOfVertexes = new Vertex[size];
@@ -61,9 +76,23 @@ public class MyGraph {
 			tableOfVertexes[i].setTabOfNeigh(matrix[i]);
 		}		
 	}
-	public MyGraph(String path, int _){
-		tableOfCoordinates = null;		
-		// to zmieniamy ^^ tu ma byæ wczytywanie
+	
+	/**
+	 * Wczytywanie z table of coordinates
+	 * @param path
+	 */
+	public MyGraph(String path){
+		tableOfCoordinates = ExportImport.newImportFromFile(path);		
+		tableOfVertexes = new Vertex[tableOfCoordinates.length];
+		
+		tableOfCoordinatesToTableOfVertexes();
+	}
+	
+	/**
+	 * does the inner transformation from (already filled) tableOfCoordinates
+	 * to tableOfVertexes	 
+	 */
+	private void tableOfCoordinatesToTableOfVertexes(){
 		double distanceTmp = 0;
 		for(int currVer=0; currVer<tableOfCoordinates.length; currVer++){
 			tableOfVertexes[currVer] = new Vertex(currVer, tableOfCoordinates.length);
@@ -78,7 +107,7 @@ public class MyGraph {
 					tableOfVertexes[currVer].setDistanceToNeighbour(currNeigh, distanceTmp);
 				}
 			}
-		}
+		}		
 	}
 	public void exportToFile(String path){
 		double [][]matrix = new double[tableOfVertexes.length][tableOfVertexes.length];
@@ -104,12 +133,14 @@ public class MyGraph {
 		return tableOfVertexes[vertex1].getDistanceToNeigbour(vertex2);
 	}
 	public static void main(String [] args){
-		MyGraph nowy = new MyGraph(5);
+		//MyGraph nowy = new MyGraph("./zestaw5.txt");
+		MyGraph nowy = new MyGraph(5, 10, 10);
+		System.out.println("Zrobilo");
 		nowy.wypisz();
-		nowy.exportToFile("nowyGraf5.csv");
-		MyGraph nowy2 = new MyGraph("nowyGraf5.csv");
+		//nowy.exportToFile("nowyGraf5.csv");
+		//MyGraph nowy2 = new MyGraph("nowyGraf5.csv");
 		System.out.println("");
-		nowy2.wypisz();
+		//nowy2.wypisz();
 		//Individual osobnik = new Individual(nowy, new ParamsOfIndividual());
 		//System.out.println(osobnik + "\n" + osobnik.getRouteLength());
 		
