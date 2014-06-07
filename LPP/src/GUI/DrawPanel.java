@@ -342,19 +342,24 @@ public class DrawPanel extends JPanel {
 //			random graph creation
 //			zakomentuj ta linijke to od razu zobaczysz ze pojdzie
 //			pewnie trzeba bedzie wygenerowac graf predzej i wczytac go z pliku
-			MyGraph graph = new MyGraph(Integer.parseInt(textField_2.getText()));
-
-			AdaptationValues appraisal = new AdaptationValues();
-			
-			System.out.println("Uruchamiam algorytm z paramterami:");
-			System.out.println("Liczba populacji:" + textField.getText());
-			System.out.println("Liczba iteracji:" + textField_1.getText());
-			System.out.println("Liczba wierzołków:" + textField_2.getText());
-			
-			MainLoop algorithm = new MainLoop(graph, params, appraisal);
-			algorithm.mainFunction();
-			algorithm.start();
-
+//			MyGraph graph = new MyGraph(Integer.parseInt(textField_2.getText()));
+			if( list.size() > 0){
+				ExportImport.newExportToFile(toIntTable(list), "temp.txt");
+				MyGraph graph = new MyGraph("temp.txt");
+				
+				AdaptationValues appraisal = new AdaptationValues();
+				
+				System.out.println("Uruchamiam algorytm z paramterami:");
+				System.out.println("Liczba populacji:" + textField.getText());
+				System.out.println("Liczba iteracji:" + textField_1.getText());
+				
+				
+				
+				
+				MainLoop algorithm = new MainLoop(graph, params, appraisal);
+				algorithm.mainFunction();
+				algorithm.start();
+			}
 			}
 		});
 		
@@ -611,6 +616,15 @@ public class DrawPanel extends JPanel {
 
 	}
 
+	protected int[][] toIntTable(List<Pair<Integer, Integer>> list2) {
+		int tab[][] = new int[list2.size()][2];
+		for(int i=0;i<list2.size();i++){
+			tab[i][0] = list2.get(i).getX();
+			tab[i][1] = list2.get(i).getY();
+		}
+		return tab;
+	}
+
 	protected double distance(Pair<Integer, Integer> pair,
 			Pair<Integer, Integer> pair2) {
 
@@ -623,7 +637,7 @@ public class DrawPanel extends JPanel {
 		repaint();
 
 		super.paint(g);
-		if(list.size() < 100){
+		if( list.size()>0 && list.size() < 100){
 			for (int i = 0; i < list.size(); i++) {
 				g.setColor(Color.red);
 				g.fillOval(list.get(i).getX(), list.get(i).getY(), 10, 10);
