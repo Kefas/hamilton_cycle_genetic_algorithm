@@ -391,6 +391,12 @@ public class DrawPanel extends JPanel {
 			}
 		});
 		
+		JButton btnGeneruj = new JButton("Generuj");
+		btnGeneruj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
 		
 		
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -435,8 +441,13 @@ public class DrawPanel extends JPanel {
 															.addComponent(rdbtnRep_1)
 															.addGap(10))
 														.addComponent(panel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-														.addComponent(slider_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-														.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)))
+														.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+														.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+															.addGroup(groupLayout.createSequentialGroup()
+																.addComponent(btnGrafNaKole)
+																.addPreferredGap(ComponentPlacement.UNRELATED)
+																.addComponent(btnGeneruj, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))
+															.addComponent(slider_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 												.addGroup(groupLayout.createSequentialGroup()
 													.addGap(79)
 													.addComponent(lblMutacje)))
@@ -464,9 +475,7 @@ public class DrawPanel extends JPanel {
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addComponent(lblReprodukcje)
 								.addComponent(lblNewLabel)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addComponent(lblLiczbaWierzchokw)
-									.addComponent(btnGrafNaKole)))
+								.addComponent(lblLiczbaWierzchokw))
 							.addGap(94))))
 		);
 		groupLayout.setVerticalGroup(
@@ -515,8 +524,10 @@ public class DrawPanel extends JPanel {
 							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(slider_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnGrafNaKole)
+							.addGap(11)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnGrafNaKole)
+								.addComponent(btnGeneruj))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(lblZestawy)
 							.addGap(2)
