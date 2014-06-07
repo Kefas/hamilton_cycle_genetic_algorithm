@@ -196,7 +196,7 @@ public class GenPanel extends JPanel {
 //				random graph creation
 //				zakomentuj ta linijke to od razu zobaczysz ze pojdzie
 //				pewnie trzeba bedzie wygenerowac graf predzej i wczytac go z pliku
-				MyGraph graph = new MyGraph(Integer.parseInt(textField_2.getText()));
+				MyGraph graph = new MyGraph(100);
 
 				AdaptationValues appraisal = new AdaptationValues();
 				
@@ -207,6 +207,7 @@ public class GenPanel extends JPanel {
 				
 				MainLoop algorithm = new MainLoop(graph, params, appraisal);
 				algorithm.mainFunction();
+				algorithm.run();
 								
 			}
 		});

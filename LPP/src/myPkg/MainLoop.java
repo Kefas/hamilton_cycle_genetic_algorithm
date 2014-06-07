@@ -54,7 +54,7 @@ public class MainLoop extends Thread{
 
 	public void run() {
 		while ( continueOrNot(evolParams.methodToFinish) ) {
-
+			
 			reproduction();
 			performCrossing(evolParams.getMethodOfBreeding(), evolParams.getMethodOfCrossing());
 
@@ -62,9 +62,10 @@ public class MainLoop extends Thread{
 	//KONSEK: tu jest jedyna linika kt�ra Cie interesuje!!!		
 			/*appraisal =*/ assessPopulation(); //this function modifies 'appraisal'
 			updateChart(appraisal);
-
+			System.out.println(Integer.toString(iterationCounter));
 			iterationCounter++;
 		}
+		
 
 	}
 
@@ -355,8 +356,8 @@ public class MainLoop extends Thread{
 		createAdditionalDataset();
 		createAdditionalDataset();
 		createAdditionalDataset();
-
-		MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());
+		System.out.println("Jestem przed uruchomienie MainLoop");
+//		MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());
 
 		/*
 		 * m.graph.wypisz();
@@ -365,7 +366,7 @@ public class MainLoop extends Thread{
 		 * "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55\n"+
 		 * "Nowa generacja: "+Arrays.toString(m.generation.toArray()));
 		 */
-		m.run();
+//		m.run();
 	}
 
 }
