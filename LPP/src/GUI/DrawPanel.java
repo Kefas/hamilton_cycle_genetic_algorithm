@@ -137,7 +137,7 @@ public class DrawPanel extends JPanel {
 		textField_1.setColumns(1);
 
 		// RadioButtony dla mutacji, krzy�owa� i reprodukcji
-		JLabel lblMutacje = new JLabel("Mutacje:");
+		JLabel lblMutacje = new JLabel(" Mutacje:    ");
 		lblMutacje.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMutacje.setFont(new Font("Tahoma", Font.BOLD, 9));
 
@@ -159,7 +159,7 @@ public class DrawPanel extends JPanel {
 		bg2.add(rdbtnKrz);
 		bg2.add(rdbtnKrz_1);
 
-		JLabel lblReprodukcje = new JLabel("  Reprodukcje:");
+		JLabel lblReprodukcje = new JLabel("Reprodukcje:   ");
 		lblReprodukcje.setHorizontalAlignment(SwingConstants.CENTER);
 		lblReprodukcje.setFont(new Font("Tahoma", Font.BOLD, 9));
 
@@ -237,7 +237,7 @@ public class DrawPanel extends JPanel {
 
 		});
 
-		JButton btnWykonaj = new JButton("Wykonaj");
+		JButton btnWykonaj = new JButton("Start");
 		btnWykonaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -447,7 +447,7 @@ public class DrawPanel extends JPanel {
 			}
 		});
 
-		JButton btnWyczy = new JButton("Wyczy\u015B\u0107");
+		JButton btnWyczy = new JButton("Reset");
 		btnWyczy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				roundGraph = false;
@@ -458,416 +458,150 @@ public class DrawPanel extends JPanel {
 		});
 
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(panel,
-												GroupLayout.DEFAULT_SIZE, 153,
-												Short.MAX_VALUE)
-										.addGap(18)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																Alignment.TRAILING,
-																groupLayout
-																		.createParallelGroup(
-																				Alignment.TRAILING)
-																		.addGroup(
-																				groupLayout
-																						.createSequentialGroup()
-																						.addGroup(
-																								groupLayout
-																										.createParallelGroup(
-																												Alignment.LEADING)
-																										.addGroup(
-																												groupLayout
-																														.createSequentialGroup()
-																														.addGap(18)
-																														.addGroup(
-																																groupLayout
-																																		.createParallelGroup(
-																																				Alignment.TRAILING)
-																																		.addGroup(
-																																				groupLayout
-																																						.createSequentialGroup()
-																																						.addGroup(
-																																								groupLayout
-																																										.createParallelGroup(
-																																												Alignment.LEADING,
-																																												false)
-																																										.addGroup(
-																																												groupLayout
-																																														.createSequentialGroup()
-																																														.addPreferredGap(
-																																																ComponentPlacement.RELATED)
-																																														.addGroup(
-																																																groupLayout
-																																																		.createParallelGroup(
-																																																				Alignment.TRAILING)
-																																																		.addComponent(
-																																																				slider_1,
-																																																				GroupLayout.DEFAULT_SIZE,
-																																																				183,
-																																																				Short.MAX_VALUE)
-																																																		.addGroup(
-																																																				groupLayout
-																																																						.createSequentialGroup()
-																																																						.addGroup(
-																																																								groupLayout
-																																																										.createParallelGroup(
-																																																												Alignment.LEADING)
-																																																										.addComponent(
-																																																												rdbtnMut,
-																																																												GroupLayout.PREFERRED_SIZE,
-																																																												68,
-																																																												GroupLayout.PREFERRED_SIZE)
-																																																										.addComponent(
-																																																												rdbtnKrz_1,
-																																																												GroupLayout.PREFERRED_SIZE,
-																																																												62,
-																																																												GroupLayout.PREFERRED_SIZE))
-																																																						.addPreferredGap(
-																																																								ComponentPlacement.RELATED,
-																																																								72,
-																																																								Short.MAX_VALUE)
-																																																						.addGroup(
-																																																								groupLayout
-																																																										.createParallelGroup(
-																																																												Alignment.LEADING)
-																																																										.addComponent(
-																																																												rdbtnKrz,
-																																																												GroupLayout.PREFERRED_SIZE,
-																																																												62,
-																																																												GroupLayout.PREFERRED_SIZE)
-																																																										.addComponent(
-																																																												rdbtnMut_1)))
-																																																		.addComponent(
-																																																				slider,
-																																																				GroupLayout.PREFERRED_SIZE,
-																																																				GroupLayout.DEFAULT_SIZE,
-																																																				GroupLayout.PREFERRED_SIZE)
-																																																		.addComponent(
-																																																				panel_2,
-																																																				GroupLayout.PREFERRED_SIZE,
-																																																				202,
-																																																				Short.MAX_VALUE)
-																																																		.addComponent(
-																																																				panel_1,
-																																																				GroupLayout.DEFAULT_SIZE,
-																																																				202,
-																																																				Short.MAX_VALUE)
-																																																		.addGroup(
-																																																				groupLayout
-																																																						.createSequentialGroup()
-																																																						.addComponent(
-																																																								lblZestawy)
-																																																						.addGap(76))
-																																																		.addGroup(
-																																																				groupLayout
-																																																						.createSequentialGroup()
-																																																						.addComponent(
-																																																								btnNewButton)
-																																																						.addGap(43))
-																																																		.addGroup(
-																																																				groupLayout
-																																																						.createSequentialGroup()
-																																																						.addComponent(
-																																																								rdbtnRep)
-																																																						.addPreferredGap(
-																																																								ComponentPlacement.RELATED,
-																																																								98,
-																																																								Short.MAX_VALUE)
-																																																						.addComponent(
-																																																								rdbtnRep_1)
-																																																						.addGap(10))
-																																																		.addComponent(
-																																																				panel_3,
-																																																				Alignment.LEADING,
-																																																				GroupLayout.DEFAULT_SIZE,
-																																																				202,
-																																																				Short.MAX_VALUE)
-																																																		.addComponent(
-																																																				panel_4,
-																																																				GroupLayout.PREFERRED_SIZE,
-																																																				190,
-																																																				GroupLayout.PREFERRED_SIZE)
-																																																		.addGroup(
-																																																				groupLayout
-																																																						.createParallelGroup(
-																																																								Alignment.LEADING)
-																																																						.addGroup(
-																																																								groupLayout
-																																																										.createSequentialGroup()
-																																																										.addComponent(
-																																																												btnGrafNaKole)
-																																																										.addPreferredGap(
-																																																												ComponentPlacement.UNRELATED)
-																																																										.addComponent(
-																																																												btnGeneruj,
-																																																												GroupLayout.PREFERRED_SIZE,
-																																																												90,
-																																																												GroupLayout.PREFERRED_SIZE))
-																																																						.addComponent(
-																																																								slider_2,
-																																																								GroupLayout.PREFERRED_SIZE,
-																																																								GroupLayout.DEFAULT_SIZE,
-																																																								GroupLayout.PREFERRED_SIZE))))
-																																										.addGroup(
-																																												groupLayout
-																																														.createSequentialGroup()
-																																														.addGap(79)
-																																														.addComponent(
-																																																lblMutacje)))
-																																						.addPreferredGap(
-																																								ComponentPlacement.RELATED))
-																																		.addGroup(
-																																				groupLayout
-																																						.createSequentialGroup()
-																																						.addComponent(
-																																								lblLiczbaIteracji)
-																																						.addGap(69))
-																																		.addGroup(
-																																				groupLayout
-																																						.createSequentialGroup()
-																																						.addComponent(
-																																								textField_1,
-																																								GroupLayout.PREFERRED_SIZE,
-																																								42,
-																																								GroupLayout.PREFERRED_SIZE)
-																																						.addGap(82))
-																																		.addGroup(
-																																				groupLayout
-																																						.createSequentialGroup()
-																																						.addComponent(
-																																								lblLiczbaPopulacji)
-																																						.addGap(61))
-																																		.addGroup(
-																																				groupLayout
-																																						.createSequentialGroup()
-																																						.addComponent(
-																																								textField,
-																																								GroupLayout.PREFERRED_SIZE,
-																																								42,
-																																								GroupLayout.PREFERRED_SIZE)
-																																						.addGap(80))))
-																										.addGroup(
-																												groupLayout
-																														.createSequentialGroup()
-																														.addGap(82)
-																														.addComponent(
-																																lblKrzyowania,
-																																GroupLayout.PREFERRED_SIZE,
-																																68,
-																																GroupLayout.PREFERRED_SIZE)))
-																						.addGap(32))
-																		.addGroup(
-																				groupLayout
-																						.createSequentialGroup()
-																						.addGroup(
-																								groupLayout
-																										.createParallelGroup(
-																												Alignment.TRAILING)
-																										.addComponent(
-																												lblReprodukcje)
-																										.addComponent(
-																												lblNewLabel)
-																										.addComponent(
-																												lblLiczbaWierzchokw))
-																						.addGap(94)))
-														.addGroup(
-																Alignment.TRAILING,
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				btnWyczy)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				btnWykonaj)
-																		.addGap(47)))));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																panel,
-																Alignment.LEADING,
-																GroupLayout.DEFAULT_SIZE,
-																701,
-																Short.MAX_VALUE)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				lblLiczbaPopulacji,
-																				GroupLayout.PREFERRED_SIZE,
-																				13,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				textField,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				slider,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				lblLiczbaIteracji,
-																				GroupLayout.PREFERRED_SIZE,
-																				13,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				textField_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				slider_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				lblMutacje)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								rdbtnMut)
-																						.addComponent(
-																								rdbtnMut_1))
-																		.addGap(13)
-																		.addComponent(
-																				lblKrzyowania,
-																				GroupLayout.PREFERRED_SIZE,
-																				15,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.UNRELATED)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								rdbtnKrz_1)
-																						.addComponent(
-																								rdbtnKrz))
-																		.addPreferredGap(
-																				ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				lblReprodukcje,
-																				GroupLayout.PREFERRED_SIZE,
-																				11,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(8)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								rdbtnRep)
-																						.addComponent(
-																								rdbtnRep_1))
-																		.addPreferredGap(
-																				ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				lblNewLabel)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				panel_3,
-																				GroupLayout.PREFERRED_SIZE,
-																				32,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				lblLiczbaWierzchokw)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				panel_4,
-																				GroupLayout.PREFERRED_SIZE,
-																				35,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				slider_2,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(11)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								btnGrafNaKole)
-																						.addComponent(
-																								btnGeneruj))
-																		.addPreferredGap(
-																				ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				lblZestawy)
-																		.addGap(2)
-																		.addComponent(
-																				panel_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				34,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				btnNewButton)
-																		.addGap(11)
-																		.addComponent(
-																				panel_2,
-																				GroupLayout.PREFERRED_SIZE,
-																				28,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED,
-																				18,
-																				Short.MAX_VALUE)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								btnWykonaj)
-																						.addComponent(
-																								btnWyczy))))
-										.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(18)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+												.addGroup(groupLayout.createSequentialGroup()
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+														.addComponent(slider_1, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+														.addGroup(groupLayout.createSequentialGroup()
+															.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+																.addComponent(rdbtnMut, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
+																.addComponent(rdbtnKrz_1, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
+															.addPreferredGap(ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+															.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+																.addComponent(rdbtnKrz, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+																.addComponent(rdbtnMut_1)))
+														.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 202, Short.MAX_VALUE)
+														.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+														.addGroup(groupLayout.createSequentialGroup()
+															.addComponent(lblZestawy)
+															.addGap(76))
+														.addGroup(groupLayout.createSequentialGroup()
+															.addComponent(rdbtnRep)
+															.addPreferredGap(ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+															.addComponent(rdbtnRep_1)
+															.addGap(10))
+														.addComponent(panel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+														.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+														.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+															.addGroup(groupLayout.createSequentialGroup()
+																.addComponent(btnGrafNaKole)
+																.addPreferredGap(ComponentPlacement.UNRELATED)
+																.addComponent(btnGeneruj, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))
+															.addComponent(slider_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+														.addGroup(groupLayout.createSequentialGroup()
+															.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+															.addGap(43))))
+												.addGroup(groupLayout.createSequentialGroup()
+													.addGap(79)
+													.addComponent(lblMutacje)))
+											.addPreferredGap(ComponentPlacement.RELATED))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(lblLiczbaIteracji)
+											.addGap(69))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+											.addGap(82))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(lblLiczbaPopulacji)
+											.addGap(61))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(textField, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+											.addGap(80))))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(82)
+									.addComponent(lblKrzyowania, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)))
+							.addGap(32))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblReprodukcje)
+								.addComponent(lblNewLabel)
+								.addComponent(lblLiczbaWierzchokw))
+							.addGap(94))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(btnWyczy)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnWykonaj)
+							.addGap(69))))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblLiczbaPopulacji, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblLiczbaIteracji, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(slider_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblMutacje)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(rdbtnMut)
+								.addComponent(rdbtnMut_1))
+							.addGap(13)
+							.addComponent(lblKrzyowania, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(rdbtnKrz_1)
+								.addComponent(rdbtnKrz))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblReprodukcje, GroupLayout.PREFERRED_SIZE, 11, GroupLayout.PREFERRED_SIZE)
+							.addGap(8)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(rdbtnRep)
+								.addComponent(rdbtnRep_1))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblNewLabel)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblLiczbaWierzchokw)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(slider_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(11)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnGrafNaKole)
+								.addComponent(btnGeneruj))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblZestawy)
+							.addGap(2)
+							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNewButton)
+							.addGap(11)
+							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnWyczy)
+								.addComponent(btnWykonaj))))
+					.addContainerGap())
+		);
 
 		JButton btnWczytajZPliku = new JButton("Wczytaj z pliku");
 		panel_2.add(btnWczytajZPliku);
@@ -919,9 +653,9 @@ public class DrawPanel extends JPanel {
 
 			}
 		});
-		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JButton button = new JButton("20");
+		button.setBounds(31, 5, 61, 23);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
@@ -934,9 +668,11 @@ public class DrawPanel extends JPanel {
 				repaint();
 			}
 		});
+		panel_1.setLayout(null);
 		panel_1.add(button);
 
 		JButton button_1 = new JButton("50");
+		button_1.setBounds(113, 5, 61, 23);
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
