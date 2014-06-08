@@ -82,7 +82,7 @@ public class MainLoop extends Thread{
 			/*appraisal =*/ assessPopulation(); //this function modifies 'appraisal'
 			if(!exitPressed)
 				updateChart(appraisal);
-			System.out.println(Integer.toString(iterationCounter));
+			
 			iterationCounter++;
 		}
 		
@@ -399,7 +399,7 @@ public class MainLoop extends Thread{
 		createAdditionalDataset();
 		createAdditionalDataset();
 		createAdditionalDataset();
-		System.out.println("Jestem przed uruchomienie MainLoop");
+	
 		//MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());
 
 		/*
