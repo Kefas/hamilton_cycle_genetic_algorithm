@@ -36,7 +36,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		genGraph = new JMenuItem("Generuj graf");
 		drawGraph = new JMenuItem("Rysuj graf");
 		about = new JMenuItem("O programie");
-		finish = new JMenuItem("Zakoñcz");
+		finish = new JMenuItem("ZakoÅ„cz");
 		
 		setJMenuBar(menuBar);
 		menuBar.add(op1);
@@ -66,7 +66,7 @@ public class MyFrame extends JFrame implements ActionListener {
 			getContentPane().add(p);
 			revalidate();
 			//repaint();
-		}
+		}	
 		if(o == genGraph){
 			getContentPane().removeAll();
 			getContentPane().add(gen);
