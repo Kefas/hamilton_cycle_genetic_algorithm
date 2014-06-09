@@ -85,10 +85,10 @@ public class MainLoop extends Thread{
 			performMutation(evolParams.getMethodOfMutation());
 	
 			/*appraisal =*/ assessPopulation(); //this function modifies 'appraisal'
-			/*if(!exitPressed)
+			if(!exitPressed)
 				updateChart(appraisal);
 
-			*/System.out.println(Long.toString(iterationCounter));
+			System.out.println(Long.toString(iterationCounter));
 
 			iterationCounter++;
 		}
@@ -438,7 +438,7 @@ public class MainLoop extends Thread{
 		int graphSize = 0;
 		
 		for(int i=0; i<reasearchSize; i++){
-			graphSize = 100*(i+1);
+			graphSize = 100*(i+11);
 			MainLoop m = new MainLoop(new MyGraph(graphSize), new ParametersOfEvolution(), new AdaptationValues());
 			//m.mainFunction();
 			m.run();
