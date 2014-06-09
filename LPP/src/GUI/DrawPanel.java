@@ -72,7 +72,6 @@ public class DrawPanel extends JPanel {
 	private int b = a;
 	private int r = 4 * SIZE / 5;
 	private int n;
-	private JPanel panel;
 	private JTextField textField_2;
 
 	private MyGraph graph;
@@ -85,36 +84,22 @@ public class DrawPanel extends JPanel {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	
+	private JPanel panel;
 
 	/**
 	 * Create the panel.
 	 */
 	public DrawPanel() {
-
+		panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		
 		list = new ArrayList<>();
 		roundGraph = false;
 		addVertex = true;
-		panel = new JPanel();
 		timerTask = new MyTimerTask();
 		timer = new Timer();
 		timer.schedule(timerTask, 0, SLEEP);
-		
-		
-
-		panel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if (addVertex) {
-					int x = e.getX();
-					int y = e.getY();
-					list.add(new Pair<Integer, Integer>(x, y));
-					System.out.println("Dzieje sie");
-					// revalidate();
-					repaint();
-				}
-			}
-		});
-		panel.setBackground(Color.WHITE);
 
 		// liczba populacji (napis, slider i textField
 		JLabel lblLiczbaPopulacji = new JLabel("Liczba populacji:");
@@ -129,6 +114,8 @@ public class DrawPanel extends JPanel {
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
 		textField.setText("1000");
 		textField.setColumns(1);
+		
+		
 
 		ButtonGroup bg1 = new ButtonGroup();
 
@@ -359,6 +346,20 @@ public class DrawPanel extends JPanel {
 			}
 		});
 
+		panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (addVertex) {
+					int x = e.getX();
+					int y = e.getY();
+					list.add(new Pair<Integer, Integer>(x, y));
+					System.out.println("Dzieje sie");
+					// revalidate();
+					repaint();
+				}
+			}
+		});
+		
 		JButton btnGeneruj = new JButton("Generuj");
 		btnGeneruj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -431,24 +432,21 @@ public class DrawPanel extends JPanel {
 					}
 				});
 		
-		JSeparator separator = new JSeparator();
+	
 
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(48)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(116)
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 692, Short.MAX_VALUE)
+								.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 710, Short.MAX_VALUE)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(separator, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE)
-										.addComponent(panel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addGap(509)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 										.addGroup(groupLayout.createSequentialGroup()
 											.addComponent(lblLiczbaPopulacji)
 											.addGap(61))
@@ -459,39 +457,47 @@ public class DrawPanel extends JPanel {
 											.addComponent(panel_5, Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
 											.addComponent(slider, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-											.addComponent(panel_6, Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
-											.addComponent(panel_7, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 197, Short.MAX_VALUE)
-											.addComponent(btnWczytajZPliku)
-											.addComponent(panel_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-											.addComponent(panel_3, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-											.addComponent(panel_4, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-											.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(panel_6, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+											.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+												.addComponent(btnWczytajZPliku)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(btnZapiszDoPliku))
+											.addComponent(panel_1, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+											.addComponent(panel_3, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+											.addComponent(panel_4, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+											.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+												.addGap(12)
 												.addComponent(btnGrafNaKole)
-												.addGap(18)
-												.addComponent(btnGeneruj, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))))))
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(btnGeneruj, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+												.addGap(2))))))
 							.addContainerGap())
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(604)
 							.addComponent(btnWyczy)
-							.addGap(45)
+							.addGap(18)
 							.addComponent(btnWykonaj)
-							.addGap(42))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnZapiszDoPliku)
-							.addGap(23))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
-							.addGap(71))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblZestawy)
-							.addGap(107))))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addGap(42))))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+							.addGap(53))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(lblZestawy)
+							.addGap(84))
 						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(panel_7, GroupLayout.PREFERRED_SIZE, 203, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(8)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 							.addComponent(lblLiczbaPopulacji, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -508,9 +514,9 @@ public class DrawPanel extends JPanel {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnGrafNaKole)
-								.addComponent(btnGeneruj))
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnGeneruj)
+								.addComponent(btnGrafNaKole))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblZestawy)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -525,16 +531,12 @@ public class DrawPanel extends JPanel {
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnWykonaj)
 								.addComponent(btnWyczy)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 737, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+					.addGap(2))
 		);
-		groupLayout.setHonorsVisibility(false);
-		panel.setLayout(null);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		textField_1 = new JTextField("10000");
 		textField_1.setBounds(157, 15, 45, 20);
