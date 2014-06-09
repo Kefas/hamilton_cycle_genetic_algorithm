@@ -86,6 +86,8 @@ public class DrawPanel extends JPanel {
 	private JTextField textField_4;
 	private JTextField textField_5;
 
+	protected long hamiltonCycleLength;
+
 	/**
 	 * Create the panel.
 	 */
@@ -154,13 +156,13 @@ public class DrawPanel extends JPanel {
 		panel_7.add(lblReprodukcje);
 		lblReprodukcje.setHorizontalAlignment(SwingConstants.CENTER);
 		lblReprodukcje.setFont(new Font("Tahoma", Font.BOLD, 9));
-		final JRadioButton rdbtnRep = new JRadioButton("z po³owicznym zastêpowaniem");
+		final JRadioButton rdbtnRep = new JRadioButton("z poï¿½owicznym zastï¿½powaniem");
 		rdbtnRep.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		rdbtnRep.setBounds(20, 7, 171, 23);
 		panel_7.add(rdbtnRep);
 		rdbtnRep.setSelected(true);
 		bg3.add(rdbtnRep);
-		JRadioButton rdbtnRep_1 = new JRadioButton("z ca³kowitym zastêpowaniem");
+		JRadioButton rdbtnRep_1 = new JRadioButton("z caï¿½kowitym zastï¿½powaniem");
 		rdbtnRep_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		rdbtnRep_1.setBounds(20, 28, 163, 23);
 		panel_7.add(rdbtnRep_1);
@@ -191,13 +193,13 @@ public class DrawPanel extends JPanel {
 		panel_5.add(lblMutacje);
 		lblMutacje.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMutacje.setFont(new Font("Tahoma", Font.BOLD, 9));
-		final JRadioButton rdbtnMut = new JRadioButton("wierzcho³kowa");
+		final JRadioButton rdbtnMut = new JRadioButton("wierzchoï¿½kowa");
 		rdbtnMut.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		rdbtnMut.setBounds(0, 23, 93, 23);
 		panel_5.add(rdbtnMut);
 		rdbtnMut.setSelected(true);
 		bg1.add(rdbtnMut);
-		JRadioButton rdbtnMut_1 = new JRadioButton("porz¹dkowa");
+		JRadioButton rdbtnMut_1 = new JRadioButton("porzï¿½dkowa");
 		rdbtnMut_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		rdbtnMut_1.setBounds(113, 23, 81, 23);
 		panel_5.add(rdbtnMut_1);
@@ -267,7 +269,7 @@ public class DrawPanel extends JPanel {
 					Hamilton hamilton = new Hamilton(adjacencyMatrix);
 					List<Integer> result = hamilton.execute();
 //					System.out.println(result);
-					int hamiltonCycleLength = 0;
+					hamiltonCycleLength = 0L;
 					int cycle[] = new int[result.size()];
 					for (int i = 0; i < result.size(); i++){
 						if(i != result.size()-1)
@@ -285,7 +287,11 @@ public class DrawPanel extends JPanel {
 				params.setSizeOfPopulation(Integer.parseInt(textField.getText()));
 				params.setNumberOfIterations(Integer.parseInt(textField_1
 						.getText()));
-
+				params.setMaxAmountOfAncestors(Integer.parseInt(textField_5.getText()));
+				params.setSimilarityToAncestors(Double.parseDouble(textField_3.getText()));
+				params.setSimiliarityInTest(Double.parseDouble(textField_4.getText()));
+				params.setCorrectResult(hamiltonCycleLength);
+				
 				if (rdbtnMut.isSelected())
 					params.setMethodOfMutation(2);
 				else
@@ -541,12 +547,12 @@ public class DrawPanel extends JPanel {
 		panel_3.add(textField_1);
 		textField_1.setColumns(10);
 		
-		textField_3 = new JTextField("0,98");
+		textField_3 = new JTextField("0.98");
 		textField_3.setBounds(157, 41, 45, 20);
 		panel_3.add(textField_3);
 		textField_3.setColumns(10);
 		
-		textField_4 = new JTextField("0,98");
+		textField_4 = new JTextField("0.98");
 		textField_4.setBounds(157, 91, 45, 20);
 		panel_3.add(textField_4);
 		textField_4.setColumns(10);
