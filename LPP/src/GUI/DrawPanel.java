@@ -78,6 +78,10 @@ public class DrawPanel extends JPanel {
 	private MyGraph graph;
 	protected MainLoop algorithm;
 
+	private boolean flag;
+
+	private int krisssCycleLength;
+
 	/**
 	 * Create the panel.
 	 */
@@ -241,7 +245,7 @@ public class DrawPanel extends JPanel {
 		btnWykonaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				System.out.println("Wykonaj button size:" + list.size());
+//				System.out.println("Wykonaj button size:" + list.size());
 				
 				if (list.size() < 150) {
 					addVertex = false;
@@ -251,18 +255,19 @@ public class DrawPanel extends JPanel {
 						for (int j = i + 1; j < list.size(); j++)
 							adjacencyMatrix[i][j] = distance(list.get(i),
 									list.get(j));
-					// for(int i=0; i<list.size();i++){
-					// for(int j=0;j<list.size(); j++)
-					// System.out.print(adjacencyMatrix[i][j] + " ");
-					// System.out.println();
-					// }
+	
 					Hamilton hamilton = new Hamilton(adjacencyMatrix);
 					List<Integer> result = hamilton.execute();
-					System.out.println(result);
+//					System.out.println(result);
+					int hamiltonCycleLength = 0;
 					int cycle[] = new int[result.size()];
-					for (int i = 0; i < result.size(); i++)
+					for (int i = 0; i < result.size(); i++){
+						if(i != result.size()-1)
+							hamiltonCycleLength += distance(list.get(result.get(i)), list.get(result.get(i+1)));
 						cycle[i] = result.get(i);
-
+					}
+					hamiltonCycleLength += distance(list.get(result.get(0)), list.get(result.get(result.size()-1)));
+					System.out.println("Cykl wyliczony z algotymu z biblioteki: " + hamiltonCycleLength);
 					drawPath(cycle);
 				}
 
@@ -295,13 +300,6 @@ public class DrawPanel extends JPanel {
 				if(rdbtnZak_2.isSelected())
 					params.setMethodToFinish(3);
 
-				// random graph creation
-				// zakomentuj ta linijke to od razu zobaczysz ze pojdzie
-				// pewnie trzeba bedzie wygenerowac graf predzej i wczytac go z
-				// pliku
-				// MyGraph graph = new
-				// MyGraph(Integer.parseInt(textField_2.getText()));
-				System.out.println("Dlugosc listy: " + list.size());
 
 				if (list.size() > 0) {
 					ExportImport.newExportToFile(toIntTable(list), "temp.txt");
@@ -309,11 +307,11 @@ public class DrawPanel extends JPanel {
 
 					appraisal = new AdaptationValues();
 
-					System.out.println("Uruchamiam algorytm z paramterami:");
-					System.out.println("Liczba populacji:"
-							+ textField.getText());
-					System.out.println("Liczba iteracji:"
-							+ textField_1.getText());
+//					System.out.println("Uruchamiam algorytm z paramterami:");
+//					System.out.println("Liczba populacji:"
+//							+ textField.getText());
+//					System.out.println("Liczba iteracji:"
+//							+ textField_1.getText());
 
 					algorithm = new MainLoop(graph, params, appraisal);
 					algorithm.mainFunction();
@@ -608,9 +606,21 @@ public class DrawPanel extends JPanel {
 	}
 
 	public void updateKrisssCycle() {
+		
 		if( algorithm != null && !algorithm.isExitPressed()){
 			krisssPath = appraisal.getTheBestCycle();
+			krisssCycleLength = 0;
 			repaint();
+			if(krisssPath != null){
+				for(int i=0; i<krisssPath.length-1;i++)
+					krisssCycleLength += distance(list.get(krisssPath[i]), list.get(krisssPath[i+1]));
+				krisssCycleLength += distance(list.get(krisssPath[0]), list.get(krisssPath[krisssPath.length-1]));
+				flag = true;
+			}
+		}
+		else if(flag){
+			System.out.println("Dlugosc cyklu krissa: " + krisssCycleLength);
+			flag = false;
 		}
 		
 	}
