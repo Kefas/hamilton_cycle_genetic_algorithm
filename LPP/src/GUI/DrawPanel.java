@@ -232,6 +232,21 @@ public class DrawPanel extends JPanel {
 			}
 
 		});
+		
+		JLabel lblPrawdopodobiestwoMutacji = new JLabel("Waga mutacji:");
+		lblPrawdopodobiestwoMutacji.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		
+		//spinner 
+		double min = 0.25;
+		double value = 1.00;
+		double max = 4.00;
+		double step = 0.01;
+		SpinnerNumberModel model = new SpinnerNumberModel(value, min, max, step);
+		final JSpinner spinner = new JSpinner(model);
+		JSpinner.NumberEditor editor = (JSpinner.NumberEditor)spinner.getEditor();  
+        DecimalFormat format = editor.getFormat();  
+        format.setMinimumFractionDigits(2);  
+        editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
 
 		JButton btnWykonaj = new JButton("Start");
 		btnWykonaj.addActionListener(new ActionListener() {
@@ -274,6 +289,8 @@ public class DrawPanel extends JPanel {
 				params.setSimilarityToAncestors(Double.parseDouble(textField_3.getText()));
 				params.setSimiliarityInTest(Double.parseDouble(textField_4.getText()));
 				params.setCorrectResult(hamiltonCycleLength);
+				params.getIndividualParams().setMutProbabMod((Double)spinner.getValue());
+				
 				
 				if (rdbtnMut.isSelected())
 					params.setMethodOfMutation(2);
@@ -438,20 +455,7 @@ public class DrawPanel extends JPanel {
 					}
 				});
 		
-		JLabel lblPrawdopodobiestwoMutacji = new JLabel("Waga mutacji:");
-		lblPrawdopodobiestwoMutacji.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		
-		//spinner 
-		double min = 0.25;
-		double value = 1.00;
-		double max = 4.00;
-		double step = 0.01;
-		SpinnerNumberModel model = new SpinnerNumberModel(value, min, max, step);
-		JSpinner spinner = new JSpinner(model);
-		JSpinner.NumberEditor editor = (JSpinner.NumberEditor)spinner.getEditor();  
-        DecimalFormat format = editor.getFormat();  
-        format.setMinimumFractionDigits(2);  
-        editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
 		
 
 		GroupLayout groupLayout = new GroupLayout(this);

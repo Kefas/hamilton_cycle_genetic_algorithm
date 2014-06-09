@@ -7,7 +7,7 @@ public class ParamsOfIndividual {
 	public double getMutProbabMod() {
 		return mutProbabMod;
 	}
-	public void setMutProbabMod(int mutProbabMod) {
+	public void setMutProbabMod(double mutProbabMod) {
 		this.mutProbabMod = mutProbabMod;
 	}
 
