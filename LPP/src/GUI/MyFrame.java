@@ -46,7 +46,7 @@ public class MyFrame extends JFrame implements ActionListener {
 			}
 		});
 		
-		finish = new JMenuItem("Zakoñcz");
+		finish = new JMenuItem("Zakoï¿½cz");
 		
 		setJMenuBar(menuBar);
 		menuBar.add(op1);
@@ -82,8 +82,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	}
 	
 	public static void main(String[] args) {
-		frame = new MyFrame();
-		
+		frame = new MyFrame();	
 		frame.setBackground(Color.gray);
 		
 		SwingUtilities.invokeLater(new Runnable() {
