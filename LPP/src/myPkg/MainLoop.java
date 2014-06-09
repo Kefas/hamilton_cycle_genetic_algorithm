@@ -3,6 +3,11 @@ package myPkg;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.WindowEvent;
+import java.awt.image.RescaleOp;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +33,7 @@ import edu.uci.ics.jung.algorithms.generators.EvolvingGraphGenerator;
 public class MainLoop extends Thread{
 	Random random = new Random();
 	int sizeOfPopulation;
-	int iterationCounter = 0;
+	long iterationCounter = 0;
 	int iterationsLimit = 1000;
 	ArrayList<Double> extremeAncestors = new ArrayList<Double>();
 	ParametersOfEvolution evolParams;
@@ -80,9 +85,11 @@ public class MainLoop extends Thread{
 			performMutation(evolParams.getMethodOfMutation());
 	
 			/*appraisal =*/ assessPopulation(); //this function modifies 'appraisal'
-			if(!exitPressed)
+			/*if(!exitPressed)
 				updateChart(appraisal);
-			
+
+			*/System.out.println(Long.toString(iterationCounter));
+
 			iterationCounter++;
 		}
 		
@@ -184,22 +191,22 @@ public class MainLoop extends Thread{
 		for (Individual x : generation) {
 			distances.add(x.getRouteLength());
 		}
-		double max = Collections.max(distances);
-		max++;
-		long totalSum = 0;
+		double maxDistance = Collections.max(distances);
+		maxDistance++;
+		long sumOfAppraisals = 0;
 		ArrayList<Double> appraisals = new ArrayList<Double>();
 		for (Double x : distances) {
-			appraisals.add(max - x); // the shortest routes will have the
+			appraisals.add(maxDistance - x); // the shortest routes will have the
 										// highest value of assessment
-			totalSum += max - x;
+			sumOfAppraisals += maxDistance - x;
 		}
 		double tabOfProbablity[] = new double[distances.size()];
 		int i = 0;
-		for (Double x : appraisals) {
+		for (Double appraisal : appraisals) {
 			if (i == 0)
-				tabOfProbablity[i] = ((double) x) / totalSum;
+				tabOfProbablity[i] = ((double) appraisal) / sumOfAppraisals;
 			else
-				tabOfProbablity[i] = ((double) x) / totalSum
+				tabOfProbablity[i] = ((double) appraisal) / sumOfAppraisals
 						+ tabOfProbablity[i - 1];
 			i++;
 		}// last value in tabOfProbability should be 1, but it may not be
@@ -257,6 +264,11 @@ public class MainLoop extends Thread{
 		generation = newGeneration;
 	}
 	
+	/**
+	 * this method chooses the better part of old generation -> it goes to the new generation
+	 * and individuals of this part crosses among each other
+	 * @param typeOfCrossing
+	 */
 	void selectiveBreedingCrossing(int typeOfCrossing){
 		Individual ind1, ind2;
 		ArrayList<Individual> newGeneration = new ArrayList<Individual>();
@@ -418,10 +430,30 @@ public class MainLoop extends Thread{
 	
 
 	public static void main(String[] args) {
-		MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());
-		m.mainFunction();
-		m.run();
+		String path = new String("dane_do_wykresu.txt");
+		Writer writer = null;
 		
+		int reasearchSize = 20;
+		Long [] amountsOfIterations = new Long[reasearchSize];
+		int graphSize = 0;
+		
+		for(int i=0; i<reasearchSize; i++){
+			graphSize = 100*(i+1);
+			MainLoop m = new MainLoop(new MyGraph(graphSize), new ParametersOfEvolution(), new AdaptationValues());
+			//m.mainFunction();
+			m.run();
+			//amountsOfIterations[i] = m.iterationCounter;
+			
+			try {
+				writer = new FileWriter(new File(path), true);
+				writer.write(graphSize +" "+ m.iterationCounter);		
+				writer.append("\n");
+				writer.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-
+		
+		
 }

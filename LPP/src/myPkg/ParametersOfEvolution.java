@@ -2,15 +2,15 @@ package myPkg;
 
 public class ParametersOfEvolution {
 	int numberOfIterations = 5000;
-	int sizeOfPopulation = 1000; //that is in relation to the number of vertexes of graph
+	int sizeOfPopulation = 900; //that is in relation to the number of vertexes of graph
 	int methodOfMutation = 1;
-	int methodOfCrossing = 1;
+	int methodOfCrossing = 2;
 	int methodOfBreeding = 1;
 	
 	int methodToFinish = 2;
 	//parameters for the 2nd method
-	int maxAmountOfAncestors = 2000; //how many ancestors do I check to identify end of evolution
-	double similarityToAncestors = 0.98; //how much must the best individual be similar to the best ancestor from the latest 'amountOfAncestors'
+	int maxAmountOfAncestors = 250; //how many ancestors do I check to identify end of evolution
+	double similarityToAncestors = 0.95; //how much must the best individual be similar to the best ancestor from the latest 'amountOfAncestors'
 	//parameters for the 3rd method
 	double similiarityInTest = 0.98;
 	long correctResult = 0;
