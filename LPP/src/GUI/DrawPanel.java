@@ -248,7 +248,8 @@ public class DrawPanel extends JPanel {
 					addVertex = false;
 					double adjacencyMatrix[][] = new double[list.size()][list
 							.size()];
-					for (int i = 0; i < list.size() - 1; i++)
+//					dont touch it! i don't know why it's works but it's works fine!
+					for (int i = 1; i < list.size() - 1; i++)
 						for (int j = i + 1; j < list.size(); j++)
 							adjacencyMatrix[i][j] = distance(list.get(i),
 									list.get(j));
@@ -361,6 +362,8 @@ public class DrawPanel extends JPanel {
 					list.add(new Pair<Integer, Integer>(x, y));
 					System.out.println("Dzieje sie");
 					// revalidate();
+					
+					
 					repaint();
 				}
 			}
@@ -384,6 +387,8 @@ public class DrawPanel extends JPanel {
 				addVertex = true;
 				if (list != null)
 					list.clear();
+				path = null;
+				krisssPath = null;
 			}
 		});
 		
