@@ -87,7 +87,9 @@ public class MainLoop extends Thread{
 			/*appraisal =*/ assessPopulation(); //this function modifies 'appraisal'
 			/*if(!exitPressed)
 				updateChart(appraisal);
+
 			*/System.out.println(Long.toString(iterationCounter));
+
 			iterationCounter++;
 		}
 		
@@ -95,12 +97,14 @@ public class MainLoop extends Thread{
 	}
 
 	private void updateChart(AdaptationValues generation2) {
+		if(generation2 != null && !isExitPressed()){
 		getXYSeries(0).getSeries(0)
 				.add(iterationCounter, generation2.getBest());
 		getXYSeries(1).getSeries(0).add(iterationCounter,
 				generation2.getAverage());
 		getXYSeries(2).getSeries(0).add(iterationCounter,
 				generation2.getWorst());
+		}
 	}
 
 	/**
@@ -347,7 +351,10 @@ public class MainLoop extends Thread{
 	}
 
 	public XYSeriesCollection getXYSeries(int datasetIndex) {
-		return seriesArrayList.get(datasetIndex);
+		if(seriesArrayList.size()> datasetIndex)
+			return seriesArrayList.get(datasetIndex);
+		else
+			return null;
 	}
 
 	public int getDatasetCount() {
@@ -386,7 +393,6 @@ public class MainLoop extends Thread{
 			@Override
 			public void dispose() {
 				super.dispose();
-				System.out.println("Hello");
 				exitPressed = true;
 				MainLoop.clearStatic();
 				
@@ -409,7 +415,7 @@ public class MainLoop extends Thread{
 		createAdditionalDataset();
 		createAdditionalDataset();
 		createAdditionalDataset();
-		System.out.println("Jestem przed uruchomienie MainLoop");
+	
 		//MainLoop m = new MainLoop(new MyGraph(100), new ParametersOfEvolution(), new AdaptationValues());
 
 		/*

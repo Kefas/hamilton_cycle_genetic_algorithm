@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +20,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
 	private JMenuBar menuBar;
 	private JMenu op1, op2, op3;
-	private JMenuItem drawGraph, genGraph, about, finish;
+	private JMenuItem drawGraph,about, finish;
 	private JDesktopPane desktop;
 	private DrawPanel p;
 	private GenPanel gen;
@@ -29,27 +30,27 @@ public class MyFrame extends JFrame implements ActionListener {
 		gen = new GenPanel();
 		
 		menuBar = new JMenuBar();
-		op1 = new JMenu("Opcja1");
-		op2 = new JMenu("Opcja2");
+		op1 = new JMenu("Graf...");
 		op3 = new JMenu("Pomoc");
 		
-		genGraph = new JMenuItem("Generuj graf");
+	
 		drawGraph = new JMenuItem("Rysuj graf");
 		about = new JMenuItem("O programie");
 		finish = new JMenuItem("Zakończ");
+
+		
+
+
 		
 		setJMenuBar(menuBar);
 		menuBar.add(op1);
-		menuBar.add(op2);
 		menuBar.add(op3);
 		op1.add(drawGraph);
-		op1.add(genGraph);
 		op1.addSeparator();
 		op1.add(finish);
 		op3.add(about);
 		
 		finish.addActionListener(this);
-		genGraph.addActionListener(this);
 		drawGraph.addActionListener(this);
 	}
 	/**
@@ -67,12 +68,7 @@ public class MyFrame extends JFrame implements ActionListener {
 			revalidate();
 			//repaint();
 		}	
-		if(o == genGraph){
-			getContentPane().removeAll();
-			getContentPane().add(gen);
-			revalidate();
-			//repaint();
-		}
+		
 		if(o == finish){
 			dispose();
 		}
@@ -86,7 +82,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				frame.setTitle("Longest simple path problem - Badania Operacyjne 2014");
+				frame.setTitle("Travelling salesman problem - Badania Operacyjne 2014");
 				frame.setResizable(false);
 				frame.setLocation(0, 0);
 				frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
