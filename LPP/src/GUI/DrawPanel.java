@@ -135,13 +135,75 @@ public class DrawPanel extends JPanel {
 		ButtonGroup bg2 = new ButtonGroup();
 
 		ButtonGroup bg3 = new ButtonGroup();
-
+		
 		JPanel panel_2 = new JPanel();
 
 		JPanel panel_3 = new JPanel();
 
 		JPanel panel_4 = new JPanel();
 		panel_4.setLayout(null);
+		
+		JPanel panel_5 = new JPanel();
+		
+		JPanel panel_6 = new JPanel();
+		
+		JPanel panel_7 = new JPanel();
+		
+		JLabel lblReprodukcje = new JLabel("Sukcesja:");
+		lblReprodukcje.setBounds(80, 0, 47, 11);
+		panel_7.add(lblReprodukcje);
+		lblReprodukcje.setHorizontalAlignment(SwingConstants.CENTER);
+		lblReprodukcje.setFont(new Font("Tahoma", Font.BOLD, 9));
+		final JRadioButton rdbtnRep = new JRadioButton("z po³owicznym zastêpowaniem");
+		rdbtnRep.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnRep.setBounds(20, 7, 171, 23);
+		panel_7.add(rdbtnRep);
+		rdbtnRep.setSelected(true);
+		bg3.add(rdbtnRep);
+		JRadioButton rdbtnRep_1 = new JRadioButton("z ca³kowitym zastêpowaniem");
+		rdbtnRep_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnRep_1.setBounds(20, 28, 163, 23);
+		panel_7.add(rdbtnRep_1);
+		bg3.add(rdbtnRep_1);
+		panel_6.setLayout(null);
+
+		JLabel lblKrzyowania = new JLabel("Krzy\u017Cowania:");
+		lblKrzyowania.setBounds(70, 0, 66, 11);
+		panel_6.add(lblKrzyowania);
+		lblKrzyowania.setHorizontalAlignment(SwingConstants.CENTER);
+		lblKrzyowania.setFont(new Font("Tahoma", Font.BOLD, 9));
+		JRadioButton rdbtnKrz_1 = new JRadioButton("jedno punktowe");
+		rdbtnKrz_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnKrz_1.setBounds(6, 13, 103, 23);
+		panel_6.add(rdbtnKrz_1);
+		rdbtnKrz_1.setSelected(true);
+		bg2.add(rdbtnKrz_1);
+		final JRadioButton rdbtnKrz = new JRadioButton("dwu punktowe");
+		rdbtnKrz.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnKrz.setBounds(111, 13, 97, 23);
+		panel_6.add(rdbtnKrz);
+		bg2.add(rdbtnKrz);
+		panel_5.setLayout(null);
+
+		// RadioButtony dla mutacji, krzyï¿½owaï¿½ i reprodukcji
+		JLabel lblMutacje = new JLabel(" Mutacje:    ");
+		lblMutacje.setBounds(77, 5, 58, 11);
+		panel_5.add(lblMutacje);
+		lblMutacje.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMutacje.setFont(new Font("Tahoma", Font.BOLD, 9));
+		final JRadioButton rdbtnMut = new JRadioButton("wierzcho³kowa");
+		rdbtnMut.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnMut.setBounds(0, 23, 93, 23);
+		panel_5.add(rdbtnMut);
+		rdbtnMut.setSelected(true);
+		bg1.add(rdbtnMut);
+		JRadioButton rdbtnMut_1 = new JRadioButton("porz¹dkowa");
+		rdbtnMut_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnMut_1.setBounds(113, 23, 81, 23);
+		panel_5.add(rdbtnMut_1);
+		bg1.add(rdbtnMut_1);
+
+		
 
 		textField_2 = new JTextField();
 		textField_2.setBounds(78, 22, 45, 20);
@@ -318,11 +380,7 @@ public class DrawPanel extends JPanel {
 			}
 		});
 		
-		JPanel panel_5 = new JPanel();
 		
-		JPanel panel_6 = new JPanel();
-		
-		JPanel panel_7 = new JPanel();
 		
 				JButton btnWczytajZPliku = new JButton("Wczytaj z pliku");
 				btnWczytajZPliku.setFont(new Font("Tahoma", Font.PLAIN, 9));
@@ -376,19 +434,19 @@ public class DrawPanel extends JPanel {
 		JSeparator separator = new JSeparator();
 
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHonorsVisibility(false);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-					.addGap(10)
+					.addGap(48)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(116)
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 692, Short.MAX_VALUE)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(separator, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(separator, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE)
+										.addComponent(panel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 										.addGroup(groupLayout.createSequentialGroup()
@@ -431,50 +489,51 @@ public class DrawPanel extends JPanel {
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
+							.addComponent(lblLiczbaPopulacji, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_5, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_7, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblLiczbaPopulacji, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(panel_5, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(panel_7, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnGrafNaKole)
-										.addComponent(btnGeneruj))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(lblZestawy)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnNewButton)
-									.addGap(44)
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(btnZapiszDoPliku)
-										.addComponent(btnWczytajZPliku))
-									.addGap(18)
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(btnWykonaj)
-										.addComponent(btnWyczy)))
-								.addComponent(separator, GroupLayout.PREFERRED_SIZE, 737, GroupLayout.PREFERRED_SIZE))
-							.addGap(89)
-							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 854, Short.MAX_VALUE))
+								.addComponent(btnGrafNaKole)
+								.addComponent(btnGeneruj))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblZestawy)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNewButton)
+							.addGap(44)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnZapiszDoPliku)
+								.addComponent(btnWczytajZPliku))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnWykonaj)
+								.addComponent(btnWyczy)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 737, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
+		groupLayout.setHonorsVisibility(false);
 		panel.setLayout(null);
 		
 		textField_1 = new JTextField("10000");
@@ -524,59 +583,7 @@ public class DrawPanel extends JPanel {
 						});
 		panel_7.setLayout(null);
 		
-				JLabel lblReprodukcje = new JLabel("Sukcesja:");
-				lblReprodukcje.setBounds(80, 0, 47, 11);
-				panel_7.add(lblReprodukcje);
-				lblReprodukcje.setHorizontalAlignment(SwingConstants.CENTER);
-				lblReprodukcje.setFont(new Font("Tahoma", Font.BOLD, 9));
-				final JRadioButton rdbtnRep = new JRadioButton("z po³owicznym zastêpowaniem");
-				rdbtnRep.setFont(new Font("Tahoma", Font.PLAIN, 10));
-				rdbtnRep.setBounds(20, 7, 171, 23);
-				panel_7.add(rdbtnRep);
-				rdbtnRep.setSelected(true);
-				bg3.add(rdbtnRep);
-				JRadioButton rdbtnRep_1 = new JRadioButton("z ca³kowitym zastêpowaniem");
-				rdbtnRep_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
-				rdbtnRep_1.setBounds(20, 28, 163, 23);
-				panel_7.add(rdbtnRep_1);
-				bg3.add(rdbtnRep_1);
-				panel_6.setLayout(null);
-		
-				JLabel lblKrzyowania = new JLabel("Krzy\u017Cowania:");
-				lblKrzyowania.setBounds(70, 0, 66, 11);
-				panel_6.add(lblKrzyowania);
-				lblKrzyowania.setHorizontalAlignment(SwingConstants.CENTER);
-				lblKrzyowania.setFont(new Font("Tahoma", Font.BOLD, 9));
-				JRadioButton rdbtnKrz_1 = new JRadioButton("jedno punktowe");
-				rdbtnKrz_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
-				rdbtnKrz_1.setBounds(6, 13, 103, 23);
-				panel_6.add(rdbtnKrz_1);
-				rdbtnKrz_1.setSelected(true);
-				bg2.add(rdbtnKrz_1);
-				final JRadioButton rdbtnKrz = new JRadioButton("dwu punktowe");
-				rdbtnKrz.setFont(new Font("Tahoma", Font.PLAIN, 10));
-				rdbtnKrz.setBounds(111, 13, 97, 23);
-				panel_6.add(rdbtnKrz);
-				bg2.add(rdbtnKrz);
-				panel_5.setLayout(null);
-		
-				// RadioButtony dla mutacji, krzyï¿½owaï¿½ i reprodukcji
-				JLabel lblMutacje = new JLabel(" Mutacje:    ");
-				lblMutacje.setBounds(77, 5, 58, 11);
-				panel_5.add(lblMutacje);
-				lblMutacje.setHorizontalAlignment(SwingConstants.CENTER);
-				lblMutacje.setFont(new Font("Tahoma", Font.BOLD, 9));
-				final JRadioButton rdbtnMut = new JRadioButton("wierzcho³kowa");
-				rdbtnMut.setFont(new Font("Tahoma", Font.PLAIN, 10));
-				rdbtnMut.setBounds(0, 23, 93, 23);
-				panel_5.add(rdbtnMut);
-				rdbtnMut.setSelected(true);
-				bg1.add(rdbtnMut);
-				JRadioButton rdbtnMut_1 = new JRadioButton("porz¹dkowa");
-				rdbtnMut_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
-				rdbtnMut_1.setBounds(113, 23, 81, 23);
-				panel_5.add(rdbtnMut_1);
-				bg1.add(rdbtnMut_1);
+				
 
 		JButton button = new JButton("20");
 		button.setBounds(31, 5, 61, 23);
