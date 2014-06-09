@@ -36,6 +36,15 @@ public class MyFrame extends JFrame implements ActionListener {
 	
 		drawGraph = new JMenuItem("Rysuj graf");
 		about = new JMenuItem("O programie");
+		about.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame fr = new JFrame("O programie");
+				fr.setSize(new Dimension(800, 500));
+				fr.setLocationByPlatform(true);
+				fr.setVisible(true);
+				fr.add(new InfoPanel());
+			}
+		});
 		finish = new JMenuItem("Zakończ");
 	
 		setJMenuBar(menuBar);
