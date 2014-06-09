@@ -85,11 +85,13 @@ public class MainLoop extends Thread{
 			performMutation(evolParams.getMethodOfMutation());
 	
 			/*appraisal =*/ assessPopulation(); //this function modifies 'appraisal'
+
 			if(!exitPressed)
 				updateChart(appraisal);
 
-			System.out.println(Long.toString(iterationCounter));
 
+		System.out.println(Long.toString(iterationCounter));
+			
 			iterationCounter++;
 		}
 		
@@ -351,10 +353,10 @@ public class MainLoop extends Thread{
 	}
 
 	public XYSeriesCollection getXYSeries(int datasetIndex) {
-		if(seriesArrayList.size()> datasetIndex)
-			return seriesArrayList.get(datasetIndex);
-		else
-			return null;
+	if(seriesArrayList.size()> datasetIndex)
+		return seriesArrayList.get(datasetIndex);
+	else
+		return null;
 	}
 
 	public int getDatasetCount() {
@@ -440,9 +442,15 @@ public class MainLoop extends Thread{
 		for(int i=0; i<reasearchSize; i++){
 			graphSize = 100*(i+11);
 			MainLoop m = new MainLoop(new MyGraph(graphSize), new ParametersOfEvolution(), new AdaptationValues());
-			//m.mainFunction();
+
+			
+//			------------------------------
+			
+			//			m.mainFunction();
+			
+//			------------------------------
 			m.run();
-			//amountsOfIterations[i] = m.iterationCounter;
+//			amountsOfIterations[i] = m.iterationCounter;
 			
 			try {
 				writer = new FileWriter(new File(path), true);

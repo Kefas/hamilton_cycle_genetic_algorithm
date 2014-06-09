@@ -43,6 +43,7 @@ import myPkg.MyGraph;
 import myPkg.ParametersOfEvolution;
 
 import java.awt.FlowLayout;
+import javax.swing.JSeparator;
 
 public class DrawPanel extends JPanel {
 //	sleep in Miliseconds
@@ -63,16 +64,14 @@ public class DrawPanel extends JPanel {
 	private Timer timer;
 	private MyTimerTask timerTask;
 	private JTextField textField;
-	private JTextField textField_1;
 	private ChangeListener listener;
-	private JSlider slider, slider_1, slider_2;
+	private JSlider slider, slider_2;
 	private boolean roundGraph, addVertex;
 	private static final int SIZE = 256;
 	private int a = SIZE / 2;
 	private int b = a;
 	private int r = 4 * SIZE / 5;
 	private int n;
-	private JPanel panel;
 	private JTextField textField_2;
 
 	private MyGraph graph;
@@ -81,42 +80,34 @@ public class DrawPanel extends JPanel {
 	private boolean flag;
 
 	private int krisssCycleLength;
+	private JTextField textField_1;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	
+	private JPanel panel;
+
+	protected long hamiltonCycleLength;
 
 	/**
 	 * Create the panel.
 	 */
 	public DrawPanel() {
-
+		panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		
 		list = new ArrayList<>();
 		roundGraph = false;
 		addVertex = true;
-		panel = new JPanel();
 		timerTask = new MyTimerTask();
 		timer = new Timer();
 		timer.schedule(timerTask, 0, SLEEP);
-		
-		
-
-		panel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if (addVertex) {
-					int x = e.getX();
-					int y = e.getY();
-					list.add(new Pair<Integer, Integer>(x, y));
-					System.out.println("Dzieje sie");
-					// revalidate();
-					repaint();
-				}
-			}
-		});
-		panel.setBackground(Color.WHITE);
 
 		// liczba populacji (napis, slider i textField
 		JLabel lblLiczbaPopulacji = new JLabel("Liczba populacji:");
 		lblLiczbaPopulacji.setFont(new Font("Tahoma", Font.BOLD, 9));
 
-		slider = new JSlider(100, 5000, 1000);
+		slider = new JSlider(100, 3500, 1000);
 		slider.setMajorTickSpacing(1400);
 		slider.setPaintLabels(true);
 		slider.setPaintTicks(true);
@@ -125,95 +116,115 @@ public class DrawPanel extends JPanel {
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
 		textField.setText("1000");
 		textField.setColumns(1);
-
-		// liczba iteracji (napis, slider i textField
-		JLabel lblLiczbaIteracji = new JLabel("Liczba iteracji:");
-		lblLiczbaIteracji.setFont(new Font("Tahoma", Font.BOLD, 9));
-
-		slider_1 = new JSlider(1000, 20000, 10000);
-		slider_1.setMajorTickSpacing(4000);
-		slider_1.setPaintTicks(true);
-		slider_1.setPaintLabels(true);
-
-		textField_1 = new JTextField();
-		textField_1.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_1.setText("10000");
-		textField_1.setColumns(1);
-
-		// RadioButtony dla mutacji, krzy�owa� i reprodukcji
-		JLabel lblMutacje = new JLabel(" Mutacje:    ");
-		lblMutacje.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMutacje.setFont(new Font("Tahoma", Font.BOLD, 9));
+		
+		
 
 		ButtonGroup bg1 = new ButtonGroup();
-		final JRadioButton rdbtnMut = new JRadioButton("mut1");
-		rdbtnMut.setSelected(true);
-		JRadioButton rdbtnMut_1 = new JRadioButton("mut2");
-		bg1.add(rdbtnMut);
-		bg1.add(rdbtnMut_1);
-
-		JLabel lblKrzyowania = new JLabel("Krzy\u017Cowania:");
-		lblKrzyowania.setHorizontalAlignment(SwingConstants.CENTER);
-		lblKrzyowania.setFont(new Font("Tahoma", Font.BOLD, 9));
 
 		ButtonGroup bg2 = new ButtonGroup();
-		JRadioButton rdbtnKrz_1 = new JRadioButton("krz1");
-		rdbtnKrz_1.setSelected(true);
-		final JRadioButton rdbtnKrz = new JRadioButton("krz2");
-		bg2.add(rdbtnKrz);
-		bg2.add(rdbtnKrz_1);
-
-		JLabel lblReprodukcje = new JLabel("Reprodukcje:   ");
-		lblReprodukcje.setHorizontalAlignment(SwingConstants.CENTER);
-		lblReprodukcje.setFont(new Font("Tahoma", Font.BOLD, 9));
 
 		ButtonGroup bg3 = new ButtonGroup();
-		final JRadioButton rdbtnRep = new JRadioButton("rep1");
-		rdbtnRep.setSelected(true);
-		JRadioButton rdbtnRep_1 = new JRadioButton("rep2");
-		bg3.add(rdbtnRep);
-		bg3.add(rdbtnRep_1);
-
+		
 		JPanel panel_2 = new JPanel();
-
-		JLabel lblNewLabel = new JLabel("Metoda ko\u0144czenia:\r\n");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 9));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JPanel panel_3 = new JPanel();
 
-		JLabel lblLiczbaWierzchokw = new JLabel(
-				"Liczba wierzcho\u0142k\u00F3w:");
-		lblLiczbaWierzchokw.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLiczbaWierzchokw.setFont(new Font("Tahoma", Font.BOLD, 9));
-
-		slider_2 = new JSlider(100, 10000, 1000);
-		slider_2.setMajorTickSpacing(4900);
-		slider_2.setPaintTicks(true);
-		slider_2.setPaintLabels(true);
-
 		JPanel panel_4 = new JPanel();
 		panel_4.setLayout(null);
+		
+		JPanel panel_5 = new JPanel();
+		
+		JPanel panel_6 = new JPanel();
+		
+		JPanel panel_7 = new JPanel();
+		
+		JLabel lblReprodukcje = new JLabel("Sukcesja:");
+		lblReprodukcje.setBounds(80, 0, 47, 11);
+		panel_7.add(lblReprodukcje);
+		lblReprodukcje.setHorizontalAlignment(SwingConstants.CENTER);
+		lblReprodukcje.setFont(new Font("Tahoma", Font.BOLD, 9));
+		final JRadioButton rdbtnRep = new JRadioButton("z po�owicznym zast�powaniem");
+		rdbtnRep.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnRep.setBounds(20, 7, 171, 23);
+		panel_7.add(rdbtnRep);
+		rdbtnRep.setSelected(true);
+		bg3.add(rdbtnRep);
+		JRadioButton rdbtnRep_1 = new JRadioButton("z ca�kowitym zast�powaniem");
+		rdbtnRep_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnRep_1.setBounds(20, 28, 163, 23);
+		panel_7.add(rdbtnRep_1);
+		bg3.add(rdbtnRep_1);
+		panel_6.setLayout(null);
+
+		JLabel lblKrzyowania = new JLabel("Krzy\u017Cowania:");
+		lblKrzyowania.setBounds(70, 0, 66, 11);
+		panel_6.add(lblKrzyowania);
+		lblKrzyowania.setHorizontalAlignment(SwingConstants.CENTER);
+		lblKrzyowania.setFont(new Font("Tahoma", Font.BOLD, 9));
+		JRadioButton rdbtnKrz_1 = new JRadioButton("jedno punktowe");
+		rdbtnKrz_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnKrz_1.setBounds(6, 13, 103, 23);
+		panel_6.add(rdbtnKrz_1);
+		rdbtnKrz_1.setSelected(true);
+		bg2.add(rdbtnKrz_1);
+		final JRadioButton rdbtnKrz = new JRadioButton("dwu punktowe");
+		rdbtnKrz.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnKrz.setBounds(111, 13, 97, 23);
+		panel_6.add(rdbtnKrz);
+		bg2.add(rdbtnKrz);
+		panel_5.setLayout(null);
+
+		// RadioButtony dla mutacji, krzy�owa� i reprodukcji
+		JLabel lblMutacje = new JLabel(" Mutacje:    ");
+		lblMutacje.setBounds(77, 5, 58, 11);
+		panel_5.add(lblMutacje);
+		lblMutacje.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMutacje.setFont(new Font("Tahoma", Font.BOLD, 9));
+		final JRadioButton rdbtnMut = new JRadioButton("wierzcho�kowa");
+		rdbtnMut.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnMut.setBounds(0, 23, 93, 23);
+		panel_5.add(rdbtnMut);
+		rdbtnMut.setSelected(true);
+		bg1.add(rdbtnMut);
+		JRadioButton rdbtnMut_1 = new JRadioButton("porz�dkowa");
+		rdbtnMut_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnMut_1.setBounds(113, 23, 81, 23);
+		panel_5.add(rdbtnMut_1);
+		bg1.add(rdbtnMut_1);
+
+		
 
 		textField_2 = new JTextField();
-		textField_2.setBounds(70, 11, 45, 20);
+		textField_2.setBounds(78, 22, 45, 20);
 		textField_2.setText("1000");
 		textField_2.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_2.setColumns(1);
 		panel_4.add(textField_2);
-		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		ButtonGroup bg4 = new ButtonGroup();
-		final JRadioButton rdbtnZak = new JRadioButton("zak1");
+				panel_3.setLayout(null);
+		
+				JLabel lblNewLabel = new JLabel("Metoda ko\u0144czenia:\r\n");
+				lblNewLabel.setBounds(59, 0, 92, 11);
+				panel_3.add(lblNewLabel);
+				lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 9));
+				lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		final JRadioButton rdbtnZak = new JRadioButton("limit iteracji");
+		rdbtnZak.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnZak.setBounds(6, 14, 80, 23);
 		rdbtnZak.setSelected(true);
 		bg4.add(rdbtnZak);
 		panel_3.add(rdbtnZak);
 
-		final JRadioButton rdbtnZak_1 = new JRadioButton("zak2");
+		final JRadioButton rdbtnZak_1 = new JRadioButton("osi\u0105gni\u0119cie wyp\u0142aszczenia\r\n");
+		rdbtnZak_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnZak_1.setBounds(6, 40, 139, 23);
 		bg4.add(rdbtnZak_1);
 		panel_3.add(rdbtnZak_1);
 
-		final JRadioButton rdbtnZak_2 = new JRadioButton("zak3");
+		final JRadioButton rdbtnZak_2 = new JRadioButton("<html>podobie\u0144stwo do <br /> 'poprawnego rozwi\u0105zania'</html>");
+		rdbtnZak_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rdbtnZak_2.setBounds(6, 85, 145, 35);
 		bg4.add(rdbtnZak_2);
 		panel_3.add(rdbtnZak_2);
 		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -223,20 +234,6 @@ public class DrawPanel extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				textField.setText(String.valueOf(slider.getValue()));
-			}
-
-		});
-		slider_1.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				textField_1.setText(String.valueOf(slider_1.getValue()));
-			}
-
-		});
-		slider_2.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				textField_2.setText(String.valueOf(slider_2.getValue()));
 			}
 
 		});
@@ -251,7 +248,8 @@ public class DrawPanel extends JPanel {
 					addVertex = false;
 					double adjacencyMatrix[][] = new double[list.size()][list
 							.size()];
-					for (int i = 0; i < list.size() - 1; i++)
+//					dont touch it! i don't know why it's works but it's works fine!
+					for (int i = 1; i < list.size() - 1; i++)
 						for (int j = i + 1; j < list.size(); j++)
 							adjacencyMatrix[i][j] = distance(list.get(i),
 									list.get(j));
@@ -259,7 +257,7 @@ public class DrawPanel extends JPanel {
 					Hamilton hamilton = new Hamilton(adjacencyMatrix);
 					List<Integer> result = hamilton.execute();
 //					System.out.println(result);
-					int hamiltonCycleLength = 0;
+					hamiltonCycleLength = 0L;
 					int cycle[] = new int[result.size()];
 					for (int i = 0; i < result.size(); i++){
 						if(i != result.size()-1)
@@ -277,7 +275,11 @@ public class DrawPanel extends JPanel {
 				params.setSizeOfPopulation(Integer.parseInt(textField.getText()));
 				params.setNumberOfIterations(Integer.parseInt(textField_1
 						.getText()));
-
+				params.setMaxAmountOfAncestors(Integer.parseInt(textField_5.getText()));
+				params.setSimilarityToAncestors(Double.parseDouble(textField_3.getText()));
+				params.setSimiliarityInTest(Double.parseDouble(textField_4.getText()));
+				params.setCorrectResult(hamiltonCycleLength);
+				
 				if (rdbtnMut.isSelected())
 					params.setMethodOfMutation(2);
 				else
@@ -351,6 +353,22 @@ public class DrawPanel extends JPanel {
 			}
 		});
 
+		panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (addVertex) {
+					int x = e.getX();
+					int y = e.getY();
+					list.add(new Pair<Integer, Integer>(x, y));
+					System.out.println("Dzieje sie");
+					// revalidate();
+					
+					
+					repaint();
+				}
+			}
+		});
+		
 		JButton btnGeneruj = new JButton("Generuj");
 		btnGeneruj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -369,205 +387,216 @@ public class DrawPanel extends JPanel {
 				addVertex = true;
 				if (list != null)
 					list.clear();
+				path = null;
+				krisssPath = null;
 			}
 		});
+		
+		
+		
+				JButton btnWczytajZPliku = new JButton("Wczytaj z pliku");
+				btnWczytajZPliku.setFont(new Font("Tahoma", Font.PLAIN, 9));
+				btnWczytajZPliku.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						String path;
+						JFileChooser fileChooser = new JFileChooser();
+						int ret = fileChooser.showOpenDialog(null);
+						if (ret == JFileChooser.APPROVE_OPTION) {
+							File selectedFile = fileChooser.getSelectedFile();
+							path = selectedFile.getAbsolutePath();
+							clear();
+							int tab[][] = new ExportImport().newImportFromFile(path);
+
+							for (int i = 0; i < tab.length; i++)
+								list.add(new Pair(tab[i][0], tab[i][1]));
+
+							repaint();
+
+						}
+
+					}
+				});
+		
+				JButton btnZapiszDoPliku = new JButton("Zapisz do pliku");
+				btnZapiszDoPliku.setFont(new Font("Tahoma", Font.PLAIN, 9));
+				btnZapiszDoPliku.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						String path;
+						int tab[][] = new int[list.size()][2];
+						JFileChooser fileChooser = new JFileChooser();
+						int ret = fileChooser.showOpenDialog(null);
+						if (ret == JFileChooser.APPROVE_OPTION) {
+							File selectedFile = fileChooser.getSelectedFile();
+							path = selectedFile.getAbsolutePath();
+							// clear();
+
+							for (int i = 0; i < list.size(); i++) {
+								tab[i][0] = list.get(i).getX();
+								tab[i][1] = list.get(i).getY();
+							}
+							ExportImport.newExportToFile(tab, path);
+
+							repaint();
+
+						}
+
+					}
+				});
+		
+	
 
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-					.addGap(18)
+					.addGap(48)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGap(116)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 710, Short.MAX_VALUE)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(18)
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-												.addGroup(groupLayout.createSequentialGroup()
-													.addPreferredGap(ComponentPlacement.RELATED)
-													.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-														.addComponent(slider_1, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-														.addGroup(groupLayout.createSequentialGroup()
-															.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-																.addComponent(rdbtnMut, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-																.addComponent(rdbtnKrz_1, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
-															.addPreferredGap(ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-															.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-																.addComponent(rdbtnKrz, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-																.addComponent(rdbtnMut_1)))
-														.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-														.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 202, Short.MAX_VALUE)
-														.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-														.addGroup(groupLayout.createSequentialGroup()
-															.addComponent(lblZestawy)
-															.addGap(76))
-														.addGroup(groupLayout.createSequentialGroup()
-															.addComponent(rdbtnRep)
-															.addPreferredGap(ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
-															.addComponent(rdbtnRep_1)
-															.addGap(10))
-														.addComponent(panel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-														.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
-														.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-															.addGroup(groupLayout.createSequentialGroup()
-																.addComponent(btnGrafNaKole)
-																.addPreferredGap(ComponentPlacement.UNRELATED)
-																.addComponent(btnGeneruj, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))
-															.addComponent(slider_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-														.addGroup(groupLayout.createSequentialGroup()
-															.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
-															.addGap(43))))
-												.addGroup(groupLayout.createSequentialGroup()
-													.addGap(79)
-													.addComponent(lblMutacje)))
-											.addPreferredGap(ComponentPlacement.RELATED))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblLiczbaIteracji)
-											.addGap(69))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-											.addGap(82))
+									.addGap(509)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 										.addGroup(groupLayout.createSequentialGroup()
 											.addComponent(lblLiczbaPopulacji)
 											.addGap(61))
 										.addGroup(groupLayout.createSequentialGroup()
 											.addComponent(textField, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-											.addGap(80))))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(82)
-									.addComponent(lblKrzyowania, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)))
-							.addGap(32))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblReprodukcje)
-								.addComponent(lblNewLabel)
-								.addComponent(lblLiczbaWierzchokw))
-							.addGap(94))
+											.addGap(80))
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+											.addComponent(panel_5, Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
+											.addComponent(slider, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+											.addComponent(panel_6, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+											.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+												.addComponent(btnWczytajZPliku)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(btnZapiszDoPliku))
+											.addComponent(panel_1, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+											.addComponent(panel_3, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+											.addComponent(panel_4, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+											.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+												.addGap(12)
+												.addComponent(btnGrafNaKole)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(btnGeneruj, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+												.addGap(2))))))
+							.addContainerGap())
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(btnWyczy)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGap(18)
 							.addComponent(btnWykonaj)
-							.addGap(69))))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addGap(42))))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+							.addGap(53))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(lblZestawy)
+							.addGap(84))
 						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(panel_7, GroupLayout.PREFERRED_SIZE, 203, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(8)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 							.addComponent(lblLiczbaPopulacji, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblLiczbaIteracji, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panel_5, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(slider_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panel_7, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblMutacje)
+							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(rdbtnMut)
-								.addComponent(rdbtnMut_1))
-							.addGap(13)
-							.addComponent(lblKrzyowania, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(rdbtnKrz_1)
-								.addComponent(rdbtnKrz))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblReprodukcje, GroupLayout.PREFERRED_SIZE, 11, GroupLayout.PREFERRED_SIZE)
-							.addGap(8)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(rdbtnRep)
-								.addComponent(rdbtnRep_1))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblNewLabel)
+								.addComponent(btnGeneruj)
+								.addComponent(btnGrafNaKole))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblLiczbaWierzchokw)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(slider_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(11)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnGrafNaKole)
-								.addComponent(btnGeneruj))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(lblZestawy)
-							.addGap(2)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnNewButton)
-							.addGap(11)
-							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+							.addGap(44)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnWyczy)
-								.addComponent(btnWykonaj))))
-					.addContainerGap())
+								.addComponent(btnZapiszDoPliku)
+								.addComponent(btnWczytajZPliku))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnWykonaj)
+								.addComponent(btnWyczy)))
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+					.addGap(2))
 		);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		textField_1 = new JTextField("10000");
+		textField_1.setBounds(157, 15, 45, 20);
+		panel_3.add(textField_1);
+		textField_1.setColumns(10);
+		
+		textField_3 = new JTextField("0.98");
+		textField_3.setBounds(157, 41, 45, 20);
+		panel_3.add(textField_3);
+		textField_3.setColumns(10);
+		
+		textField_4 = new JTextField("0.98");
+		textField_4.setBounds(157, 91, 45, 20);
+		panel_3.add(textField_4);
+		textField_4.setColumns(10);
+		
+		JLabel lblIloRozwaanychPrzodkw = new JLabel("Ilo\u015B\u0107 rozwa\u017Canych przodk\u00F3w:");
+		lblIloRozwaanychPrzodkw.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblIloRozwaanychPrzodkw.setBounds(10, 70, 141, 14);
+		panel_3.add(lblIloRozwaanychPrzodkw);
+		
+		textField_5 = new JTextField("1000");
+		textField_5.setBounds(157, 67, 45, 20);
+		panel_3.add(textField_5);
+		textField_5.setColumns(10);
+		
+				JLabel lblLiczbaWierzchokw = new JLabel(
+						"Liczba wierzcho\u0142k\u00F3w:");
+				lblLiczbaWierzchokw.setBounds(58, 0, 104, 11);
+				panel_4.add(lblLiczbaWierzchokw);
+				lblLiczbaWierzchokw.setHorizontalAlignment(SwingConstants.CENTER);
+				lblLiczbaWierzchokw.setFont(new Font("Tahoma", Font.BOLD, 9));
+				
+						slider_2 = new JSlider(100, 10000, 1000);
+						slider_2.setBounds(0, 47, 200, 45);
+						panel_4.add(slider_2);
+						slider_2.setMajorTickSpacing(4900);
+						slider_2.setPaintTicks(true);
+						slider_2.setPaintLabels(true);
+						slider_2.addChangeListener(new ChangeListener() {
+							@Override
+							public void stateChanged(ChangeEvent e) {
+								textField_2.setText(String.valueOf(slider_2.getValue()));
+							}
 
-		JButton btnWczytajZPliku = new JButton("Wczytaj z pliku");
-		panel_2.add(btnWczytajZPliku);
-		btnWczytajZPliku.setFont(new Font("Tahoma", Font.PLAIN, 9));
-
-		JButton btnZapiszDoPliku = new JButton("Zapisz do pliku");
-		panel_2.add(btnZapiszDoPliku);
-		btnZapiszDoPliku.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnZapiszDoPliku.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String path;
-				int tab[][] = new int[list.size()][2];
-				JFileChooser fileChooser = new JFileChooser();
-				int ret = fileChooser.showOpenDialog(null);
-				if (ret == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooser.getSelectedFile();
-					path = selectedFile.getAbsolutePath();
-					// clear();
-
-					for (int i = 0; i < list.size(); i++) {
-						tab[i][0] = list.get(i).getX();
-						tab[i][1] = list.get(i).getY();
-					}
-					ExportImport.newExportToFile(tab, path);
-
-					repaint();
-
-				}
-
-			}
-		});
-		btnWczytajZPliku.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String path;
-				JFileChooser fileChooser = new JFileChooser();
-				int ret = fileChooser.showOpenDialog(null);
-				if (ret == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooser.getSelectedFile();
-					path = selectedFile.getAbsolutePath();
-					clear();
-					int tab[][] = new ExportImport().newImportFromFile(path);
-
-					for (int i = 0; i < tab.length; i++)
-						list.add(new Pair(tab[i][0], tab[i][1]));
-
-					repaint();
-
-				}
-
-			}
-		});
+						});
+		panel_7.setLayout(null);
+		
+				
 
 		JButton button = new JButton("20");
 		button.setBounds(31, 5, 61, 23);
@@ -587,7 +616,7 @@ public class DrawPanel extends JPanel {
 		panel_1.add(button);
 
 		JButton button_1 = new JButton("50");
-		button_1.setBounds(113, 5, 61, 23);
+		button_1.setBounds(130, 5, 61, 23);
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
@@ -749,6 +778,4 @@ public class DrawPanel extends JPanel {
 		path = tab;
 		repaint();
 	}
-
-
 }
