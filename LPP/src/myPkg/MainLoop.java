@@ -88,12 +88,12 @@ public class MainLoop extends Thread{
 			
 //			-------------------------------
 			
-//			if(!exitPressed)
-//				updateChart(appraisal);
+			if(!exitPressed)
+				updateChart(appraisal);
 			
 //			------------------------------
 
-			System.out.println(Long.toString(iterationCounter));
+	//		System.out.println(Long.toString(iterationCounter));
 			
 //			------------------------------
 
