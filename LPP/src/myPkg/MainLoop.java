@@ -85,10 +85,10 @@ public class MainLoop extends Thread{
 			performMutation(evolParams.getMethodOfMutation());
 	
 			/*appraisal =*/ assessPopulation(); //this function modifies 'appraisal'
-
+//
 			if(!exitPressed)
 				updateChart(appraisal);
-		System.out.println(Long.toString(iterationCounter));
+//		System.out.println(Long.toString(iterationCounter));
 			
 			iterationCounter++;
 		}
@@ -363,7 +363,7 @@ public class MainLoop extends Thread{
 	public void mainFunction(){
 		XYSeriesCollection dataset = createDataset("Populacje");
 		JFreeChart chart = ChartFactory.createXYLineChart("",
-				"Numer Populacji", "Warto��", dataset,
+				"Numer Populacji", "Wartość", dataset,
 				PlotOrientation.VERTICAL, false, false, false);
 		chart.setBackgroundPaint(Color.white);
 		plot = chart.getXYPlot();
@@ -438,9 +438,10 @@ public class MainLoop extends Thread{
 		int graphSize = 0;
 		
 		for(int i=0; i<reasearchSize; i++){
-			graphSize = 100*(i+11);
+			graphSize = 100*(i+56);
+			
 			MainLoop m = new MainLoop(new MyGraph(graphSize), new ParametersOfEvolution(), new AdaptationValues());
-
+			
 			
 //			------------------------------
 			
@@ -448,7 +449,7 @@ public class MainLoop extends Thread{
 			
 //			------------------------------
 			m.run();
-//			amountsOfIterations[i] = m.iterationCounter;
+			amountsOfIterations[i] = m.iterationCounter;
 			
 			try {
 				writer = new FileWriter(new File(path), true);

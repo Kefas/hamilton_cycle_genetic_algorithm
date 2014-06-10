@@ -233,7 +233,7 @@ public class DrawPanel extends JPanel {
 
 		});
 		
-		JLabel lblPrawdopodobiestwoMutacji = new JLabel("Waga mutacji:");
+		JLabel lblPrawdopodobiestwoMutacji = new JLabel("Prawdopodobieństwo mut. (%):");
 		lblPrawdopodobiestwoMutacji.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		
 		//spinner 
